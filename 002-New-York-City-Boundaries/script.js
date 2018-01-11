@@ -10,7 +10,7 @@ var map = new mapboxgl.Map({
     center: [-73.9926559, 40.7159975],    // this should be a random point
     zoom: 10,   // 10 - what scale
     maxBounds: bounds,
-    //interactive: false,
+    interactive: false,
 });
 
 // coords to set max map area
@@ -63,6 +63,14 @@ map.on('load', function () {
         maskName: "boroMask",
         maskId: "boro-mask",
     },
+    {
+        boundObj: mapzenLandBound,
+        boundName: "mapzenLandBound",
+        boundId: "mapzenLand-boundary",
+        maskObj: mapzenLandMask,
+        maskName: "mapzenLandMask",
+        maskId: "mapzenLand-mask",
+    },
     ];
 
 
@@ -88,17 +96,7 @@ map.on('load', function () {
                 "line-width": 1
             },
         });
-    } 
-
-    // map.on('click', 'boro-boundary', function () {
-    //     console.log("over boro");
-    //     showMask("boro-mask", "boroMask");
-    // });
-
-    // map.on('click', 'estShore-boundary', function () {
-    //     console.log("over est shore");
-    //     showMask("estShore-mask", "estShoreMask");
-    // });   
+    }  
 });
 
 var lastMaskVisible = false;
@@ -140,6 +138,9 @@ map.on('click', function(e) {
     } else if (clickedLayer == "quad-boundary") {
         console.log("over est shore");
         showMask("quad-mask", "quadMask");
+    } else if (clickedLayer == "mapzenLand-boundary") {
+        console.log("over mapzen land"); 
+        showMask("mapzenLand-mask", "mapzenLandMask");
     }
 });
 
@@ -156,7 +157,7 @@ function clearMask() {
     map.setPaintProperty('satellite', 'raster-opacity', 0);
 }
 
-var colors = ["#c2ab33", "#22d316", "#0133dd"];
+var colors = ["#c2ab33", "#22d316", "#0133dd", "#a24603"];
 
 
 
