@@ -9,8 +9,8 @@ var map = new mapboxgl.Map({
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: [-73.9926559, 40.7159975],    // this should be a random point
     zoom: 10,   // 10 - what scale
-    //maxBounds: bounds,
-    //interactive: false,
+    maxBounds: bounds,
+    interactive: false,
 });
 
 // coords to set max map area
@@ -20,6 +20,170 @@ var colors = ["#c2ab33", "#22d316", "#0133dd", "#a24603", "#ddab33", "#c71233", 
 var lastMaskVisible = false;
 var lastMask;
 var maskTimer;
+
+var layersArray = [
+    {
+        //boundName: "quadBound",
+        boundId: "quad-boundary",
+        maskObj: quadMask,
+        maskName: "quadMask",
+        maskId: "quad-mask",
+    },
+    {
+        //boundName: "estShoreBound",
+        boundId: "estShore-boundary",
+        maskObj: estShoreMask,
+        maskName: "estShoreMask",
+        maskId: "estShore-mask",
+    },
+    {
+        //boundName: "boroBound",
+        boundId: "boro-boundary",
+        maskObj: boroMask,
+        maskName: "boroMask",
+        maskId: "boro-mask",
+    },
+    {
+        //boundName: "mapzenLandBound",
+        boundId: "mapzenLand-boundary",
+        maskObj: mapzenLandMask,
+        maskName: "mapzenLandMask",
+        maskId: "mapzenLand-mask",
+    },
+    {
+        //boundName: "mapzenCostBound",
+        boundId: "mapzenCoast-boundary",
+        maskObj: mapzenCoastMask,
+        maskName: "mapzenCoastMask",
+        maskId: "mapzenCoast-mask",
+    },
+    {
+        //boundName: "agricBound",
+        boundId: "agric-boundary",
+        maskObj: agricMask,
+        maskName: "agricMask",
+        maskId: "agric-mask",
+    },
+    {
+        //boundName: "municCourtBound",
+        boundId: "municCourt-boundary",
+        maskObj: municCourtMask,
+        maskName: "municCourtMask",
+        maskId: "municCourt-mask",
+    },
+    {
+        //boundName: "neighborBound",
+        boundId: "neighbor-boundary",
+        maskObj: neighborMask,
+        maskName: "neighborMask",
+        maskId: "neighbor-mask",
+    },
+    {
+        //boundName: "parksPropsBound",
+        boundId: "parksProps-boundary",
+        maskObj: parksPropsMask,
+        maskName: "parksPropsMask",
+        maskId: "parksProps-mask",
+    },
+    {
+        //boundName: "zoningQuarterBound",
+        boundId: "zoningQuarter-boundary",
+        maskObj: zoningQuarterMask,
+        maskName: "zoningQuarterMask",
+        maskId: "zoningQuarter-mask",
+    },
+    {
+        //boundName: "zoningSectionBound",
+        boundId: "zoningSection-boundary",
+        maskObj: zoningSectionMask,
+        maskName: "zoningSectionMask",
+        maskId: "zoningSection-mask",
+    },
+    {
+        //boundName: "censusCountyBound",
+        boundId: "censusCounty-boundary",
+        maskObj: censusCountyMask,
+        maskName: "censusCountyMask",
+        maskId: "censusCounty-mask",
+    },
+    {
+        //boundName: "geologyBound",
+        boundId: "geology-boundary",
+        maskObj: geologyMask,
+        maskName: "geologyMask",
+        maskId: "geology-mask",
+    },
+    {
+        //boundName: "estSedBound",
+        boundId: "estSed-boundary",
+        maskObj: estSedMask,
+        maskName: "estSedMask",
+        maskId: "estSed-mask",
+    },
+    {
+        //boundName: "riverSedBound",
+        boundId: "riverSed-boundary",
+        maskObj: riverSedMask,
+        maskName: "riverSedMask",
+        maskId: "riverSed-mask",
+    },
+    {
+        //boundName: "censusTractBound",
+        boundId: "censusTract-boundary",
+        maskObj: censusTractMask,
+        maskName: "censusTractMask",
+        maskId: "censusTract-mask",
+    },
+    {
+        //boundName: "coastalBound",
+        boundId: "coastal-boundary",
+        maskObj: coastalMask,
+        maskName: "coastalMask",
+        maskId: "coastal-mask",
+    },
+    {
+        //boundName: "freshFoodBound",
+        boundId: "freshFood-boundary",
+        maskObj: freshFoodMask,
+        maskName: "freshFoodMask",
+        maskId: "freshFood-mask",
+    },
+    {
+        //boundName: "waterfrontParksBound",
+        boundId: "waterfrontParks-boundary",
+        maskObj: waterfrontParksMask,
+        maskName: "waterfrontParksMask",
+        maskId: "waterfrontParks-mask",
+    },
+    {
+        //boundName: "zipcodeBound",
+        boundId: "zipcode-boundary",
+        maskObj: zipcodeMask,
+        maskName: "zipcodeMask",
+        maskId: "zipcode-mask",
+    },
+    {
+        //boundName: "cableBound",
+        boundId: "cable-boundary",
+        maskObj: cableMask,
+        maskName: "cableMask",
+        maskId: "cable-mask",
+    },
+    {
+        //boundName: "historicBound",
+        boundId: "historic-boundary",
+        maskObj: historicMask,
+        maskName: "historicMask",
+        maskId: "historic-mask",
+    },
+    {
+        //boundName: "hydrographyBound",
+        boundId: "hydrography-boundary",
+        maskObj: hydrographyMask,
+        maskName: "hydrographyMask",
+        maskId: "hydrography-mask",
+    },
+];
 
 map.on('load', function () {
     console.log("map is loaded");
@@ -39,174 +203,9 @@ map.on('load', function () {
         }
     });
 
-    var layersArray = [
-    {
-        boundName: "quadBound",
-        boundId: "quad-boundary",
-        maskObj: quadMask,
-        maskName: "quadMask",
-        maskId: "quad-mask",
-    },
-    {
-        boundName: "estShoreBound",
-        boundId: "estShore-boundary",
-        maskObj: estShoreMask,
-        maskName: "estShoreMask",
-        maskId: "estShore-mask",
-    },
-    {
-        boundName: "boroBound",
-        boundId: "boro-boundary",
-        maskObj: boroMask,
-        maskName: "boroMask",
-        maskId: "boro-mask",
-    },
-    {
-        boundName: "mapzenLandBound",
-        boundId: "mapzenLand-boundary",
-        maskObj: mapzenLandMask,
-        maskName: "mapzenLandMask",
-        maskId: "mapzenLand-mask",
-    },
-    {
-        boundName: "mapzenCostBound",
-        boundId: "mapzenCoast-boundary",
-        maskObj: mapzenCoastMask,
-        maskName: "mapzenCoastMask",
-        maskId: "mapzenCoast-mask",
-    },
-    {
-        boundName: "agricBound",
-        boundId: "agric-boundary",
-        maskObj: agricMask,
-        maskName: "agricMask",
-        maskId: "agric-mask",
-    },
-    {
-        boundName: "municCourtBound",
-        boundId: "municCourt-boundary",
-        maskObj: municCourtMask,
-        maskName: "municCourtMask",
-        maskId: "municCourt-mask",
-    },
-    {
-        boundName: "neighborBound",
-        boundId: "neighbor-boundary",
-        maskObj: neighborMask,
-        maskName: "neighborMask",
-        maskId: "neighbor-mask",
-    },
-    {
-        boundName: "parksPropsBound",
-        boundId: "parksProps-boundary",
-        maskObj: parksPropsMask,
-        maskName: "parksPropsMask",
-        maskId: "parksProps-mask",
-    },
-    {
-        boundName: "zoningQuarterBound",
-        boundId: "zoningQuarter-boundary",
-        maskObj: zoningQuarterMask,
-        maskName: "zoningQuarterMask",
-        maskId: "zoningQuarter-mask",
-    },
-    {
-        boundName: "zoningSectionBound",
-        boundId: "zoningSection-boundary",
-        maskObj: zoningSectionMask,
-        maskName: "zoningSectionMask",
-        maskId: "zoningSection-mask",
-    },
-    {
-        boundName: "censusCountyBound",
-        boundId: "censusCounty-boundary",
-        maskObj: censusCountyMask,
-        maskName: "censusCountyMask",
-        maskId: "censusCounty-mask",
-    },
-    {
-        boundName: "geologyBound",
-        boundId: "geology-boundary",
-        maskObj: geologyMask,
-        maskName: "geologyMask",
-        maskId: "geology-mask",
-    },
-    {
-        boundName: "estSedBound",
-        boundId: "estSed-boundary",
-        maskObj: estSedMask,
-        maskName: "estSedMask",
-        maskId: "estSed-mask",
-    },
-    {
-        boundName: "riverSedBound",
-        boundId: "riverSed-boundary",
-        maskObj: riverSedMask,
-        maskName: "riverSedMask",
-        maskId: "riverSed-mask",
-    },
-    {
-        boundName: "censusTractBound",
-        boundId: "censusTract-boundary",
-        maskObj: censusTractMask,
-        maskName: "censusTractMask",
-        maskId: "censusTract-mask",
-    },
-    {
-        boundName: "coastalBound",
-        boundId: "coastal-boundary",
-        maskObj: coastalMask,
-        maskName: "coastalMask",
-        maskId: "coastal-mask",
-    },
-    {
-        boundName: "freshFoodBound",
-        boundId: "freshFood-boundary",
-        maskObj: freshFoodMask,
-        maskName: "freshFoodMask",
-        maskId: "freshFood-mask",
-    },
-    {
-        boundName: "waterfrontParksBound",
-        boundId: "waterfrontParks-boundary",
-        maskObj: waterfrontParksMask,
-        maskName: "waterfrontParksMask",
-        maskId: "waterfrontParks-mask",
-    },
-    {
-        boundName: "zipcodeBound",
-        boundId: "zipcode-boundary",
-        maskObj: zipcodeMask,
-        maskName: "zipcodeMask",
-        maskId: "zipcode-mask",
-    },
-    {
-        boundName: "cableBound",
-        boundId: "cable-boundary",
-        maskObj: cableMask,
-        maskName: "cableMask",
-        maskId: "cable-mask",
-    },
-    {
-        boundName: "historicBound",
-        boundId: "historic-boundary",
-        maskObj: historicMask,
-        maskName: "historicMask",
-        maskId: "historic-mask",
-    },
-    {
-        boundName: "hydrographyBound",
-        boundId: "hydrography-boundary",
-        maskObj: hydrographyMask,
-        maskName: "hydrographyMask",
-        maskId: "hydrography-mask",
-    },
-    ];
-
-
-
     for (var i = 0; i < layersArray.length; i++) {
         var thisLayer = layersArray[i];
+        var boundaryId = thisLayer.boundId;
 
         // use the mask for both boundary and mask
         map.addSource(thisLayer.maskName, {
@@ -216,7 +215,7 @@ map.on('load', function () {
 
         // add boundary
         map.addLayer({
-            "id": thisLayer.boundId,
+            "id": boundaryId,
             "type": "line",
             "source": thisLayer.maskName,
             "paint": {
