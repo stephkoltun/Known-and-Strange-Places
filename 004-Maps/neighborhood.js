@@ -7,43 +7,47 @@ var map = new mapboxgl.Map({
     // satellite imagery styling
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
-    center: [-73.9926559, 40.7159975],    // this should be a random point
+    center: [-73.968991, 40.682130],    // this should be a random point
     zoom: 17,   // 2500
-    interactive: false,
 });
 
+// disable map zoom when using scroll
+map.scrollZoom.disable();
 
 
 map.on('load', function () {
     console.log("map is loaded");
 
-    // use the mask for both boundary and mask
-    map.addSource('catch-basin', {
-        "type": "geojson",
-        "data": 'anothersideproject.co/known-and-strange/004/GEOJSON/neighborhood-2500/NYCOD_catch-basins.geojson'
-    });
+    for (var i = 0; i < neighborLayers.length; i++) {
+        var thisLayer = neighborLayers[i];
 
-    // add boundary
-    map.addLayer({
-        "id": 'catchBasins',
-        "type": "circle",
-        "source": 'catch-basin',
-        'paint': {
-            'circle-radius': 10,
-            'circle-color': '#ff12ee'
+        map.addSource(thisLayer.dataName, {
+            "type": "geojson",
+            "data": thisLayer.dataObj,
+        });
+
+        if (thisLayer.type == 'circle') {
+            // add circle
+            map.addLayer({
+                "id": thisLayer.layerId,
+                "type": "circle",
+                "source": thisLayer.dataName,
+                'paint': {
+                    'circle-radius': 2,
+                    'circle-color': thisLayer.color
+                }
+            });
+        } else if (thisLayer.type == 'line') {
+            map.addLayer({
+                "id": thisLayer.layerId,
+                "type": "line",
+                "source": thisLayer.dataName,
+                'paint': {
+                    "line-color": thisLayer.color,
+                    "line-width": .8
+                }
+            });
         }
-    });
-
-
-    // map.addLayer({
-    //     "id": 'catchBasins',
-    //     "type": "line",
-    //     "source": 'catch-basin',
-    //     "paint": {
-    //         "line-color": colors[i],
-    //         "line-width": 0.5
-    //     },
-    // });
-
+    }
 });
 
