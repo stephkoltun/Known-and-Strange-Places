@@ -1,3 +1,5 @@
+
+
 var neighborLayers = [
     {
         dataObj: catchBasinObj,
@@ -22,7 +24,7 @@ var neighborLayers = [
     // },
     {
         dataObj: hydrantsObj,
-        dataName: 'hydrants',
+        dataName: 'hyd-rants',
         layerId: 'hydrants',
         color: '#39a95c',
         type: 'circle'

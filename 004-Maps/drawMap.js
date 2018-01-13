@@ -1,4 +1,5 @@
 
+
 // initialize map
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
 
@@ -8,18 +9,17 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: [-73.968991, 40.682130],    // this should be a random point
-    zoom: 17,   // 2500
+    zoom: zoomLevel,  
 });
 
 // disable map zoom when using scroll
 map.scrollZoom.disable();
 
-
 map.on('load', function () {
     console.log("map is loaded");
 
-    for (var i = 0; i < neighborLayers.length; i++) {
-        var thisLayer = neighborLayers[i];
+    for (var i = 0; i < mapLayers.length; i++) {
+        var thisLayer = mapLayers[i];
 
         map.addSource(thisLayer.dataName, {
             "type": "geojson",
