@@ -48,6 +48,67 @@ map.on('load', function () {
                 }
             });
         }
-    }
+    };
+
+
+
+
+    var currentlyHidden = false;
+    var tempLabel;
+    // consider adding debounding function....
+    // https://bl.ocks.org/ryanbaumann/0d72890cea4f97e0dbd10ea3cf7189b2
+
+    map.on('mousemove', function(e) {
+        // set bbox as 5px reactangle area around clicked point
+        var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+        var features = map.queryRenderedFeatures(e.point);
+
+
+        if (features.length > 0 && !currentlyHidden) {
+            var isolateLayer = features[0].layer.id;
+            console.log("isolate " + isolateLayer);
+
+            // hide all other layers
+            for (var i = 0; i < mapLayers.length; i++) {
+                if (mapLayers[i].layerId != isolateLayer) {
+                    map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'none');
+                } else {
+                    map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
+                }
+            }
+
+            // add text
+            tempLabel = $("body").append(features[0].layer.dataName);
+
+            currentlyHidden = true;
+
+        } else if (features.length == 0 && currentlyHidden) {
+
+                currentlyHidden = false;
+                console.log("unhide");
+                
+                for (var i = 0; i < mapLayers.length; i++) {
+                    map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
+                }
+
+        }
+    });
+
 });
+
+
+
+// map.on('mousemove', function (e) {
+//     var features = map.queryRenderedFeatures(e.point);
+//     document.getElementById('features').innerHTML = JSON.stringify(features, null, 2);
+// });
+
+// map.on("mousemove", function(e) {
+//     map.setFilter("state-fills-hover", ["==", "name", e.features[0].properties.name]);
+// });
+
+// // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+// map.on("mouseleave", "state-fills", function() {
+//     map.setFilter("state-fills-hover", ["==", "name", ""]);
+// });
 

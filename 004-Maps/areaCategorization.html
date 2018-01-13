@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>Pattern Making - Areas</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <script src='GEOJSON/areas-40000/NYCOD_beaches.js'></script>
+    <script src='GEOJSON/areas-40000/NYCOD_business-improvment.js'></script>
+    <script src='GEOJSON/areas-40000/NYCOD_forever-wild.js'></script>
+    <script src='GEOJSON/areas-40000/NYCOD_function-parkland.js'></script>
+    <script src='GEOJSON/areas-40000/NYCOD_historic-districts.js'></script>
+    <script src='GEOJSON/areas-40000/NYU_fresh-food-stores-zoning.js'></script>
+    <script src='GEOJSON/areas-40000/NYU_waterfront-parks.js'></script>
+
+    <script src='areaLayers.js'></script>
+
+    <!-- LIBRARIES! -->
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
+    <script type="text/javascript">
+        var mapMode = 'areas';
+        var mapLayers = areaLayers;
+        var zoomLevel = 12; //40,000
+        $(document).ready(function() {
+            console.log("document is ready");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="map">
+        
+        <script src='drawMap.js'></script>
+    </div>
+</body>
+
+</html>

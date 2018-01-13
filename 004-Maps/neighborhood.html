@@ -17,7 +17,7 @@
     <script src='GEOJSON/neighborhood-2500/NYCOD_public-pools.js'></script>
     <script src='GEOJSON/neighborhood-2500/NYCOD_railroad-structure.js'></script>
     <script src='GEOJSON/neighborhood-2500/subway_entrances_may2016.js'></script>
-
+    <script src='neighborLayers.js'></script>
 
     <!-- LIBRARIES! -->
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
@@ -26,7 +26,7 @@
     <script type="text/javascript">
         var mapMode = 'neighborhood';
         var mapLayers = neighborLayers;
-        var zoomLevel = 17; // 2500
+        var zoomLevel = 16; // 2500
 
         $(document).ready(function() {
             console.log("document is ready");
@@ -36,7 +36,7 @@
 
 <body>
     <div id="map">
-        <script src='neighborhoodLayers.js'></script>
+        
         <script src='drawMap.js'></script>
     </div>
 </body>
