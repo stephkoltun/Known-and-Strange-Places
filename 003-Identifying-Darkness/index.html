@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>Identifying Darkness</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    
+    <!-- LIBRARIES! -->
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("document is ready");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="desc">
+        <h1>Identifying Darkness</h1>
+        <h2>click and hold to toggle modes</h2> 
+        <h2>double click to change scales</h2>
+    </div>
+    <div class="imgwrapper">
+        <img src="img/CoopCity-1000.jpeg" class="vis aerial" id="aer1">
+        <img src="img/CoopCity-2000.jpeg" class="hid aerial" id="aer2">
+        <img src="img/CoopCity-5000.jpeg" class="hid aerial" id="aer3">
+        <img src="img/CoopCity-10000.jpeg" class="hid aerial" id="aer4">
+
+        <img src="img/18-01-12_1910_Edge-Detection_TH60.png" class="hid edge" id="edge1">
+        <img src="img/18-01-12_1912_Edge-Detection_TH60.png" class="hid edge" id="edge2">
+        <img src="img/18-01-12_1913_Edge-Detection_TH60.png" class="hid edge" id="edge3">
+        <img src="img/18-01-12_1906_Pixel-Detection_TH120.png" class="hid pixel" id="pixel1">
+        <img src="img/18-01-12_1916_Pixel-Detection_TH120.png" class="hid pixel" id="pixel2">
+        <img src="img/18-01-12_1921_Pixel-Detection_TH120.png" class="hid pixel" id="pixel3">
+        <img src="img/18-01-12_2111_Pixel-Detection_TH120.png" class="hid pixel" id="pixel4">
+        <img src="img/18-01-12_2058_Blob-Detection_RES5_TH120.png" class="hid blob" id="blob1">
+        <img src="img/18-01-12_2056_Blob-Detection_RES5_TH120.png" class="hid blob" id="blob2">
+        <img src="img/18-01-12_2054_Blob-Detection_RES5_TH120.png" class="hid blob" id="blob3">
+        <img src="img/18-01-12_2109_Blob-Detection_RES5_TH120.png" class="hid blob" id="blob4">
+        <img src="img/18-01-12_2110_Edge-Detection_TH60.png" class="hid edge" id="edge4">
+        
+    </div>
+    <script src='darkness.js'></script>
+</body>
+
+</html>
