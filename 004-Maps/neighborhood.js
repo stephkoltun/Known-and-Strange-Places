@@ -20,7 +20,7 @@ map.on('load', function () {
     // use the mask for both boundary and mask
     map.addSource('catch-basin', {
         "type": "geojson",
-        "data": 'localhost:8001/GEOJSON/neighborhood-2500/NYCOD_catch-basins.geojson'
+        "data": 'anothersideproject.co/known-and-strange/004/GEOJSON/neighborhood-2500/NYCOD_catch-basins.geojson'
     });
 
     // add boundary
