@@ -5,41 +5,43 @@
 }
 
 body {
-	margin: 0;
+	margin: 0 !important;
 	padding: 0;
 }
 
 #desc {
 	position: absolute;
+	width: 100%;
 	top: 50%;
-  	right: 50%;
   	transform: translate(0, -50%);
   	z-index: 10;
 }
 
 h1 {
 	font-family: 'Inconsolata', monospace;
-	font-size: 20px;
-	color: #fff;
+	font-size: 36px;
+	color: #000;
 	font-weight: 400;
-	text-align: right;
-	margin: 5px 0;
-}
-
-h2 {
-	font-family: Lora;
-	font-size: 62px;
-	font-weight: 400;
-	color: #fff;
-	text-align: right;
+	text-align: center;
 	margin: 15px 0;
 }
 
-p {
-	font-family: Lora;
-	font-size: 18px;
+h2 {
+	font-family: 'Inconsolata', monospace;
+	font-size: 24px;
 	font-weight: 400;
-	color: #fff;
-	text-align: right;
-	margin: 15px 0 15px 65px;
+	color: #000;
+	text-align: center;
+	margin: 5px 0;
+}
+
+p.label {
+	font-family: 'Inconsolata', monospace;
+	font-size: 14px;
+	font-weight: 400;
+	color: #000;
+	text-align: left;
+	margin: 5px 0;
+	position: absolute;
+	z-index: 20;
 }

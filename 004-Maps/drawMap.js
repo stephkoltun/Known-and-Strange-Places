@@ -30,6 +30,9 @@ map.on('load', function () {
             // add circle
             map.addLayer({
                 "id": thisLayer.layerId,
+                "metadata": {
+                    "displaylabel": thisLayer.displaylabel,
+                },
                 "type": "circle",
                 "source": thisLayer.dataName,
                 'paint': {
@@ -40,6 +43,9 @@ map.on('load', function () {
         } else if (thisLayer.type == 'line') {
             map.addLayer({
                 "id": thisLayer.layerId,
+                "metadata": {
+                    "displaylabel": thisLayer.displaylabel,
+                },
                 "type": "line",
                 "source": thisLayer.dataName,
                 'paint': {
@@ -50,11 +56,11 @@ map.on('load', function () {
         }
     };
 
-
+    $("#desc").delay(3000).fadeOut(1000);
 
 
     var currentlyHidden = false;
-    var tempLabel;
+
     // consider adding debounding function....
     // https://bl.ocks.org/ryanbaumann/0d72890cea4f97e0dbd10ea3cf7189b2
 
@@ -78,7 +84,10 @@ map.on('load', function () {
             }
 
             // add text
-            tempLabel = $("body").append(features[0].layer.dataName);
+            console.log(features[0]);
+            var templabel = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
+            $("body").append(templabel);
+            $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
             currentlyHidden = true;
 
@@ -86,6 +95,8 @@ map.on('load', function () {
 
                 currentlyHidden = false;
                 console.log("unhide");
+
+                $(".label").remove();
                 
                 for (var i = 0; i < mapLayers.length; i++) {
                     map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
@@ -97,18 +108,21 @@ map.on('load', function () {
 });
 
 
-
-// map.on('mousemove', function (e) {
-//     var features = map.queryRenderedFeatures(e.point);
-//     document.getElementById('features').innerHTML = JSON.stringify(features, null, 2);
-// });
-
-// map.on("mousemove", function(e) {
-//     map.setFilter("state-fills-hover", ["==", "name", e.features[0].properties.name]);
-// });
-
-// // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
-// map.on("mouseleave", "state-fills", function() {
-//     map.setFilter("state-fills-hover", ["==", "name", ""]);
-// });
-
+$(document).keypress(function(e) {
+    console.log(e.keyCode);
+    if(e.keyCode == 32) {
+        console.log("--- change map");
+        // go to next map
+        
+        if (mapMode == 'neighborhood') {
+            window.location.href = "http://anothersideproject.co/known-and-strange/polygonDistribution.html";
+        } else if (mapMode == 'polygons') {
+            window.location.href = "http://anothersideproject.co/known-and-strange/pointDistribution.html";
+        } else if (mapMode == 'points') {
+            window.location.href = "http://anothersideproject.co/known-and-strange/areaCategorization.html";
+        } else if (mapMode == 'areas') {
+            window.location.href = "http://anothersideproject.co/known-and-strange/neighborhood.html";
+        }
+        
+    }
+});
