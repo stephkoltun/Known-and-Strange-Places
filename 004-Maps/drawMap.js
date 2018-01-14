@@ -115,13 +115,13 @@ $(document).keypress(function(e) {
         // go to next map
         
         if (mapMode == 'neighborhood') {
-            window.location.href = "http://anothersideproject.co/known-and-strange/004/polygonDistribution.html";
+            window.location.href = "http://anothersideproject.co/knownandstrange/004/polygonDistribution.html";
         } else if (mapMode == 'polygons') {
-            window.location.href = "http://anothersideproject.co/known-and-strange/004/pointDistribution.html";
+            window.location.href = "http://anothersideproject.co/knownandstrange/004/pointDistribution.html";
         } else if (mapMode == 'points') {
-            window.location.href = "http://anothersideproject.co/known-and-strange/004/areaCategorization.html";
+            window.location.href = "http://anothersideproject.co/knownandstrange/004/areaCategorization.html";
         } else if (mapMode == 'areas') {
-            window.location.href = "http://anothersideproject.co/known-and-strange/004/index.html";
+            window.location.href = "http://anothersideproject.co/knownandstrange/004/index.html";
         }
         
     }
