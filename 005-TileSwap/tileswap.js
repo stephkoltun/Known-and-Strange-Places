@@ -1,6 +1,6 @@
 
 // initialize map
-mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
+mapboxgl.accessToken = key;
 
 var startPoints = [
     [-73.903207, 40.608448],
@@ -17,8 +17,6 @@ var startPoints = [
 
 var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
 
-
-
 var map = new mapboxgl.Map({
     container: 'map',
     // satellite imagery styling
@@ -30,6 +28,7 @@ var map = new mapboxgl.Map({
 });
 
 map.scrollZoom.disable();
+map.doubleClickZoom.disable();
 
 var nSubs = 4;
 var imgWidth = 1000;
@@ -103,23 +102,6 @@ function swapPixels() {
         ctx2D.putImageData(replaceImage, replaceX, replaceY);
 
     }
-
-
-
-    // var ctxImageData = ctx2D.getImageData(400, 400, subSize, subSize);
-    // var data =  ctxImageData.data;
-    // var otherSub = ctx2D.getImageData(0, 0, subSize, subSize);
-    // var otherData = otherSub.data;
-
-    // // reassign pixels elsewhere
-    // for (var i = 0; i < data.length; i += 4) {
-    //   data[i]     = otherData[i];     // red
-    //   data[i + 1] = otherData[i + 1]; // green
-    //   data[i + 2] = otherData[i + 2]; // blue
-    // }
-
-    // ctx2D.putImageData(ctxImageData, 400, 400);
-    
 }
 
 function createOrder(subs) {
