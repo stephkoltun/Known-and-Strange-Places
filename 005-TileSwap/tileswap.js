@@ -18,6 +18,7 @@ var startPoints = [
 var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
 
 
+
 var map = new mapboxgl.Map({
     container: 'map',
     // satellite imagery styling
@@ -27,6 +28,8 @@ var map = new mapboxgl.Map({
     center: startPoints[randomStart],    // this should be a random point
     zoom: 15,   // 10 - what scale
 });
+
+map.scrollZoom.disable();
 
 var nSubs = 4;
 var imgWidth = 1000;
