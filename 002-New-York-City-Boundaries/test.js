@@ -8,7 +8,7 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: [-73.9926559, 40.7159975],    // this should be a random point
-    zoom: 10,   // 10 - what scale
+    zoom: 11,   // 10 - what scale
     maxBounds: bounds,
     interactive: false,
 });
