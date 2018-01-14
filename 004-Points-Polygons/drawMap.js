@@ -1,7 +1,5 @@
-    
-
 // initialize map
-mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
+mapboxgl.accessToken = key;
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -12,8 +10,9 @@ var map = new mapboxgl.Map({
     zoom: zoomLevel,  
 });
 
-// disable map zoom when using scroll
+// disable map zoom
 map.scrollZoom.disable();
+map.doubleClickZoom.disable();
 
 map.on('load', function () {
     console.log("map is loaded");
