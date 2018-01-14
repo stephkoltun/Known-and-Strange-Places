@@ -6,9 +6,16 @@ var startPoints = [
     [-73.903207, 40.608448],
     [-73.925492, 40.790892],
     [-73.797266, 40.793105],
-
+    [-73.820011, 40.602733],
+    [-73.785777, 40.621554],
+    [-73.883871, 40.693623],
+    [-73.998303, 40.696152],
+    [-74.000262, 40.758289],
+    [-73.956949, 40.792846],
+    [-73.928162, 40.848156],
 ];
 
+var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
 
 
 var map = new mapboxgl.Map({
@@ -17,12 +24,12 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/satellite-v9',
     //style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
-    center: startPoints[Math.floor(Math.random(startPoints.length))],    // this should be a random point
+    center: startPoints[randomStart],    // this should be a random point
     zoom: 15,   // 10 - what scale
 });
 
 var nSubs = 4;
-var imgWidth = 800;
+var imgWidth = 1000;
 var subSize = imgWidth/nSubs;
 var totalSubs = nSubs*nSubs;
 
