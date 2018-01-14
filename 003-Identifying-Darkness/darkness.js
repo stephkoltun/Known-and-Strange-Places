@@ -5,28 +5,32 @@ var timer;
 
 $("#desc").delay(3000).fadeOut(1000);
 
-$("body").dblclick(function() {
-	console.log("--- change scale");
-	// hide current aerial
-	var curAerial = "#aer" + curScale;
-	console.log("hide " + curAerial);
-	$(curAerial).addClass("hid").removeClass("vis");
 
-	if (curScale < 4) {
-		curScale++;
-	} else {
-		curScale = 1;
+$(document).keypress(function(e) {
+	console.log(e.keyCode);
+	if(e.keyCode == 32) {
+		console.log("--- change scale");
+		// hide current aerial
+		var curAerial = "#aer" + curScale;
+		console.log("hide " + curAerial);
+		$(curAerial).addClass("hid").removeClass("vis");
+
+		if (curScale < 4) {
+			curScale++;
+		} else {
+			curScale = 1;
+		}
+
+		// show new aerial
+		var nextAerial = "#aer" + (curScale);
+		// set new aerial
+		console.log("show " + nextAerial);
+		$(nextAerial).addClass("vis").removeClass("hid");
+
+		console.log("--- scale: " + curScale);
 	}
-
-	// show new aerial
-	var nextAerial = "#aer" + (curScale);
-	// set new aerial
-	console.log("show " + nextAerial);
-	$(nextAerial).addClass("vis").removeClass("hid");
-
-	console.log("--- scale: " + curScale);
-
 });
+
 
 $("body").mousedown(function() {
 	console.log("show things");
