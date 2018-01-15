@@ -32,10 +32,6 @@ var startPoints = [
         'coord': [-73.822370, 40.827342],
         'name': "Throgs Neck"
     },
-    // {
-    //     'coord': [-73.820011, 40.602733],
-    //     'name': "Broad Channel"
-    // },
     {
         'coord': [-73.841395, 40.654482],
         'name': "Howard Beach"
@@ -52,24 +48,20 @@ var startPoints = [
         'coord': [-74.000262, 40.758289],
         'name': "Javits Convention Center"
     },
-
-
-
-
-    // ,
-    // ,
-    // ,
-    // ,
-    // ,
-    // ,
-    // [-73.956949, 40.792846],
-    // [-73.928162, 40.848156],
+    {
+        'coord': [-73.956949, 40.792846],
+        'name': "Central Park"
+    },
+    {
+        'coord': [-73.928162, 40.848156],
+        'name': "Harlem River Park"
+    },
 ];
 
 var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
 
 var centerPt = startPoints[randomStart].coord;
-$("#place").text(startPoints[randomStart].name + " " + centerPt);
+$("#place").text(startPoints[randomStart].name + " " + centerPt[1] + ", " +centerPt[0]);
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -78,7 +70,7 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: centerPt,    // this should be a random point
-    zoom: 10,   // 10 - what scale
+    zoom: 11,   // 10 - what scale
 });
 
 map.scrollZoom.disable();
@@ -133,22 +125,6 @@ var transitLayers = [
 map.on('load', function () {
     console.log("map is loaded");
 
-    // calculate and add walk buffer
-    walkRadiusPoly = createWalkRadius();
-    // map.addSource('walkBuffer', {
-    //         "type": "geojson",
-    //         "data": walkRadiusPoly,
-    //     });
-    // map.addLayer({
-    //     "id": 'walkBuffer',
-    //     "type": "line",
-    //     "source": 'walkBuffer',
-    //     'paint': {
-    //         "line-color": '#000000',
-    //         "line-width": .8
-    //     }
-    // });
-
     for (var i = 0; i < transitLayers.length; i++) {
         var thisLayer = transitLayers[i];
 
@@ -158,6 +134,52 @@ map.on('load', function () {
         });
     };
 
+    // calculate and add walk buffer
+    walkRadiusPoly = createWalkRadius();
+    drawStartPoint();
+    drawAndCalculateRoutes(); 
+
+});
+
+map.on('click', function(e) {
+    console.log(e.lngLat);
+    var newCoords = [e.lngLat.lng, e.lngLat.lat]
+    var panEvent = map.panTo(newCoords);
+    console.log(panEvent);
+
+    console.log("remove layers");
+    
+    if (map.getLayer("expressBusRoutes") != undefined) {
+        map.removeLayer("expressBusRoutes");
+        map.removeSource("expressBusRoutes");
+    }
+
+    if (map.getLayer("localBusRoutes") != undefined) {
+        map.removeLayer("localBusRoutes");
+        map.removeSource("localBusRoutes");
+    }
+    
+    if (map.getLayer("subwayRoutes") != undefined) {
+        map.removeLayer("subwayRoutes");
+        map.removeSource("subwayRoutes");
+    }
+
+    map.removeLayer("startPoint");
+    map.removeSource("startPoint");
+
+    centerPt = newCoords;
+    walkRadiusPoly = createWalkRadius();
+
+    drawStartPoint();
+    drawAndCalculateRoutes(); 
+    $("#place").text(centerPt[1] + ", " + centerPt[0]);
+});
+
+var newPoint = false;
+
+
+
+function drawAndCalculateRoutes() {
     var accessibleSubways = checkSubways();
     console.log("--- nearby subway stops");
     console.log(accessibleSubways);
@@ -173,12 +195,18 @@ map.on('load', function () {
     console.log("--- nearby express stops");
     console.log(accesibleExpressStops);
     MTABusRoutes(accesibleExpressStops, "express");
+}
 
-    drawStart();
+var walkRadiusPoly;
+var walkDistanceInKm = 1.2;
 
-});
+function createWalkRadius() {
+    var point = turf.point(centerPt);
+    var buffered = turf.buffer(point, walkDistanceInKm, {units: 'kilometers'});
+    return buffered;
+}
 
-function drawStart() {
+function drawStartPoint() {
     map.addSource('startPoint', {
         "type": "geojson",
         "data": {
@@ -197,14 +225,6 @@ function drawStart() {
     })
 }
 
-var walkRadiusPoly;
-var walkDistanceInKm = 1.2;
-
-function createWalkRadius() {
-    var point = turf.point(centerPt);
-    var buffered = turf.buffer(point, walkDistanceInKm, {units: 'kilometers'});
-    return buffered;
-}
 
 
 function MTABusRoutes(_stops, _type) {
@@ -263,7 +283,7 @@ function drawMatchingBusRoutes(_routes, _names, _type) {
 
 
     map.addLayer({
-        "id": _type+ 'BusRoutes',
+        "id": _type + 'BusRoutes',
         "type": "line",
         "source": {
             "type": "geojson",
@@ -330,16 +350,20 @@ function showAccessibleSubways(_accessible) {
     };
 
     map.addLayer({
-        "id": 'subRoutes',
+        "id": 'subwayRoutes',
         "type": "line",
         "source": {
             "type": "geojson",
             "data": geojson
         },
         'paint': {
-            "line-color": "#000000",
+            "line-color": "#000",
             "line-width": 1.4,
-            "line-opacity": 1
+            "line-opacity": 1,
+            
+        },
+        'layout': {
+            "line-cap": "round"
         }
     });
 }
@@ -378,7 +402,7 @@ function checkSubways() {
                 }
 
                 if (addFeature) {
-                    accessibleLinesFeatures.push(thisFeature)
+                    accessibleLinesFeatures.push(thisFeature);
                 }
             }
 
@@ -400,3 +424,6 @@ function checkSubways() {
     //console.log(accessibleLines);
     return accessible;
 }
+
+
+
