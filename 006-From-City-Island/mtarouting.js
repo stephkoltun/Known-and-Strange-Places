@@ -15,22 +15,61 @@
 // initialize map
 mapboxgl.accessToken = key;
 
+var startPlaces = [
+    "Mill Bas"
+];
+
 var startPoints = [
-    [-73.903207, 40.608448],
-    [-73.925492, 40.790892],
-    [-73.797266, 40.793105],
-    [-73.820011, 40.602733],
-    [-73.785777, 40.621554],
-    [-73.883871, 40.693623],
-    [-73.998303, 40.696152],
-    [-74.000262, 40.758289],
-    [-73.956949, 40.792846],
-    [-73.928162, 40.848156],
+    {
+        'coord': [-73.903207, 40.608448],
+        'name': "Mill Basin",
+    },
+    {
+        'coord': [-73.925492, 40.790892],
+        'name': "Randall's Island"
+    },
+    {
+        'coord': [-73.822370, 40.827342],
+        'name': "Throgs Neck"
+    },
+    // {
+    //     'coord': [-73.820011, 40.602733],
+    //     'name': "Broad Channel"
+    // },
+    {
+        'coord': [-73.841395, 40.654482],
+        'name': "Howard Beach"
+    },
+    {
+        'coord': [-73.881296, 40.696222],
+        'name': "Glendale"
+    },
+    {
+        'coord': [-73.998303, 40.696152],
+        'name': "Brooklyn Heights"
+    },
+    {
+        'coord': [-74.000262, 40.758289],
+        'name': "Javits Convention Center"
+    },
+
+
+
+
+    // ,
+    // ,
+    // ,
+    // ,
+    // ,
+    // ,
+    // [-73.956949, 40.792846],
+    // [-73.928162, 40.848156],
 ];
 
 var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
 
-var centerPt = [-74.000262, 40.758289];
+var centerPt = startPoints[randomStart].coord;
+$("#place").text(startPoints[randomStart].name + " " + centerPt);
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -53,13 +92,6 @@ var transitLayers = [
         color: '#0979f3',
         type: 'line'
     },
-    // {
-    //     dataObj: subwayEntrancesObj,
-    //     dataName: 'subway-entraces',
-    //     layerId: 'subwayEntrances',
-    //     color: '#39a95c',
-    //     type: 'circle'
-    // },
     {
         dataObj: subwayStopsObj,
         dataName: 'subway-stops',
@@ -81,6 +113,20 @@ var transitLayers = [
         color: '#11ff66',
         type: 'line'
     },
+    {
+        dataObj: expressRouteObj,
+        dataName: 'express-lines',
+        layerId: 'expressLines',
+        color: '#0e1166',
+        type: 'line'
+    },
+    {
+        dataObj: expressStopObj,
+        dataName: 'express-stops',
+        layerId: 'expressStops',
+        color: '#11ff66',
+        type: 'line'
+    },
 ];
 
 
@@ -89,19 +135,19 @@ map.on('load', function () {
 
     // calculate and add walk buffer
     walkRadiusPoly = createWalkRadius();
-    map.addSource('walkBuffer', {
-            "type": "geojson",
-            "data": walkRadiusPoly,
-        });
-    map.addLayer({
-        "id": 'walkBuffer',
-        "type": "line",
-        "source": 'walkBuffer',
-        'paint': {
-            "line-color": '#000000',
-            "line-width": .8
-        }
-    });
+    // map.addSource('walkBuffer', {
+    //         "type": "geojson",
+    //         "data": walkRadiusPoly,
+    //     });
+    // map.addLayer({
+    //     "id": 'walkBuffer',
+    //     "type": "line",
+    //     "source": 'walkBuffer',
+    //     'paint': {
+    //         "line-color": '#000000',
+    //         "line-width": .8
+    //     }
+    // });
 
     for (var i = 0; i < transitLayers.length; i++) {
         var thisLayer = transitLayers[i];
@@ -110,54 +156,46 @@ map.on('load', function () {
             "type": "geojson",
             "data": thisLayer.dataObj,
         });
-
-        if (thisLayer.type == 'circle') {
-            // add circle
-            // map.addLayer({
-            //     "id": thisLayer.layerId,
-            //     "type": "circle",
-            //     "source": thisLayer.dataName,
-            //     'paint': {
-            //         'circle-radius': 2,
-            //         'circle-color': thisLayer.color
-            //     }
-            // });
-        } else if (thisLayer.dataName == 'bus-lines') {
-            // map.addLayer({
-            //     "id": thisLayer.layerId,
-            //     "type": "line",
-            //     "source": thisLayer.dataName,
-            //     'paint': {
-            //         "line-color": thisLayer.color,
-            //         "line-width": .8
-            //     }
-            // });
-        }
     };
 
+    var accessibleSubways = checkSubways();
+    console.log("--- nearby subway stops");
+    console.log(accessibleSubways);
+    showAccessibleSubways(accessibleSubways);
 
-    map.on('data', function (data) {
-    if (data.dataType === 'source' && data.isSourceLoaded) {
-        console.log('data loaded', data)
 
-        // stop listening to map.on('data'), if applicable
+    var accesibleBusStops = checkBusStops("local");
+    console.log("--- nearby bus stops");
+    console.log(accesibleBusStops);
+    MTABusRoutes(accesibleBusStops, "local");
 
-        //var accessibleSubways = checkSubways();
-        //showAccessibleSubways(accessibleSubways);
+    var accesibleExpressStops = checkBusStops("express");
+    console.log("--- nearby express stops");
+    console.log(accesibleExpressStops);
+    MTABusRoutes(accesibleExpressStops, "express");
 
-        //checkBuses();
-        //var intersectingBusRoutes = checkBusRoutes();
-        var accesibleBusStops = checkBusStops();
-        console.log(accesibleBusStops);
-
-        MTABusRoutes(accesibleBusStops);
-
-        //console.log(accessibleRoutes);
-        
-    }
-  })
+    drawStart();
 
 });
+
+function drawStart() {
+    map.addSource('startPoint', {
+        "type": "geojson",
+        "data": {
+            "type": "Point",
+            "coordinates": centerPt,
+        }
+    });
+    map.addLayer({
+        "id": 'startPoint',
+        "type": "circle",
+        "source": 'startPoint',
+        'paint': {
+            "circle-color": '#000000',
+            "circle-radius": 3
+        }
+    })
+}
 
 var walkRadiusPoly;
 var walkDistanceInKm = 1.2;
@@ -168,66 +206,8 @@ function createWalkRadius() {
     return buffered;
 }
 
-function confirmStopsOnRoutes(_routes, _nearbyStops) { 
 
-    var realRoutes = [];
-
-    for (var i = 0; i < _routes.length; i++) {
-        var route = _routes[i];
-        var url = 'http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + route + '.json?key=' + mtabuskey +'&includePolylines=false&version=2';
-
-        $.ajax({
-            'url': url, 
-            'dataType': 'jsonp',
-            success: function(result) {
-                //console.log(result)
-
-                var stopsOnRoute = result.data.entry.stopIds;
-
-                for (var s = 0; s < _nearbyStops.length; s++) {
-                    var stop = "MTA_" + _nearbyStops[s].properties.stop_id;
-                    if (stopsOnRoute.includes(stop)) {
-
-                        if (!realRoutes.includes(result.data.entry.routeId))
-                        realRoutes.push(result.data.entry.routeId);
-                    }
-                }
-            }
-        });
-    }
-}
-
-function checkBusRoutes() {
-    console.log("check bus lines");
-    var busRoutes = busRoutesObj.features;
-    var includedRoutes = [];
-
-    for (var b = 0; b < busRoutes.length; b++) {
-
-        var intersect;
-
-        // check if route intersects
-        if (busRoutes[b].geometry.type == 'LineString') {
-            var busLine = turf.lineString(busRoutes[b].geometry.coordinates);
-            intersect = turf.lineIntersect(walkRadiusPoly, busLine);
-        } else if (busRoutes[b].geometry.type == 'MultiLineString') {
-            var busLine = turf.multiLineString(busRoutes[b].geometry.coordinates);
-            intersect = turf.lineIntersect(walkRadiusPoly, busLine);
-        }
-
-        if (intersect.features.length > 0) {
-            //includedBusFeatures.push(busRoutes[b]); - need to draw the feature later
-
-            if (includedRoutes.includes(busRoutes[b].properties.route_id)==false) {
-                includedRoutes.push(busRoutes[b].properties.route_id);
-            }           
-        } 
-    }
-
-    return includedRoutes;
-}
-
-function MTABusRoutes(_stops) {
+function MTABusRoutes(_stops, _type) {
 
     var promiseArray = [];
     var allRoutes = [];
@@ -238,33 +218,41 @@ function MTABusRoutes(_stops) {
         var stopid = _stops[i].properties.stop_id;
         var promise = MTAPromise(stopid)
             .then(function(response_json){
-                var routes = response_json.data.routes;
-                for (var r = 0; r < routes.length; r++) {
-                    allRoutes.push(routes[r]);
-                    if (!allRouteNames.includes(routes[r].shortName)) {
-                        allRouteNames.push(routes[r].shortName);
-                    }
-                } 
+                if (response_json.code == 200) {
+                    var routes = response_json.data.routes;
+                    for (var r = 0; r < routes.length; r++) {
+                        allRoutes.push(routes[r]);
+                        if (!allRouteNames.includes(routes[r].shortName)) {
+                            allRouteNames.push(routes[r].shortName);
+                        }
+                    } 
+                } else {
+                    console.log(response_json);
+                }
             }); 
         promiseArray.push(promise);
     } 
 
     Promise.all(promiseArray).then(function() {
-        console.log("looked up all stop routes");
-        drawMatchingBusRoutes(allRoutes, allRouteNames);
+        console.log("--- nearby " + _type + " routes");
+        console.log(allRoutes);
+        drawMatchingBusRoutes(allRoutes, allRouteNames, _type);
     }) 
 }
 
-function drawMatchingBusRoutes(_routes, _names) {
+function drawMatchingBusRoutes(_routes, _names, _type) {
     // find matching features
     var allBusLines = busRoutesObj.features;
-    console.log(_names);
 
     var busFeatures = [];
 
     for (var b = 0; b < allBusLines.length; b++) {
-        if (_names.includes(allBusLines[b].properties.route_shor)) {
-            busFeatures.push(allBusLines[b]);
+        var thisFeature = allBusLines[b];
+        if (_names.includes(thisFeature.properties.route_shor)) {
+            if (thisFeature.properties.color.substring(0,1) != "#") {
+                thisFeature.properties.color = "#" + thisFeature.properties.color;
+            }
+            busFeatures.push(thisFeature);
         }
     }
 
@@ -273,16 +261,22 @@ function drawMatchingBusRoutes(_routes, _names) {
         "features": busFeatures
     };
 
+
     map.addLayer({
-        "id": 'busRoutes',
+        "id": _type+ 'BusRoutes',
         "type": "line",
         "source": {
             "type": "geojson",
             "data": geojson
         },
         'paint': {
-            "line-color": "#0e1166",
-            "line-width": .8
+            "line-color": ['get', 'color'],
+            "line-width": 1.4,
+            "line-opacity": 1,
+            
+        },
+        'layout': {
+            "line-cap": "round"
         }
     });
 }
@@ -301,9 +295,16 @@ function MTAPromise(_stopId) {
     })
 }
 
-function checkBusStops() {
+function checkBusStops(_type) {
     console.log("check bus stops");
-    var busStops = busStopObj.features;
+
+    var busStops;
+
+    if (_type == 'local') {
+       busStops = busStopObj.features; 
+   } else if (_type == 'express') {
+        busStops = expressStopObj.features;
+   }
 
     var accessibleStops = [];   // array of point features
 
@@ -336,8 +337,9 @@ function showAccessibleSubways(_accessible) {
             "data": geojson
         },
         'paint': {
-            "line-color": "#ac1234",
-            "line-width": .8
+            "line-color": "#000000",
+            "line-width": 1.4,
+            "line-opacity": 1
         }
     });
 }

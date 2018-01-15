@@ -11,16 +11,15 @@ body {
 
 #desc {
 	position: absolute;
-	top: 50%;
-  	right: 50%;
-  	transform: translate(0, -50%);
+	bottom: 100px;
+  	left: 100px;
   	z-index: 10;
 }
 
 h1 {
 	font-family: 'Inconsolata', monospace;
 	font-size: 20px;
-	color: #fff;
+	color: #000;
 	font-weight: 400;
 	text-align: right;
 	margin: 5px 0;
