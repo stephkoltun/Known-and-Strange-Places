@@ -157,14 +157,16 @@ map.on('load', function () {
         }
     });
 
+    //startTimer();
+
     // calculate and add walk buffer
-    //walkRadiusPoly = createWalkRadius();
-    //drawStartPoint();
-    //drawAndCalculateRoutes(); 
+    // walkRadiusPoly = createWalkRadius();
+    // drawStartPoint();
+    // drawAndCalculateRoutes(); 
 
 });
 
-map.on('click', function(e) {
+function resetLocation(e) {
     var newCoords = [e.lngLat.lng, e.lngLat.lat]
     map.panTo(newCoords);
 
@@ -196,8 +198,12 @@ map.on('click', function(e) {
     drawAndCalculateRoutes(); 
 
     var neighborhood = findNeighborhood(centerPt);
-    $("#place").text(centerPt[1] + ", " + centerPt[0]);
-    
+    console.log(neighborhood);
+    $("#place").text(neighborhood.properties.ntaname + " " + centerPt[1] + ", " + centerPt[0]);
+}
+
+map.on('click', function(e) {
+    resetLocation(e);
 });
 
 map.on('drag', function(e){
@@ -206,19 +212,19 @@ map.on('drag', function(e){
 
 
 
-
 function findNeighborhood(centerPt) {
     console.log("find neighborhood");
     var point = turf.point(centerPt);
     var neighborhoodBounds = neighborhoodObj.features;
-    console.log(neighborhoodBounds[0]);
-    // for (var n = 0; n < neighborhoodBounds.length; n++) {
-    //     var neighborPolys = turf.polygon(neighborhoodBounds[n].geometry);
-    //     if (turf.booleanPointInPolygon(point, neighborPolys)) {
-    //         console.log(neighborhoodObj[n]);
-    //     }
-    // }
-    return "hey";
+    for (var n = 0; n < neighborhoodBounds.length; n++) {
+        if (neighborhoodBounds[n].geometry.type == "MultiPolygon") {
+            var neighborPolys = turf.multiPolygon(neighborhoodBounds[n].geometry.coordinates);
+            var check = turf.booleanPointInPolygon(point, neighborPolys)
+            if (check) {
+                return neighborhoodBounds[n];
+            }
+        }
+    } 
 }
 
 function drawAndCalculateRoutes() {
@@ -478,15 +484,33 @@ function showAerial() {
     aerialVisible = true;
     startTimer();
     map.setPaintProperty('satellite', 'raster-opacity', 1);
+    if (map.getLayer("subwayRoutes") != undefined) {
+       map.setPaintProperty('subwayRoutes', 'line-opacity', 0);
+    }
+    if (map.getLayer("expressBusRoutes") != undefined) {
+        map.setPaintProperty('expressBusRoutes', 'line-opacity', 0);
+    }
+    if (map.getLayer("localBusRoutes") != undefined) {
+        map.setPaintProperty('localBusRoutes', 'line-opacity', 0);
+    }
 }
 
 function clearAerial() {
     console.log("clear aerial");
     aerialVisible = false;
     map.setPaintProperty('satellite', 'raster-opacity', 0);
+    if (map.getLayer("subwayRoutes") != undefined) {
+       map.setPaintProperty('subwayRoutes', 'line-opacity', 1);
+    }
+    if (map.getLayer("expressBusRoutes") != undefined) {
+        map.setPaintProperty('expressBusRoutes', 'line-opacity', 1);
+    }
+    if (map.getLayer("localBusRoutes") != undefined) {
+        map.setPaintProperty('localBusRoutes', 'line-opacity', 1);
+    }
 }
 
 function startTimer() {
-    aerialTimer = setTimeout("clearAerial()", 1000);
+    aerialTimer = setTimeout("clearAerial()", 800);
 }
 
