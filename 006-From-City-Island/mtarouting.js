@@ -10,7 +10,8 @@
 // need to write more so that the mta stuff is accessible...
 //http://www.bradoncode.com/tutorials/browserify-tutorial-node-js/
 
-//console.log(mta);
+// MTA Bus Time API
+// http://bustime.mta.info/wiki/Developers/OneBusAwayRESTfulAPI
 
 // initialize map
 mapboxgl.accessToken = key;
@@ -70,7 +71,7 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: centerPt,    // this should be a random point
-    zoom: 11,   // 10 - what scale
+    zoom: 13,   // 10 - what scale
 });
 
 map.scrollZoom.disable();
@@ -119,35 +120,56 @@ var transitLayers = [
         color: '#11ff66',
         type: 'line'
     },
+    {
+        dataObj: neighborhoodObj,
+        dataName: 'neighborhood-areas',
+        layerId: 'neighborhoodAreas',
+        color: '#11ff66',
+        type: 'line'
+    },
 ];
 
 
 map.on('load', function () {
     console.log("map is loaded");
 
-    for (var i = 0; i < transitLayers.length; i++) {
-        var thisLayer = transitLayers[i];
+    // for (var i = 0; i < transitLayers.length; i++) {
+    //     var thisLayer = transitLayers[i];
 
-        map.addSource(thisLayer.dataName, {
-            "type": "geojson",
-            "data": thisLayer.dataObj,
-        });
-    };
+    //     map.addSource(thisLayer.dataName, {
+    //         "type": "geojson",
+    //         "data": thisLayer.dataObj,
+    //     });
+    // };
+
+    map.addSource('satellite', {
+        type: 'raster',
+        url: 'mapbox://mapbox.satellite'
+    });
+
+    map.addLayer({
+        'id': 'satellite',
+        'type': 'raster',
+        'source': 'satellite',
+        'source-layer': 'contour',
+        'paint': {
+            'raster-opacity': 1
+        }
+    });
 
     // calculate and add walk buffer
-    walkRadiusPoly = createWalkRadius();
-    drawStartPoint();
-    drawAndCalculateRoutes(); 
+    //walkRadiusPoly = createWalkRadius();
+    //drawStartPoint();
+    //drawAndCalculateRoutes(); 
 
 });
 
 map.on('click', function(e) {
-    console.log(e.lngLat);
     var newCoords = [e.lngLat.lng, e.lngLat.lat]
-    var panEvent = map.panTo(newCoords);
-    console.log(panEvent);
+    map.panTo(newCoords);
 
     console.log("remove layers");
+    clearAerial();
     
     if (map.getLayer("expressBusRoutes") != undefined) {
         map.removeLayer("expressBusRoutes");
@@ -163,21 +185,41 @@ map.on('click', function(e) {
         map.removeLayer("subwayRoutes");
         map.removeSource("subwayRoutes");
     }
-
+    if (map.getLayer("startPoint") != undefined) {
     map.removeLayer("startPoint");
     map.removeSource("startPoint");
-
+    }
     centerPt = newCoords;
     walkRadiusPoly = createWalkRadius();
 
     drawStartPoint();
     drawAndCalculateRoutes(); 
+
+    var neighborhood = findNeighborhood(centerPt);
     $("#place").text(centerPt[1] + ", " + centerPt[0]);
+    
 });
 
-var newPoint = false;
+map.on('drag', function(e){
+    showAerial();
+})
 
 
+
+
+function findNeighborhood(centerPt) {
+    console.log("find neighborhood");
+    var point = turf.point(centerPt);
+    var neighborhoodBounds = neighborhoodObj.features;
+    console.log(neighborhoodBounds[0]);
+    // for (var n = 0; n < neighborhoodBounds.length; n++) {
+    //     var neighborPolys = turf.polygon(neighborhoodBounds[n].geometry);
+    //     if (turf.booleanPointInPolygon(point, neighborPolys)) {
+    //         console.log(neighborhoodObj[n]);
+    //     }
+    // }
+    return "hey";
+}
 
 function drawAndCalculateRoutes() {
     var accessibleSubways = checkSubways();
@@ -198,7 +240,7 @@ function drawAndCalculateRoutes() {
 }
 
 var walkRadiusPoly;
-var walkDistanceInKm = 1.2;
+var walkDistanceInKm = .8;
 
 function createWalkRadius() {
     var point = turf.point(centerPt);
@@ -425,5 +467,26 @@ function checkSubways() {
     return accessible;
 }
 
+var aerialVisible = false;
+var aerialTimer;
 
+function showAerial() {
+    if (aerialVisible == true) {
+        clearTimeout(aerialTimer);
+    } 
+     
+    aerialVisible = true;
+    startTimer();
+    map.setPaintProperty('satellite', 'raster-opacity', 1);
+}
+
+function clearAerial() {
+    console.log("clear aerial");
+    aerialVisible = false;
+    map.setPaintProperty('satellite', 'raster-opacity', 0);
+}
+
+function startTimer() {
+    aerialTimer = setTimeout("clearAerial()", 1000);
+}
 
