@@ -6,8 +6,8 @@ mapboxgl.accessToken = key;
 
 var startPoints = [
     {
-        'coord': [-73.956949, 40.792846],
-        'name': "Central Park"
+        'coord': [-73.980235, 40.688508],
+        'name': "LIU-Brooklyn"
     },
 
 ];
@@ -23,7 +23,7 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: centerPt,    // this should be a random point
-    zoom: 15,   // 10 - what scale
+    zoom: 14,   // 19
 });
 
 map.scrollZoom.disable();
@@ -34,15 +34,33 @@ var transitLayers = [
         dataObj: routesObj,
         dataName: 'lines',
         layerId: 'subwayLines',
-        color: '#0979f3',
-        type: 'line'
+        color: '#929292',
+        type: 'line',
+        opac: 1
+    },
+    // {
+    //     dataObj: entrancesObj,
+    //     dataName: 'entrances',
+    //     layerId: 'subwayEntrances',
+    //     color: '#aa124b',
+    //     type: 'line'
+    // },
+    {
+        dataObj: ventsObj,
+        dataName: 'vents',
+        layerId: 'subwayVents',
+        color: '#83d2f8',
+        type: 'line',
+        opac: 0
     },
     {
-        dataObj: entrancesObj,
-        dataName: 'entrances',
-        layerId: 'subwayEntrances',
-        color: '#aa124b',
-        type: 'line'
+        dataObj: bufferObj,
+        dataName: 'buffers',
+        layerId: 'bufferEntrances',
+        color: "rgb(25,180,220)",
+        type: 'line',
+        opac: 1
+
     },
     // {
     //     dataObj: stationsObj,
@@ -51,78 +69,13 @@ var transitLayers = [
     //     color: '#0e1166',
     //     type: 'line'
     // },
-    // {
-    //     dataObj: ventsObj,
-    //     dataName: 'vents',
-    //     layerId: 'subwayVents',
-    //     color: '#06443f',
-    //     type: 'line'
-    // },
+
 ];
+
 
 
 map.on('load', function () {
     console.log("map is loaded");
-
-    for (var i = 0; i < transitLayers.length; i++) {
-        var thisLayer = transitLayers[i];
-        console.log(thisLayer);
-
-        map.addSource(thisLayer.dataName, {
-            "type": "geojson",
-            "data": thisLayer.dataObj,
-        });
-
-        map.addLayer({
-            "id": thisLayer.layerId,
-            "type": "line",
-            "source": thisLayer.dataName,
-            'paint': {
-                "line-color": thisLayer.color,
-                "line-width": 2
-            }
-        })
-
-        if (thisLayer.layerId == 'subwayEntrances') {
-            var allEntrances = thisLayer.dataObj.features;
-            for (var i = 0; i < allEntrances.length; i++) {
-                var coords = allEntrances[i].geometry.coordinates;
-                var entrance = turf.polygon(coords);
-                var buffer = turf.buffer(entrance, .03, {units: 'kilometers'})
-
-                var bbox = turf.bbox(buffer);
-                var bboxPoly = turf.bboxPolygon(bbox);
-
-
-                var x1 = coords[0][0][0];
-                var x2 = coords[0][1][0];
-                var y1 = coords[0][0][1];
-                var y2 = coords[0][1][1];
-                
-                var run = Math.abs(x1-x2);
-                var rise = Math.abs(y1-y2);
-                var angle = Math.atan(run/rise) * 180/Math.PI;
-
-                var rotatedPoly = turf.transformRotate(bboxPoly, angle)
-
-                var sourceName = thisLayer.dataName + 'Buffer' + i;
-                var layerName = thisLayer.layerId + 'Buffer' + i;
-                map.addSource(sourceName, {
-                    "type": "geojson",
-                    "data": rotatedPoly,
-                });
-                map.addLayer({
-                    "id": layerName,
-                    "type": "line",
-                    "source": sourceName,
-                    'paint': {
-                        "line-color": '#000000',
-                        "line-width": 1
-                    }
-                })
-            }
-        }
-    };
 
     map.addSource('satellite', {
         type: 'raster',
@@ -139,6 +92,132 @@ map.on('load', function () {
         }
     });
 
+    for (var i = 0; i < transitLayers.length; i++) {
+        var thisLayer = transitLayers[i];
+        console.log(thisLayer);
+        map.addSource(thisLayer.dataName, {
+                "type": "geojson",
+                "data": thisLayer.dataObj,
+            });
+
+        if (thisLayer.type == 'line') {
+
+            map.addLayer({
+                "id": thisLayer.layerId,
+                "type": "line",
+                "source": thisLayer.dataName,
+                'paint': {
+                    "line-color": thisLayer.color,
+                    "line-width": 1,
+                    'line-opacity': thisLayer.opac,
+                },
+                'layout': {
+                    'line-cap': "round",
+                    'line-join': 'round'
+                }
+            })
+        } else if (thisLayer.type == 'fill') {
+
+            map.addLayer({
+                "id": thisLayer.layerId,
+                "type": "fill",
+                "source": thisLayer.dataName,
+                'paint': {
+                    "fill-color": "#000000",
+                    //"fill-outline-color": thisLayer.color,
+                    'fill-antialias': true,
+                    'fill-opacity': thisLayer.opac,
+                }
+            })
+        }
+
+        
+    };
+
+
+
 });
+
+map.on('click', function(e) {
+    var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+    var features = map.queryRenderedFeatures(bbox, {layers: ['bufferEntrances']});
+    console.log(features);
+
+    if (features.length > 0) {
+        // make mask with feature
+        var mask = turf.polygon(features[0].geometry.coordinates);
+        showMask(mask);
+
+        map.easeTo({
+            center: [e.lngLat.lng, e.lngLat.lat], 
+            zoom: 19,
+            duration: 1200, 
+            easing(t) {
+                return t;
+            }
+        })
+        
+    }
+})
+
+var bounds = [-74.120188, 40.916945, -73.574491, 40.433158];
+
+
+
+function polyMask(mask, bounds) {
+  var bboxPoly = turf.bboxPolygon(bounds);
+  return turf.difference(bboxPoly, mask);
+}
+
+var masked = false;
+function showMask(mask) {
+    if (masked == true) {
+        clearTimeout(maskTimer);
+        map.removeLayer('zmask');
+        map.removeSource('mask');
+    } 
+
+    map.addSource('mask', {
+            "type": "geojson",
+            "data": polyMask(mask, bounds)
+          });
+
+    map.addLayer({
+        "id": "zmask",
+        "source": "mask",
+        "type": "fill",
+        "paint": {
+          "fill-color": "#ffffff",
+          'fill-opacity': 0.999
+        }
+    }, 'subwayLines');
+        
+    masked = true;
+    startTimer();
+    map.setPaintProperty('satellite', 'raster-opacity', 1);
+    map.setPaintProperty('subwayVents', 'line-opacity', 1);
+}
+
+function clearMask() {
+    console.log("clear mask and satellite");
+    map.setPaintProperty('satellite', 'raster-opacity', 0);
+    map.setPaintProperty('subwayVents', 'line-opacity', 0);
+    map.removeLayer('zmask');
+    map.removeSource('mask');
+    map.easeTo({
+            center: map.getCenter(), 
+            zoom: 14,
+            duration: 1200, 
+            easing(t) {
+                return t;
+            }
+        })
+    masked = false;
+}
+
+function startTimer() {
+    console.log("startTimer");
+    maskTimer = setTimeout("clearMask()", 4500);
+}
 
 
