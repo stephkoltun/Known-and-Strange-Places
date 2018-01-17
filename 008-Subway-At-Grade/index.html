@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>From City Island</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    <script src='config.js'></script>
+
+    <!-- LIBRARIES! -->
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <!--<script src='mtaapi.js' charset="utf-8"></script>-->
+
+    <!-- GEOJSON -->
+    <script src='GEOJSON/entrances_2017.js'></script>
+    <script src='GEOJSON/routes_2017.js'></script>
+    <script src='GEOJSON/stations.js'></script>
+    <script src='GEOJSON/vents.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("document is ready");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="desc"><h1 id="place"></h1></div>
+    <div id="map">
+        <script src='subway.js'></script>
+    </div>
+</body>
+
+</html>
