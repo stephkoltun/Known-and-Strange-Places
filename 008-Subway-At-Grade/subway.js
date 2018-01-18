@@ -45,14 +45,14 @@ var transitLayers = [
     //     color: '#aa124b',
     //     type: 'line'
     // },
-    {
-        dataObj: ventsObj,
-        dataName: 'vents',
-        layerId: 'subwayVents',
-        color: '#83d2f8',
-        type: 'line',
-        opac: 0
-    },
+    // {
+    //     dataObj: ventsObj,
+    //     dataName: 'vents',
+    //     layerId: 'subwayVents',
+    //     color: '#83d2f8',
+    //     type: 'line',
+    //     opac: 0
+    // },
     {
         dataObj: bufferObj,
         dataName: 'buffers',

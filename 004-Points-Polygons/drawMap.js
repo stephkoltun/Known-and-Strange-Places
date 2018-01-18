@@ -1,12 +1,33 @@
 // initialize map
 mapboxgl.accessToken = key;
 
+var useStyle;
+if (mapMode == 'neighborhood') {
+    useStyle = 'mapbox://styles/stephkoltun/cjcjp91ec8yio2rnwrpt8lwfh'   // with elev points
+} else {
+    useStyle = 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc'  // no elevs
+}
+
+var startPoints = [
+    [-73.903207, 40.608448],
+    [-73.925492, 40.790892],
+    [-73.797266, 40.793105],
+    [-73.820011, 40.602733],
+    [-73.785777, 40.621554],
+    [-73.883871, 40.693623],
+    [-73.998303, 40.696152],
+    [-74.000262, 40.758289],
+    [-73.956949, 40.792846],
+    [-73.928162, 40.848156],
+];
+
+var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
+
 var map = new mapboxgl.Map({
     container: 'map',
-    // satellite imagery styling
-    style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
+    style: useStyle,
     // set the start point of the map - needs to be long-lat (not lat-long)
-    center: [-73.968991, 40.682130],    // this should be a random point
+    center: startPoints[randomStart],    // this should be a random point
     zoom: zoomLevel,  
 });
 
@@ -66,7 +87,7 @@ map.on('load', function () {
     map.on('mousemove', function(e) {
         // set bbox as 5px reactangle area around clicked point
         var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-        var features = map.queryRenderedFeatures(e.point);
+        var features = map.queryRenderedFeatures(bbox);
 
 
         if (features.length > 0 && !currentlyHidden) {
@@ -81,10 +102,15 @@ map.on('load', function () {
                     map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
                 }
             }
-
             // add text
             console.log(features[0]);
-            var templabel = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
+            var templabel;
+            if (features[0].layer.id == "elevPoints") {
+                templabel = "<p class='label'>Elevation Points</p>";
+            } else {
+                templabel = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
+            }
+            
             $("body").append(templabel);
             $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
