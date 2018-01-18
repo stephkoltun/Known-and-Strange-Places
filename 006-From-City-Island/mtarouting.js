@@ -16,10 +16,6 @@
 // initialize map
 mapboxgl.accessToken = key;
 
-var startPlaces = [
-    "Mill Bas"
-];
-
 var startPoints = [
     {
         'coord': [-73.903207, 40.608448],
