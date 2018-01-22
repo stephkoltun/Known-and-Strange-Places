@@ -1,9 +1,12 @@
-var width = $(window).width();
-var height = $(window).height()/3;
+var width = $(window).width()/3;
+var height = $(window).width()/3;
 
 showGraph();
 showAerial();
 showRoute();
+
+var lineColor = "#84d2aa";
+var dotColor = "#342ce4";
 
 function showGraph() {
     var xScale = d3.scaleLinear()
@@ -31,32 +34,32 @@ function showGraph() {
             return yScale(d.properties.elev); // use the 1st index of data (for example, get 20 from [20,13])
         })
 
-
     svg.append("svg:path")
         .attr("d", line1(pathPointData))
         .attr("class", "line")
         .style("fill", "none")
-        .style("stroke", "#000")
+        .style("stroke", "#84d2aa")
         .style("stroke-width", 1);
 
     svg.selectAll('.altitude')
         .data(pathPointData)
         .enter().append("circle")
         .attr("class", "altitude")
-        .attr("r", .5)
+        .attr("r", 5)
         .attr("cx", function(d,i) {
             return xScale(i)
         })
         .attr("cy", function(d) {
             return yScale(d.properties.elev)
         })
-        .style("fill", "#000")
+        .style("fill", "#342ce4")
+        .style("opacity", 0)
         .on("mouseover", function(d,i) {
 
-            console.log(d);
-            console.log(i);
-            d3.selectAll(".altitude").attr("r", .5).style("fill", "#000");
-            d3.select(this).attr("r", 5).style("fill", "#33ab67");
+            // console.log(d);
+            // console.log(i);
+            d3.selectAll(".altitude").style("opacity", 0);
+            d3.select(this).style("opacity", 1);
             var coords = [d.properties.lon,d.properties.lat]
             aerial.panTo(coords);
             route.panTo(coords);
@@ -82,7 +85,7 @@ function showGraph() {
                     }
                 },
                 'paint': {
-                    "circle-color": "#33ab67",
+                    "circle-color": dotColor,
                     "circle-radius": 5,
                 }
             })
@@ -104,8 +107,12 @@ function showRoute() {
         container: 'map',
         style: 'mapbox://styles/stephkoltun/cjcqeyd6n53932smqco6657s3',
         center: startPoint,  
-        zoom: 16,  
-    });
+        zoom: 16, 
+        attributionControl: false 
+    })
+    .addControl(new mapboxgl.AttributionControl({
+        compact: true
+    }));
 
     route.scrollZoom.disable();
     route.doubleClickZoom.disable();
@@ -123,7 +130,7 @@ function showRoute() {
             "type": "line",
             "source": 'walkedpath',
             'paint': {
-                "line-color": "#000",
+                "line-color": lineColor,
                 "line-width": 1.5,
             }
         })
@@ -138,7 +145,7 @@ function showRoute() {
             "type": "circle",
             "source": 'walkedpoints',
             'paint': {
-                "circle-color": "#000",
+                "circle-color": lineColor,
                 "circle-radius": .75,
             }
         })

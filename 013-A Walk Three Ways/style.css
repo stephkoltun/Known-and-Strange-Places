@@ -8,8 +8,10 @@ body {
 }
 
 #graph, #aerial, #map {
-	width:100vw;
-	height:33vh;
+	width:33vw;
+	height:33vw;
+	float:left;
+	margin-top:16.5vw;
 }
 
 h1 {
