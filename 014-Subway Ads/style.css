@@ -1,0 +1,62 @@
+body {
+	margin: 0 !important;
+	padding: 0;
+}
+
+div#seventh {
+	height: 60vh;
+	overflow: scroll;
+	white-space: nowrap;
+	line-height: 0;
+	font-size: 0;
+}
+
+div#prince {
+	height: 60vh;
+	overflow: scroll;
+	white-space: nowrap;
+	line-height: 0;
+	font-size: 0;
+}
+
+img {
+
+	height:100%;
+/*	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);*/
+/*	width: 100vw;
+	height: 100vh;
+	object-fit: cover;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);*/
+}
+
+
+#desc {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+  	transform: translate(0, -50%);
+  	z-index: 10;
+}
+
+h1 {
+	font-family: 'Inconsolata', monospace;
+	font-size: 36px;
+	color: #fff;
+	font-weight: 400;
+	text-align: center;
+	margin: 15px 0;
+}
+
+h2 {
+	font-family: 'Inconsolata', monospace;
+	font-size: 24px;
+	font-weight: 400;
+	color: #fff;
+	text-align: center;
+	margin: 5px 0;
+}

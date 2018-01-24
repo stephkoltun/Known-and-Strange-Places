@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>Subway Stream</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+<!--     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+ -->
+    <!-- LIBRARIES! -->
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+
+        var movePrince;
+        var moveSeventh;
+        // var prevSide = '';
+        // var curSide = '';
+
+        $(document).ready(function() {
+            
+            console.log("document is ready");
+
+            $("#prince").scrollLeft(45000);
+            $("#seventh").scrollLeft(0);
+            moveAds("#seventh", 'right');
+            moveAds("#prince", 'left');
+
+            // if ($("#prince").scrollLeft() == 0) {
+            //     clearInterval(moveRight);
+            //     clearInterval(moveLeft);
+            //     moveAds("#seventh", 'left');
+            //     moveAds("#prince", 'right');
+            // }
+
+
+            // $('#seventh').mousemove(function(event) {
+            //     if (event.pageX < $(window).width()/2) {
+            //         curSide = 'left';  
+            //     }
+
+            //     if (event.pageX > $(window).width()/2) {
+            //         curSide = 'right'; 
+            //     }
+            //     if (curSide != prevSide) {
+            //         moveAds("#seventh");
+            //     }
+
+            //     prevSide = curSide;
+            // })  
+
+            // $('#prince').mousemove(function(event) {
+            //     if (event.pageX < $(window).width()/2) {
+            //         curSide = 'left';  
+            //     }
+
+            //     if (event.pageX > $(window).width()/2) {
+            //         curSide = 'right'; 
+            //     }
+            //     if (curSide != prevSide) {
+            //         moveAds("#prince");
+            //     }
+
+            //     prevSide = curSide;
+            // })  
+        });
+
+        function moveAds(classname, dir) {
+            console.log("change direction");
+            // clearInterval(moveScreen);
+            if (dir == 'left') {
+                setInterval(function() {
+                    var curScrollPos = $(classname).scrollLeft();
+                    $(classname).scrollLeft(curScrollPos - 200);
+                }, 50); 
+            } else if (dir == 'right') {
+                var curScrollPos = $(classname).scrollLeft();
+                setInterval(function() {
+                    var curScrollPos = $(classname).scrollLeft();
+                    $(classname).scrollLeft(curScrollPos + 200);
+                }, 50); 
+            }
+        }
+    </script>
+</head>
+
+<body>
+<!--     <div id="desc">
+        <h1>Finding Green</h1>
+        <h2>toggle views by moving cursor across the center</h2> 
+    </div> -->
+    <div id="seventh">
+        <img src="img/seventh/seventh-001.jpg">
+        <img src="img/seventh/seventh-002.jpg">
+        <img src="img/seventh/seventh-003.jpg">
+        <img src="img/seventh/seventh-004.jpg">
+        <img src="img/seventh/seventh-005.jpg">
+        <img src="img/seventh/seventh-006.jpg">
+        <img src="img/seventh/seventh-007.jpg">
+        <img src="img/seventh/seventh-008.jpg">
+        <img src="img/seventh/seventh-009.jpg">
+        <img src="img/seventh/seventh-010.jpg">
+        <img src="img/seventh/seventh-011.jpg">
+        <img src="img/seventh/seventh-012.jpg">
+        <img src="img/seventh/seventh-013.jpg">
+        <img src="img/seventh/seventh-014.jpg">
+        <img src="img/seventh/seventh-015.jpg">
+        <img src="img/seventh/seventh-016.jpg">
+        <img src="img/seventh/seventh-017.jpg">
+        <img src="img/seventh/seventh-018.jpg">
+        <img src="img/seventh/seventh-019.jpg">
+        <img src="img/seventh/seventh-020.jpg">
+        <img src="img/seventh/seventh-021.jpg">
+        <img src="img/seventh/seventh-022.jpg">
+        <img src="img/seventh/seventh-023.jpg">
+        <img src="img/seventh/seventh-024.jpg">
+        <img src="img/seventh/seventh-025.jpg">
+        <img src="img/seventh/seventh-026.jpg">
+        <img src="img/seventh/seventh-027.jpg">
+        <img src="img/seventh/seventh-028.jpg">
+        <img src="img/seventh/seventh-029.jpg">
+        <img src="img/seventh/seventh-030.jpg">
+    </div>
+    <div id="prince">
+        <img src="img/prince/prince-001.jpg">
+        <img src="img/prince/prince-002.jpg">
+        <img src="img/prince/prince-003.jpg">
+        <img src="img/prince/prince-004.jpg">
+        <img src="img/prince/prince-005.jpg">
+        <img src="img/prince/prince-006.jpg">
+        <img src="img/prince/prince-007.jpg">
+        <img src="img/prince/prince-008.jpg">
+        <img src="img/prince/prince-009.jpg">
+        <img src="img/prince/prince-010.jpg">
+        <img src="img/prince/prince-011.jpg">
+        <img src="img/prince/prince-012.jpg">
+        <img src="img/prince/prince-013.jpg">
+        <img src="img/prince/prince-014.jpg">
+        <img src="img/prince/prince-015.jpg">
+        <img src="img/prince/prince-016.jpg">
+        <img src="img/prince/prince-017.jpg">
+        <img src="img/prince/prince-018.jpg">
+        <img src="img/prince/prince-019.jpg">
+        <img src="img/prince/prince-020.jpg">
+        <img src="img/prince/prince-021.jpg">
+        <img src="img/prince/prince-022.jpg">
+        <img src="img/prince/prince-023.jpg">
+        <img src="img/prince/prince-024.jpg">
+        <img src="img/prince/prince-025.jpg">
+        <img src="img/prince/prince-026.jpg">
+    </div>
+    <script>
+
+        
+           
+
+            
+
+            
+        
+        
+    </script>
+<!--     <script src='hue.js'></script> -->
+</body>
+
+</html>
