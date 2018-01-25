@@ -1,6 +1,6 @@
-#map {
-	width:1000px;
-	height:1000px;
+#IRmap {
+	width:800px;
+	height:800px;
 	z-index: 10;
 	margin: 0;
 	opacity: 0;
@@ -11,7 +11,7 @@
 }
 
 canvas#imgmap {
-	opacity: 0.25;
+	opacity: 0;
 }
 
 canvas#halftone, canvas#imgmap {
