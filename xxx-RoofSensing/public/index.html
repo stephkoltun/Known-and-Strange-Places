@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>What's It Like Outside</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <!-- LIBRARIES! -->
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("document is ready");
+        });
+    </script>
+</head>
+
+<body>
+    <form method="POST" action="/addReading">
+        <label for="light">Light:</label>
+        <input type="number" name="light"/><br>
+        <label for="sound">Sound:</label>
+        <input type="number" name="sound"/><br>
+        <label for="temperature">Tempeature:</label>
+        <input type="number" name="temperature"/><br>
+        <input type="submit" name="submitbutton" value="Add reading" />
+    </form>
+    <br>
+    <br>
+    <form method="POST" action="/resetReadings">
+        <input type="submit" name="submitbutton" value="Erase all readings"/>
+    </form>
+    <form method="GET" action="/all">
+        <input type="submit" name="submitbutton" value="Get all readings"/>
+    </form>
+
+    <form method="GET" action="/latest">
+        <input type="submit" name="submitbutton" value="Get latest reading"/>
+    </form>
+
+</body>
+
+</html>

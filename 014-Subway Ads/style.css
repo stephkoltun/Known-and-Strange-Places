@@ -3,7 +3,7 @@ body {
 	padding: 0;
 }
 
-div#seventh {
+div#seventh, div#prince, div#broadway {
 	height: 60vh;
 	overflow: scroll;
 	white-space: nowrap;
@@ -11,16 +11,9 @@ div#seventh {
 	font-size: 0;
 }
 
-div#prince {
-	height: 60vh;
-	overflow: scroll;
-	white-space: nowrap;
-	line-height: 0;
-	font-size: 0;
-}
+
 
 img {
-
 	height:100%;
 /*	position: relative;
   	top: 50%;
@@ -35,28 +28,38 @@ img {
 }
 
 
-#desc {
+#sevLabel {
 	position: absolute;
-	width: 100%;
-	top: 50%;
-  	transform: translate(0, -50%);
-  	z-index: 10;
+	left: 50px;
+	top: 0vh;
+  	z-index: 20;
 }
+#princeLabel {
+	position: absolute;
+	left: 50px;
+	top: 60vh;
+  	z-index: 20;
+}
+#broadwayLabel {
+	position: absolute;
+	left: 50px;
+	top: 120vh;
+  	z-index: 20;
+}
+
 
 h1 {
 	font-family: 'Inconsolata', monospace;
-	font-size: 36px;
+	font-size: 16px;
 	color: #fff;
-	font-weight: 400;
-	text-align: center;
-	margin: 15px 0;
+	font-weight: 700;
+	margin: 50px 0 0 0;
 }
 
 h2 {
 	font-family: 'Inconsolata', monospace;
-	font-size: 24px;
+	font-size: 16px;
 	font-weight: 400;
 	color: #fff;
-	text-align: center;
 	margin: 5px 0;
 }

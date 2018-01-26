@@ -14,81 +14,70 @@
 
         var movePrince;
         var moveSeventh;
-        // var prevSide = '';
-        // var curSide = '';
+        var moveBroadway;
+        
 
-        $(document).ready(function() {
-            
+        $(document).ready(function() {          
             console.log("document is ready");
 
-            $("#prince").scrollLeft(45000);
             $("#seventh").scrollLeft(0);
-            moveAds("#seventh", 'right');
-            moveAds("#prince", 'left');
+            $("#prince").scrollLeft($("#prince").get(0).scrollWidth);
+            $("#broadway").scrollLeft(0);
+            var seventhMax = $('#seventh').get(0).scrollWidth - $("#lastSeventh").width()*3-200;
+            var princeMax = $('#prince').get(0).scrollWidth - $("#lastPrince").width()*3-200;
+            var broadwayMax = $('#broadway').get(0).scrollWidth - $("#lastBroadway").width()*4-200;
 
-            // if ($("#prince").scrollLeft() == 0) {
-            //     clearInterval(moveRight);
-            //     clearInterval(moveLeft);
-            //     moveAds("#seventh", 'left');
-            //     moveAds("#prince", 'right');
-            // }
+            //checkPos("#seventh", moveSeventh, seventhMax);
+            //checkPos("#prince", movePrince, princeMax);
+            //checkPos("#broadway", moveBroadway, broadwayMax);
 
-
-            // $('#seventh').mousemove(function(event) {
-            //     if (event.pageX < $(window).width()/2) {
-            //         curSide = 'left';  
-            //     }
-
-            //     if (event.pageX > $(window).width()/2) {
-            //         curSide = 'right'; 
-            //     }
-            //     if (curSide != prevSide) {
-            //         moveAds("#seventh");
-            //     }
-
-            //     prevSide = curSide;
-            // })  
-
-            // $('#prince').mousemove(function(event) {
-            //     if (event.pageX < $(window).width()/2) {
-            //         curSide = 'left';  
-            //     }
-
-            //     if (event.pageX > $(window).width()/2) {
-            //         curSide = 'right'; 
-            //     }
-            //     if (curSide != prevSide) {
-            //         moveAds("#prince");
-            //     }
-
-            //     prevSide = curSide;
-            // })  
         });
 
+
+        function checkPos(classname, curInver, maxPosVar) {
+            setInterval(function() {
+                var curScrollPos = $(classname).scrollLeft();
+                console.log(classname, curScrollPos,maxPosVar);
+
+                if (curScrollPos == 0) {
+                    clearInterval(curInver);
+                    console.log(curScrollPos);
+                    curInver = moveAds(classname, 'right');
+                } else if (curScrollPos >= maxPosVar) {
+                    clearInterval(curInver)
+                    console.log(curScrollPos);
+                    curInver = moveAds(classname, 'left');
+                }
+            }, 150);
+        }
+
         function moveAds(classname, dir) {
-            console.log("change direction");
+            console.log(classname + " change direction");
+
+            var interval;
             // clearInterval(moveScreen);
             if (dir == 'left') {
-                setInterval(function() {
+                interval = setInterval(function() {
                     var curScrollPos = $(classname).scrollLeft();
                     $(classname).scrollLeft(curScrollPos - 200);
-                }, 50); 
+                }, 50);
+                return interval;
             } else if (dir == 'right') {
-                var curScrollPos = $(classname).scrollLeft();
-                setInterval(function() {
+                interval = setInterval(function() {
                     var curScrollPos = $(classname).scrollLeft();
                     $(classname).scrollLeft(curScrollPos + 200);
                 }, 50); 
+                return interval;
             }
         }
     </script>
 </head>
 
 <body>
-<!--     <div id="desc">
-        <h1>Finding Green</h1>
-        <h2>toggle views by moving cursor across the center</h2> 
-    </div> -->
+    <div id="sevLabel">
+        <h1>Seventh Ave, B/Q</h1>
+        <h2>January 23, 2018</h2> 
+    </div>
     <div id="seventh">
         <img src="img/seventh/seventh-001.jpg">
         <img src="img/seventh/seventh-002.jpg">
@@ -120,6 +109,30 @@
         <img src="img/seventh/seventh-028.jpg">
         <img src="img/seventh/seventh-029.jpg">
         <img src="img/seventh/seventh-030.jpg">
+        <img src="img/seventh/seventh-031.jpg">
+        <img src="img/seventh/seventh-032.jpg">
+        <img src="img/seventh/seventh-033.jpg">
+        <img src="img/seventh/seventh-034.jpg">
+        <img src="img/seventh/seventh-035.jpg">
+        <img src="img/seventh/seventh-036.jpg">
+        <img src="img/seventh/seventh-037.jpg">
+        <img src="img/seventh/seventh-038.jpg">
+        <img src="img/seventh/seventh-039.jpg">
+        <img src="img/seventh/seventh-040.jpg">
+        <img src="img/seventh/seventh-041.jpg">
+        <img src="img/seventh/seventh-042.jpg">
+        <img src="img/seventh/seventh-043.jpg">
+        <img src="img/seventh/seventh-044.jpg">
+        <img src="img/seventh/seventh-045.jpg">
+        <img src="img/seventh/seventh-046.jpg">
+        <img src="img/seventh/seventh-047.jpg">
+        <img src="img/seventh/seventh-048.jpg">
+        <img src="img/seventh/seventh-049.jpg">
+        <img src="img/seventh/seventh-050.jpg" id="lastSeventh">
+    </div>
+    <div id="princeLabel">
+        <h1>Prince St, 6</h1>
+        <h2>January 23, 2018</h2> 
     </div>
     <div id="prince">
         <img src="img/prince/prince-001.jpg">
@@ -147,20 +160,30 @@
         <img src="img/prince/prince-023.jpg">
         <img src="img/prince/prince-024.jpg">
         <img src="img/prince/prince-025.jpg">
-        <img src="img/prince/prince-026.jpg">
+        <img src="img/prince/prince-026.jpg" id="lastPrince">
     </div>
-    <script>
-
-        
-           
-
-            
-
-            
-        
-        
-    </script>
-<!--     <script src='hue.js'></script> -->
+    <div id="broadwayLabel">
+        <h1>Broadway Lafayette, B/D/6</h1>
+        <h2>January 23, 2018</h2> 
+    </div>
+    <div id="broadway">
+        <img src="img/broadway/broadway-001.jpg">
+        <img src="img/broadway/broadway-002.jpg">
+        <img src="img/broadway/broadway-003.jpg">
+        <img src="img/broadway/broadway-004.jpg">
+        <img src="img/broadway/broadway-005.jpg">
+        <img src="img/broadway/broadway-006.jpg">
+        <img src="img/broadway/broadway-007.jpg">
+        <img src="img/broadway/broadway-008.jpg">
+        <img src="img/broadway/broadway-009.jpg">
+        <img src="img/broadway/broadway-010.jpg">
+        <img src="img/broadway/broadway-011.jpg">
+        <img src="img/broadway/broadway-012.jpg">
+        <img src="img/broadway/broadway-013.jpg">
+        <img src="img/broadway/broadway-014.jpg">
+        <img src="img/broadway/broadway-015.jpg">
+        <img src="img/broadway/broadway-016.jpg" id="lastBroadway">
+    </div>
 </body>
 
 </html>
