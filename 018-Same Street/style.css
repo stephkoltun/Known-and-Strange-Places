@@ -1,0 +1,37 @@
+#streetLeft, #streetRight {
+  /* font-size: 0;
+  line-height: 0; */
+  overflow: hidden;
+  position: absolute;
+  top:50%;
+  left:5vw;
+  transform: translate(0%,-50%);
+}
+
+#streetLeft {
+  width: 45vw;
+  z-index: 10;
+}
+#streetRight {
+  width: 90vw;
+  z-index: 0;
+}
+#streetRight h1 {
+  position: relative;
+  left: 45vw;
+}
+
+img {
+  width: 100vw;
+}
+
+body{
+  margin:0 5vw;
+  padding: 0;
+}
+
+h1 {
+	font-family: 'Inconsolata', monospace;
+	font-size: 16px;
+	font-weight: 400;
+}

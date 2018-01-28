@@ -4,4 +4,6 @@
 *.qgs
 *.geojson
 */GEOJSON
+*/tiles
+*/node_modules
 config.js
