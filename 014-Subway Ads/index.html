@@ -9,33 +9,43 @@
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
  -->
     <!-- LIBRARIES! -->
+    
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script type="text/javascript">
 
         var movePrince;
         var moveSeventh;
         var moveBroadway;
-        
 
-        $(document).ready(function() {          
-            console.log("document is ready");
+        $('#seventh').imagesLoaded(function() { 
+        
 
             $("#seventh").scrollLeft(0);
             $("#prince").scrollLeft($("#prince").get(0).scrollWidth);
             $("#broadway").scrollLeft(0);
-            var seventhMax = $('#seventh').get(0).scrollWidth - $("#lastSeventh").width()*3-200;
-            var princeMax = $('#prince').get(0).scrollWidth - $("#lastPrince").width()*3-200;
-            var broadwayMax = $('#broadway').get(0).scrollWidth - $("#lastBroadway").width()*4-200;
+            // var seventhMax = $('#seventh').get(0).scrollWidth - $("#lastSeventh").width()*3-200;
+            // var princeMax = $('#prince').get(0).scrollWidth - $("#lastPrince").width()*3-200;
+            // var broadwayMax = $('#broadway').get(0).scrollWidth - $("#lastBroadway").width()*4-200;
 
-            //checkPos("#seventh", moveSeventh, seventhMax);
-            //checkPos("#prince", movePrince, princeMax);
-            //checkPos("#broadway", moveBroadway, broadwayMax);
-
+            checkPos("#seventh", moveSeventh);
+            checkPos("#prince", movePrince);
+            checkPos("#broadway", moveBroadway);
         });
 
 
-        function checkPos(classname, curInver, maxPosVar) {
+        function checkPos(classname, curInver) {
             setInterval(function() {
+                var maxPosVar
+
+                if (classname == '#seventh') {
+                    maxPosVar = $('#seventh').get(0).scrollWidth - $("#lastSeventh").width()*3-200;
+                } else if (classname == "#prince") {
+                    maxPosVar = $('#prince').get(0).scrollWidth - $("#lastPrince").width()*3-200;
+                } else if (classname == "#broadway") {
+                    maxPosVar = $('#broadway').get(0).scrollWidth - $("#lastBroadway").width()*4-200;
+                }
+
                 var curScrollPos = $(classname).scrollLeft();
                 console.log(classname, curScrollPos,maxPosVar);
 
