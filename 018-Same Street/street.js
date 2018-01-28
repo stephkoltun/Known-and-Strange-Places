@@ -47,7 +47,7 @@ function assembleImage() {
 }
 
 function requestImg(classname, point) {
-  var imgUrl = "https://maps.googleapis.com/maps/api/streetview?size=640x320&location=" + point.lon + "," + point.lat + "&fov=90&heading=" + point.heading;
+  var imgUrl = "https://maps.googleapis.com/maps/api/streetview?&key=" + key + "&size=640x320&location=" + point.lon + "," + point.lat + "&fov=90&heading=" + point.heading;
 
   convertFunction(imgUrl, function(base64Img){
       console.log(point.boro);
