@@ -13,7 +13,7 @@ var map = new mapboxgl.Map({
     zoom: 16
 });
 
-var bounds = [-74.009080, 40.899271, -73.893638, 40.819490];
+var bounds = [-74.022470, 40.934100, -73.836217, 40.801300];
 // disable map zoom
 //map.scrollZoom.disable();
 map.doubleClickZoom.disable();
@@ -66,8 +66,6 @@ map.on('mousemove', function(e) {
     var bbox = [[e.point.x - 3, e.point.y - 3], [e.point.x + 3, e.point.y + 3]];
     var features = map.queryRenderedFeatures(bbox);
 
-    console.log(features);
-
     if (features.length > 0 && !currentlyHidden) {
         //console.log(features[0]);
 
@@ -86,19 +84,22 @@ map.on('mousemove', function(e) {
             ["<=", "DN", upperElev],
             [">=", "DN", lowerElev],
         ];
-        
-        // use rendered features to get all the matching 
-        var matchHeight = map.querySourceFeatures('contours', filter);
-        console.log(matchHeight);
 
-        // var line = turf.multiLineString(features[0].geometry.coordinates);
-        // //console.log(line);
-        // var single = turf.lineString(line.geometry.coordinates)
+        map.setFilter('contours', filter);    // elevation
+
+        // var windowbox = [[0, 0], [500, 500]];
+        // // use rendered features to get all the matching 
+        // var matchHeight = map.queryRenderedFeatures(windowbox, {
+        //     layers: ['contours'],
+        //     filter: filter,
+        // });
+        // console.log(matchHeight);
+
         var mask = turf.polygon(features[0].geometry.coordinates);
         console.log(mask);
         showMask(mask);
 
-        map.setFilter('contours', filter);    // elevation
+        
         var templabel = "<p class='label'>" + lowerElev + '-' + upperElev + "m</p>";
 
         $("body").append(templabel);
@@ -146,6 +147,13 @@ function polyMask(mask, bounds) {
 
 function showMask(mask) {
     console.log("make a mask");
+
+    if (map.getLayer('zmask') != undefined) {
+        map.removeLayer('zmask');
+        map.removeSource('mask'); 
+        map.setPaintProperty('satellite', 'raster-opacity', 0);
+        map.setFilter('contours', null);
+    }
 
     map.addSource('mask', {
         "type": "geojson",
