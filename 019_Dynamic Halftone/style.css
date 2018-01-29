@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+#aerialmap, #irmap, #demmap {
+   width: 600px;
+   height: 600px;
+   display: inline;
+   float: left;
+}
+
+#allSliders {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  z-index: 100;
+  transform: translate(0%, -50%);
+}
+
+.slidercontainer {
+  margin: 15px;
+  width: 150px;
+}
+
+label {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+}
+
+
