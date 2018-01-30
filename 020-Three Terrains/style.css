@@ -1,42 +1,48 @@
 
 body {
-	margin: 0;
+	margin: 0 0 0 0;
 	padding: 0;
 }
 
-/*#desc {
+div#playhead {
+	width:1px;
+	height:100vh;
+	background-color: black;
 	position: absolute;
-	bottom: 100px;
-  	left: 100px;
-  	z-index: 10;
-}*/
+	top:0;
+	left:0;
+	z-index: 10;
+}
 
-#waves {
+#elevation, #path, #audio {
+	width: 100vw;
+	height: 33vh;
 }
 
 h1 {
 	font-family: 'Inconsolata', monospace;
-	font-size: 20px;
-	color: #000;
+	font-size: 15px;
 	font-weight: 400;
-	text-align: right;
-	margin: 5px 0;
+	margin: 0;
 }
 
-h2 {
-	font-family: Lora;
-	font-size: 62px;
-	font-weight: 400;
-	color: #fff;
-	text-align: right;
-	margin: 15px 0;
+h1#label1 {
+	position: absolute;
+	top: 30vh;
+	left: 50px;
+	color: #F06449;
 }
 
-p {
-	font-family: Lora;
-	font-size: 18px;
-	font-weight: 400;
-	color: #fff;
-	text-align: right;
-	margin: 15px 0 15px 65px;
+h1#label2 {
+	position: absolute;
+	top: 60vh;
+	left: 50px;
+	color: #3AB795;
+}
+
+h1#label3 {
+	position: absolute;
+	top: 90vh;
+	left: 50px;
+	color: #5BC3EB;
 }
