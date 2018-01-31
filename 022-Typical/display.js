@@ -6,7 +6,10 @@ var width = winwidth - margin.left - margin.right;
 var height = 168330 - margin.top - margin.bottom;
 
 
-//$("#desc").delay(3000).fadeOut(1000);
+var path;
+var projection;
+var consecutiveHeights = [];
+var spacing = 40;
 
 function createSVG() {
   var svg = d3.select("#blocks")
@@ -14,12 +17,12 @@ function createSVG() {
       .attr("width", width)
       .attr("height", height);
 
-  var projection = d3.geoMercator()
+  projection = d3.geoMercator()
   //.translate([width/2, height/2])    // translate to center of screen
   //.center([-73.996243, 40.778375])
   .scale([2000000]);          // scale things wayyyy up
 
-  var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
+  path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
    .projection(projection);  // tell path generator to use albersUsa projection
 
   d3.json('Manhattan-Blocks.geojson', function(error, mapData) {
@@ -30,7 +33,6 @@ function createSVG() {
 
     //var maxWidth = 2914.2238;
     // always need to compute this id scale is going to be based on browser
-    var consecutiveHeights = [];
     var prevHeight = 0;
     for (var b = 0; b < features.length; b++) {
       var bounds = (path.bounds(features[b]));
@@ -39,29 +41,58 @@ function createSVG() {
       prevHeight = prevHeight + y;
     }
     console.log(prevHeight);
-    var spacing = 40;
 
-    svg.selectAll("path")
+    svg.selectAll("path.block")
       .data(features)
       .enter()
       .append("path")
       .attr("d",path)
+      .attr("class","block")
       .style("fill", "none")
-      .style("stroke", "#000")
+      .style("stroke", "#0066FF")
       .style("stroke-width", "2")
+      .style("opacity", 0.05)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr("transform",function(d,i) {
         var bounds = (path.bounds(d));
         var blockWidth = bounds[1][0] - bounds[0][0];
+        var blockHeight = bounds[1][1] - bounds[0][1];
         var center = (width - blockWidth)/2;
+        var centroid = (path.centroid(d));
+        var centroidX = centroid[0];
+        var centroidY = centroid[1];
+
+        var desireY = (winheight-margin.top-margin.bottom)/2;
+
+        var y0 = desireY-centroidY + margin.top;
         var x0 = bounds[0][0]*(-1) + margin.right + center;
-        var y0 = bounds[0][1]*(-1) + consecutiveHeights[i] + spacing*i + margin.top;
-        var center = (path.centroid(d));
-        return "translate(" + x0 + "," + y0 + ") rotate(-29 " + center[0] + " " + center[1] +")"
+        return "translate(" + x0 + "," + y0 + ") rotate(-29 " + centroidX + " " + centroidY +")"
       });
   });
-
 };
+
+setTimeout(function() {
+  $("#desc").delay(2000).fadeOut(2000);
+
+  d3.selectAll(".block")
+  .transition()
+  .duration(2000)
+  .style("opacity", 1)
+  .attr("transform",function(d,i) {
+    var bounds = (path.bounds(d));
+    var blockWidth = bounds[1][0] - bounds[0][0];
+    var blockHeight = bounds[1][1] - bounds[0][1];
+    var center = (width - blockWidth)/2;
+    var centroid = (path.centroid(d));
+    var centroidX = centroid[0];
+    var centroidY = centroid[1];
+
+    var x0 = bounds[0][0]*(-1) + margin.right + center;
+    var y0 = bounds[0][1]*(-1) + consecutiveHeights[i] + spacing*i + margin.top;
+    return "translate(" + x0 + "," + y0 + ") rotate(-29 " + centroidX + " " + centroidY +")"
+  });
+
+},5000);
 
 // var scrollable = d3.select("#scrollable");
 //

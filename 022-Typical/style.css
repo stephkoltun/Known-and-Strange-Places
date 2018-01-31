@@ -12,12 +12,6 @@ body {
 	z-index: 10;
 }
 
-.block{
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
 h1 {
 	font-family: 'Inconsolata', monospace;
 	font-size: 36px;
