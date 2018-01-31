@@ -160,10 +160,10 @@ function generateHalftone(prevCan) {
                     halftoneCxt.fill();
             
                     // this is the center reference
-                    halftoneCxt.beginPath();
-                    halftoneCxt.arc(subdivPixels.xCenter, subdivPixels.yCenter, 1, 0, 2 * Math.PI, false);
-                    halftoneCxt.fillStyle = 'black';
-                    halftoneCxt.fill();
+                    // halftoneCxt.beginPath();
+                    // halftoneCxt.arc(subdivPixels.xCenter, subdivPixels.yCenter, 1, 0, 2 * Math.PI, false);
+                    // halftoneCxt.fillStyle = 'black';
+                    // halftoneCxt.fill();
                 })
 
             assemblePixels(irData, m, n, "ir")
