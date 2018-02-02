@@ -64,6 +64,23 @@ function setup() {
   }
 }
 
+var firedTime = 0;
+var waitTime = 500;
+function mouseWheel(e) {
+  var now = Date.now();
+  var timePassed = now - firedTime;
+  if (e.deltaY > 4 && (timePassed > waitTime)) {
+    console.log("increase zoom");
+    changeZoom("up");
+    firedTime = now;
+  } else if (e.deltaY < -4 && (timePassed > waitTime)) {
+    console.log("decrease zoom");
+    changeZoom("down");
+    firedTime = now;
+  }
+}
+
+
 function sampleColor() {
   console.log("replace colors", zoomLevel);
 
@@ -136,6 +153,4 @@ function sampleColor() {
   } else {
     image(baseImage, 0, 0);
   }
-
-
 }
