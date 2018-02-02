@@ -94,43 +94,48 @@ function sampleColor() {
   var subSize = imgWidth/nSubs;
   var totalSubs = nSubs*nSubs;
 
+  if (nSubs != imgWidth) {
+    for (var m = 0; m < imgWidth; m+=subSize) {
+      for (var n = 0; n < imgWidth; n+=subSize) {
+        var r = 0;
+        var g = 0;
+        var b = 0;
 
-  for (var m = 0; m < imgWidth; m+=subSize) {
-    for (var n = 0; n < imgWidth; n+=subSize) {
-      var r = 0;
-      var g = 0;
-      var b = 0;
+        //console.log(m);
 
-      //console.log(m);
-
-      //Within subdivisions
-      for (var i = 0; i < subSize; i++)
-      {
-        for (var j = 0; j < subSize; j++)
+        //Within subdivisions
+        for (var i = 0; i < subSize; i++)
         {
-          //Get position, e.g. array index number
-          var position = (i + m) + ((j * imgWidth)+ (n * imgWidth));
+          for (var j = 0; j < subSize; j++)
+          {
+            //Get position, e.g. array index number
+            var position = (i + m) + ((j * imgWidth)+ (n * imgWidth));
 
-          //Get color from pixel[position]
-          var pixelColor = sortedPixels[position];
+            //Get color from pixel[position]
+            var pixelColor = sortedPixels[position];
 
 
-          //Add RGB component to r,g,b
-          r += red(pixelColor);
-          g += green(pixelColor);
-          b += blue(pixelColor);
+            //Add RGB component to r,g,b
+            r += red(pixelColor);
+            g += green(pixelColor);
+            b += blue(pixelColor);
+          }
         }
+
+        //Calculate average subdivision color
+        var avgR = r / (subSize * subSize);
+        var avgG = g / (subSize * subSize);
+        var avgB = b / (subSize * subSize);
+        var avgColor = color(avgR, avgG, avgB);
+
+        noStroke();
+        fill(avgColor);
+        rect(m, n, subSize, subSize);
       }
-
-      //Calculate average subdivision color
-      var avgR = r / (subSize * subSize);
-      var avgG = g / (subSize * subSize);
-      var avgB = b / (subSize * subSize);
-      var avgColor = color(avgR, avgG, avgB);
-
-      noStroke();
-      fill(avgColor);
-      rect(m, n, subSize, subSize);
     }
+  } else {
+    image(baseImage, 0, 0);
   }
+
+
 }
