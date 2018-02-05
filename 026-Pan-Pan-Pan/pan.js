@@ -11,9 +11,10 @@ function preload(){
 }
 
 function setup() {
+  console.log("loaded");
   var cnv = createCanvas(displaySize*3, displaySize*2);
   cnv.parent("wrapper");  // set parent of canvas
-  background(240);
+  //background(240);
 
   updateOffset();
   calculateVisibleTiles();
@@ -65,8 +66,6 @@ function writeGlobalIndex() {
   var keySize = map(displaySize, 0, extentSize, 0, displaySize);
   var xPos = map(xOffset*(-1), 0, extentSize, 0, displaySize);
   var yPos = map(yOffset*(-1), 0, extentSize, 0, displaySize);
-  //console.log(xOffset, yOffset);
-  rect(xPos,yPos,keySize,keySize);
 
   fill("#fff");
   noStroke();
@@ -89,9 +88,13 @@ function writeGlobalIndex() {
       var textX = x - xEdge;
       var textY = y - yEdge;
 
+      var indexVal = Math.floor(x) + Math.floor(y)*extentSize;
+
       textSize(9);
-      text(xLabel, textX+6, textY+14);
-      text(yLabel, textX+6, textY+24);
+      text(indexVal, textX+6, textY+8);
+      //textSize(9);
+      //text(xLabel, textX+6, textY+14);
+      //text(yLabel, textX+6, textY+24);
 
     }
   }
@@ -100,43 +103,60 @@ function writeGlobalIndex() {
 function writeTileIndex() {
   fill("#fff");
   noStroke();
-  rect(0,0,displaySize,displaySize)
+  rect(0,0,displaySize,displaySize);
 
-  for (var i = 0; i < tiles.length; i++) {
+  var xEdge = xOffset*(-1);
+  var yEdge = yOffset*(-1);
 
+  for (var x = xEdge; x < xEdge+displaySize; x+= 60) {
+    for (var y = yEdge; y < yEdge+displaySize; y+= 60) {
 
-    noStroke();
-    textFont('Inconsolata');
-    textAlign(LEFT,CENTER);
+      fill("#000")
+      noStroke();
+      textFont('Inconsolata');
+      textAlign(LEFT,CENTER);
 
-    if (tiles[i].visible) {
-      var tileLabel = "0" + tiles[i].id;
-      // local tile index
-      for (var x = tiles[i].visX1; x < tiles[i].visX2; x+=60) {
-        for (var y = tiles[i].visY1; y < tiles[i].visY2; y+=60) {
-          var xLabel = "x: " + Math.floor(x);
-          var yLabel = "y: " + Math.floor(y);
+      var textX = x - xEdge;
+      var textY = y - yEdge;
 
-          var textX = tiles[i].drawX + (x-tiles[i].visX1);
-          var textY = tiles[i].drawY + (y-tiles[i].visY1);
-
-          if (i == 0) {
-            fill("rgb(245,47,87)");
-          } else if (i == 1) {
-            fill("#6EEB83");
-          } else if (i == 3) {
-            fill("#F3752B");
-          } else if (i == 2) {
-            fill("#56CBF9");
-          }
-          textSize(14);
-          text(tileLabel, textX+6, textY+8);
-          fill("#000")
-          textSize(9);
-          text(xLabel, textX+6, textY+20);
-          text(yLabel, textX+6, textY+30);
-        }
+      var xPos;
+      var yPos;
+      var tileLabel;
+      if (x > tileSize) {
+        xPos =  Math.floor(x) - tileSize;
+      } else {
+        xPos = Math.floor(x);
       }
+
+      if (y > tileSize) {
+        yPos = Math.floor(y) - tileSize;
+      } else {
+        yPos = Math.floor(y);
+      }
+
+      var indexVal;
+      if ((x > tileSize) && (y > tileSize)) {
+        tileLabel = "03";
+        fill("rgb(245,47,87)");
+      } else if ((x < tileSize) && (y > tileSize)) {
+        tileLabel = "02";
+        fill("#6EEB83");
+      } else if ((x > tileSize) && (y < tileSize)) {
+        tileLabel = "01";
+        fill("#56CBF9");
+      } else if ((x < tileSize) && (y < tileSize)) {
+        tileLabel = "00";
+        fill("#F3752B");
+      }
+
+      indexVal = xPos + yPos*tileSize;
+
+      textSize(14);
+      text(tileLabel, textX+6, textY+8);
+      textSize(9);
+      text(indexVal, textX+6, textY+18);
+      text(("x: " + xPos), textX+6, textY+28);
+      text(("y: " + yPos), textX+6, textY+38);
     }
   }
 }
