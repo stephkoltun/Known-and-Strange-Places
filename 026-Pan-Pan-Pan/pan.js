@@ -32,7 +32,7 @@ function updateAllViews() {
   drawVisibleTiles();
 
   push();
-  translate(0, displaySize);
+  translate(displaySize*2, displaySize);
   drawCrop();
   pop();
 
@@ -53,7 +53,7 @@ function updateAllViews() {
   pop();
 
   push();
-  translate(displaySize*2, displaySize);
+  translate(0, displaySize);
   writeGlobalIndex();
   pop();
 

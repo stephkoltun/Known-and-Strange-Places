@@ -6,11 +6,13 @@ var extentSize = tileSize*tileNum;
 
 var visibleTiles;
 
-if ($(window).width()/3 < $(window).height()/2) {
-  displaySize = Math.floor($(window).width()/3);
-} else {
-  displaySize = Math.floor($(window).height()/2);
-}
+var displaySize = tileSize/2;
+
+// if ($(window).width()/3 < $(window).height()/2) {
+//   displaySize = Math.floor($(window).width()/3);
+// } else {
+//   displaySize = Math.floor($(window).height()/2);
+// }
 
 var tiles = [
   {
