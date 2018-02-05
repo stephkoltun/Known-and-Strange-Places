@@ -1,25 +1,19 @@
 var xOffset = tileSize/2*(-1)-(displaySize/2);
 var yOffset = tileSize/2*(-1)-(displaySize/2);
 
-
-
 function preload(){
   baseImage = loadImage('img/Stuyvesant_1200.png');
 
-  // load all the images...shouldn't really do this...
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].loadedImg = loadImage(tiles[i].path);
     tiles[i].loadedImg.loadPixels();
   }
-
 }
 
 function setup() {
-
   var cnv = createCanvas(displaySize*3, displaySize*2);
   cnv.parent("wrapper");  // set parent of canvas
   background(240);
-
 
   updateOffset();
   calculateVisibleTiles();
@@ -32,17 +26,18 @@ function draw() {
 
 }
 
+
 function updateAllViews() {
   //drawTileBounds();
   drawVisibleTiles();
 
   push();
-  translate(displaySize*2, 0);
+  translate(0, displaySize);
   drawCrop();
   pop();
 
   push();
-  translate(0, displaySize);
+  translate(displaySize*2, 0);
   drawKey();
   pop();
 
@@ -73,7 +68,7 @@ function writeGlobalIndex() {
   //console.log(xOffset, yOffset);
   rect(xPos,yPos,keySize,keySize);
 
-  fill("#0C1B33");
+  fill("#fff");
   noStroke();
   rect(0,0,displaySize,displaySize);
 
@@ -83,7 +78,7 @@ function writeGlobalIndex() {
   for (var x = xEdge; x < xEdge+displaySize; x+= 60) {
     for (var y = yEdge; y < yEdge+displaySize; y+= 60) {
 
-      fill("#FFFFFF")
+      fill("#000")
       noStroke();
       textFont('Inconsolata');
       textAlign(LEFT,CENTER);
@@ -103,20 +98,12 @@ function writeGlobalIndex() {
 }
 
 function writeTileIndex() {
-  fill("#0C1B33");
+  fill("#fff");
   noStroke();
   rect(0,0,displaySize,displaySize)
 
   for (var i = 0; i < tiles.length; i++) {
-    if (i == 0) {
-      fill("#FF5D73");
-    } else if (i == 1) {
-      fill("#03B5AA");
-    } else if (i == 3) {
-      fill("#DBFE87");
-    } else if (i == 2) {
-      fill("#06AED5");
-    }
+
 
     noStroke();
     textFont('Inconsolata');
@@ -133,8 +120,18 @@ function writeTileIndex() {
           var textX = tiles[i].drawX + (x-tiles[i].visX1);
           var textY = tiles[i].drawY + (y-tiles[i].visY1);
 
+          if (i == 0) {
+            fill("rgb(245,47,87)");
+          } else if (i == 1) {
+            fill("#6EEB83");
+          } else if (i == 3) {
+            fill("#F3752B");
+          } else if (i == 2) {
+            fill("#56CBF9");
+          }
           textSize(14);
           text(tileLabel, textX+6, textY+8);
+          fill("#000")
           textSize(9);
           text(xLabel, textX+6, textY+20);
           text(yLabel, textX+6, textY+30);
