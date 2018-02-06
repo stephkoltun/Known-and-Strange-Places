@@ -4,10 +4,15 @@ var tileSize = 2500;
 var tileNum = 1;
 var extentSize = tileSize*tileNum;
 var displaySize = tileSize/4;
+var multiplier = 4;
+var visibleSubSize = displaySize/(Math.pow(2,multiplier));
+console.log(visibleSubSize);
 
+var rgbImage;
 
 function preload(){
   baseImage = loadImage('img/Harlem_2400_2500x2500_DEM.png');
+  rgbImage = loadImage('img/Harlem_2400_2500x2500_RGB.png');
 }
 
 function setup() {
@@ -18,7 +23,7 @@ function setup() {
 
   //updateOffset();
   //calculateVisibleTiles();
-  drawBaseImage();
+  //drawBaseImage();
   drawSubdivision(xOffset, yOffset, displaySize, displaySize);
 }
 
@@ -26,25 +31,46 @@ function draw() {
 
 }
 
+$("#subsizeSlider").on('mouseup', function() {
+  multiplier = parseInt(subsizeSlider.value);
+  visibleSubSize = displaySize/(Math.pow(2,multiplier));
+  clearCanvas();
+  //drawBaseImage();
+  drawSubdivision(xOffset, yOffset, displaySize, displaySize);
+})
+
+
+
 var minSubSize = 8;
 var brightnessThreshold = 75;
-var deltaThreshold = 15;
+var deltaThreshold = 20;
 
 var xOffset = 150;
 var yOffset = 150;
 
 function drawBaseImage() {
-  var subset = baseImage.get(xOffset, yOffset, displaySize, displaySize);
+  var subset = rgbImage.get(xOffset, yOffset, displaySize, displaySize);
   image(subset,0,0);
 }
 
+function clearCanvas() {
+  fill(255);
+  rect(0,0,displaySize,displaySize);
+}
+
 function drawSubdivision(_posX, _posY, _width, _height) {
+  //console.log(_width);
+
+  var drawX = _posX - xOffset;
+  var drawY = _posY - yOffset;
+
   var subdiv = baseImage.get(_posX, _posY, _width, _height);
   subdiv.loadPixels();
   var brightnessArray = [];
   var totalBright = 0;
   var frequency = 5;
   var delta;
+  var averageBrightness;
   var maxBright = 0;
   var minBright = 1000;
   for (var i = 0; i < subdiv.pixels.length; i+=(4*frequency)) {
@@ -62,34 +88,33 @@ function drawSubdivision(_posX, _posY, _width, _height) {
     if (brightness > maxBright) {
       maxBright = brightness
     }
-
     if (brightness < minBright) {
       minBright = brightness
     }
-
   }
-
   delta = Math.abs(maxBright - minBright);
-  //console.log(delta)
-  //console.log(delta);
-  // check average brightness
-  var averageBrightness = totalBright/(subdiv.pixels.length/4/frequency);
-  //console.log(averageBrightness);
-  //console.log(brightnessArray);
-  var drawX = _posX - xOffset;
-  var drawY = _posY - yOffset;
+  averageBrightness = totalBright/(subdiv.pixels.length/4/frequency);
 
   if (delta <= deltaThreshold && _width > minSubSize) {
-
   //if (averageBrightness > brightnessThreshold && _width > minSubSize) {
+    // this subdivision is of its final size
+
     fill(255,0,0);
     noStroke();
     textAlign(CENTER,CENTER);
     //text(delta,drawX+_width/2, drawY+_height/2);
+
+    if (_width == visibleSubSize) {
+      var rgbSub = rgbImage.get(_posX, _posY, _width, _height);
+      noFill();
+      noStroke();
+      image(rgbSub, drawX, drawY);
+    }
     noFill();
-    stroke(255,0,0);
+    stroke(150);
     strokeWeight(0.5);
     rect(drawX, drawY, _width, _height);
+
   } else if ( _width/2 > minSubSize) {
     //console.log("min: " + brightnessArray[0] + ", max: " + brightnessArray[brightnessArray.length-1] + ", delta: " + delta);
     var newWidth = _width/2;
@@ -100,37 +125,49 @@ function drawSubdivision(_posX, _posY, _width, _height) {
     drawSubdivision((_posX + newWidth), (_posY + newHeight), newWidth, newHeight);
   } else {
     //console.log("smallest");
-    fill(255,0,0);
-    noStroke();
-    //noFill();
-    //stroke(0,0,255);
+    // fill(255,0,0);
+    // noStroke();
+    noFill();
+    stroke(150);
     var drawX = _posX - xOffset;
     var drawY = _posY - yOffset;
     rect(drawX, drawY, _width, _height);
   }
 }
 
+function showOnly(size) {
+
+}
 
 
-
+var dragging = false;
 function mouseDragged() {
-  var shiftX = mouseX - pmouseX;
-  var shiftY = mouseY - pmouseY;
+    if (mouseY > 200) {
+      dragging = true;
+      var shiftX = mouseX - pmouseX;
+      var shiftY = mouseY - pmouseY;
 
-  var newXOffset = xOffset - shiftX;
-  var newYOffset = yOffset - shiftY;
+      var newXOffset = xOffset - shiftX;
+      var newYOffset = yOffset - shiftY;
 
-  if ((newXOffset >= 0) && (newXOffset <= (extentSize-displaySize)) && (newYOffset >= 0) && (newYOffset <= (extentSize-displaySize))) {
+      if ((newXOffset >= 0) && (newXOffset <= (extentSize-displaySize)) && (newYOffset >= 0) && (newYOffset <= (extentSize-displaySize))) {
 
-    xOffset = newXOffset;
-    yOffset = newYOffset;
+      xOffset = newXOffset;
+      yOffset = newYOffset;
 
-    drawBaseImage();
+      drawBaseImage();
+    }
   }
 }
 
 function mouseReleased() {
-  drawSubdivision(xOffset, yOffset, displaySize, displaySize);
+  if (dragging) {
+    clearCanvas();
+    //drawBaseImage();
+    drawSubdivision(xOffset, yOffset, displaySize, displaySize);
+    dragging = false;
+  }
+
 }
 
 function rgbToHsl(r, g, b){
