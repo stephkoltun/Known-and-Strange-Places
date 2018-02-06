@@ -27,15 +27,16 @@ function getLights(result) {
 function draw() {
   var vol = mic.getLevel();
   if (vol > .1) {
-    changeState();
+    changeState("1");
+    changeState("2")
   }
 }
 
 // toggle light state
-function changeState() {
+function changeState(lightNum) {
   var setState = !prevState;
   prevState = setState;
-  var path = url + "1" + "/state";
+  var path = url + lightNum + "/state";
   var content = JSON.stringify(
     {"on": setState}
   )
