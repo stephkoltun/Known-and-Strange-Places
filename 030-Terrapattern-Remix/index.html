@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>Pattern Remix (030)</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='style.css' type='text/css'>
+
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    <script src='config.js'></script>
+    <script src='GEOJSON/cemetery/terrapattern_New_York_40.6205818_-73.9726529.json'></script>
+    <script src='GEOJSON/cemetery/terrapattern_New_York_40.6508868_-73.9877559.json'></script>
+    <script src='GEOJSON/cemetery/terrapattern_New_York_40.6519318_-73.9932479.json'></script>
+    <script src='GEOJSON/cemetery/terrapattern_New_York_40.6582018_-73.9939344.json'></script>
+    <script src='GEOJSON/cemetery/terrapattern_New_York_40.6963443_-73.8813484.json'></script>
+    <script src='GEOJSON/cemetery/terrapattern_New_York_40.6968668_-73.8813484.json'></script>
+
+    <script src='GEOJSON/public-housing/terrapattern_New_York_40.6602918_-73.8806619.json'></script>
+    <script src='GEOJSON/public-housing/terrapattern_New_York_40.7966643_-73.9424469.json'></script>
+    <script src='GEOJSON/public-housing/terrapattern_New_York_40.7992768_-73.9314629.json'></script>
+    <script src='GEOJSON/public-housing/terrapattern_New_York_40.8238343_-73.9033164.json'></script>
+
+
+
+    <!-- LIBRARIES! -->
+
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script> -->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("document is ready");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="context"></div>
+    <div id="remix"></div>
+    <script src='remix.js'></script>
+</body>
+
+</html>

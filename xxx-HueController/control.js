@@ -28,7 +28,7 @@ function draw() {
   var vol = mic.getLevel();
   if (vol > .1) {
     changeState("1");
-    changeState("2")
+    //changeState("2")
   }
 }
 

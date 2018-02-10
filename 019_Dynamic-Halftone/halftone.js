@@ -3,7 +3,7 @@ $(document).ready(function () {
     var centerPt = [40.648063, -73.972526];
     //var centerPt = [40.575162,-73.946886];
 
-  var aerialmap = L.map('aerialmap', {attributionControl: false, zoomControl:false}).setView(centerPt, 17); 
+  var aerialmap = L.map('aerialmap', {attributionControl: false, zoomControl:false}).setView(centerPt, 17);
   var aerialtile = L.tileLayer('Flatbush-Ditmas-Park/Flatbush-Ditmas-Park_RGB/{z}/{x}/{y}.png', {
 //var aerialtile = L.tileLayer('Coney-AER/{z}/{x}/{y}.png', {
     minZoom: 17,
@@ -120,16 +120,16 @@ function generateHalftone(prevCan) {
     console.log("generate halftone");
     var halftone2D = document.getElementById("halftone");
     var halftoneCxt = halftone2D.getContext("2d");
-    
+
     halftoneCxt.clearRect(0, 0, halftone2D.width, halftone2D.height);
 
     halftoneCxt.rect(0,0,halftone2D.width,halftone2D.height);
     halftoneCxt.fillStyle = "rgb(255, 255, 255)";
     halftoneCxt.fill();
-    
+
     for (var m = 0; m < imgWidth; m+=subSize) {
         for (var n = 0; n < imgWidth; n+=subSize) {
-    
+
             // get the AER subdiv
             var aerImage = prevAERContext.getImageData(m, n, subSize, subSize);
             var aerData = aerImage.data;
@@ -139,26 +139,26 @@ function generateHalftone(prevCan) {
 
             var demImage = prevDEMContext.getImageData(m, n, subSize, subSize);
             var demData = demImage.data;
-    
+
             assemblePixels(aerData, m, n, "aer")
                 .then(function(subdivPixels) {
                     //console.log(subdivPixels);
-            
+
                     var hslData = subdivPixels.hslArray;
                     var maxBrightness = subdivPixels.maxBrightness;
                     var minBrightness = subdivPixels.minBrightness;
                     var avgBrightness = subdivPixels.totalBrightness/hslData.length;
-            
+
                     var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);   // brighter = bigger
-            
+
                     var x = subdivPixels.xCenter + aerXOffset;
                     var y = subdivPixels.yCenter + aerYOffset;
-            
+
                     halftoneCxt.beginPath();
                     halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
                     halftoneCxt.fillStyle = "rgba(0, 0, 255, .5)";
                     halftoneCxt.fill();
-            
+
                     // this is the center reference
                     // halftoneCxt.beginPath();
                     // halftoneCxt.arc(subdivPixels.xCenter, subdivPixels.yCenter, 1, 0, 2 * Math.PI, false);
@@ -171,10 +171,10 @@ function generateHalftone(prevCan) {
                     //console.log(subdivPixels);
                     var avgRed = subdivPixels.avgRed;
                     var radius = mapVal(avgRed, 0.0, 255.0, 0.0, subSize/2.5);
-            
+
                     var x = subdivPixels.xCenter + irXOffset;
                     var y = subdivPixels.yCenter + irYOffset;
-            
+
                     halftoneCxt.beginPath();
                     halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
                     // halftoneCxt.rect(x,y,radius*2,radius*2);
@@ -190,12 +190,12 @@ function generateHalftone(prevCan) {
                     var maxBrightness = subdivPixels.maxBrightness;
                     var minBrightness = subdivPixels.minBrightness;
                     var avgBrightness = subdivPixels.totalBrightness/hslData.length;
-            
+
                     var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);
-            
+
                     var x = subdivPixels.xCenter + demXOffset;
                     var y = subdivPixels.yCenter + demYOffset;
-            
+
                     //halftoneCxt.beginPath();
                     //halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
                     halftoneCxt.beginPath();
@@ -265,7 +265,7 @@ function assemblePixels(unsorted_array, m, n, mode) {
             }
             if (red < pixelInfo.minRed) {
                 pixelInfo.minRed = red;
-            } 
+            }
 
         }
 

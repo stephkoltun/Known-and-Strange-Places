@@ -1,0 +1,65 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#context {
+	width:600px;
+	height:600px;
+	z-index: 0;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
+
+#remix {
+	width:200px;
+	height:200px;
+	z-index: 10;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
+
+.mapboxgl-control-container {
+	display: none;
+}
+
+#desc {
+	position: absolute;
+	top: 50%;
+	right: 50%;
+	transform: translate(0, -50%);
+	z-index: 20;
+}
+
+h1 {
+	font-family: 'Inconsolata', monospace;
+	font-size: 20px;
+	color: #fff;
+	font-weight: 400;
+	text-align: right;
+	margin: 5px 0;
+}
+
+h2 {
+	font-family: Lora;
+	font-size: 62px;
+	font-weight: 400;
+	color: #fff;
+	text-align: right;
+	margin: 15px 0;
+}
+
+p {
+	font-family: Lora;
+	font-size: 18px;
+	font-weight: 400;
+	color: #fff;
+	text-align: right;
+	margin: 15px 0 15px 65px;
+}
