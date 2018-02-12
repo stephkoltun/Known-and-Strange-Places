@@ -1,0 +1,27 @@
+/* .lazy {
+  width: 800px;
+  height: 640px;
+} */
+
+img {
+  width: 94%;
+  display: block;
+  margin: 5% auto;
+}
+
+.column {
+  float: left;
+  width: 32vw;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper {
+  width: 96vw;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0);
+}
