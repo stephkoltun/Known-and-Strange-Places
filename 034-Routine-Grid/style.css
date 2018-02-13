@@ -11,7 +11,7 @@ img {
 
 .column {
   float: left;
-  width: 32vw;
+  width: 19vw;
 }
 
 body {
@@ -20,7 +20,7 @@ body {
 }
 
 #wrapper {
-  width: 96vw;
+  width: 95vw;
   position: absolute;
   left: 50%;
   transform: translate(-50%,0);
