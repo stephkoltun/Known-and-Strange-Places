@@ -1,65 +1,10 @@
 // TEST WITH A VIDEO!!!!
-
-var imgArray = [
-  {
-    path: 'img/frame-3.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-4.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-5.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-6.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-7.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-8.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-9.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-10.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-10.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-10.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-11.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-12.png',
-    loaded: null,
-  },
-  {
-    path: 'img/frame-13.png',
-    loaded: null,
-  },
-];
-
 var canvasWidth = 800;
 var canvasHeight = 640;
 var curImg = 1; // start at 1 so we always compare backwards to the previous frame
 var differenceThreshold = 25;
-var sameTransparency = 50;
+var sameTransparency = 255;
+var framerate = 3;
 
 // load all the images and assign them back to the object
 function preload(){
@@ -73,12 +18,16 @@ function setup() {
   var cnv = createCanvas(canvasWidth, canvasHeight);
   cnv.parent("canvas");  // set parent of canvas
   background(240);
-  frameRate(1);
+  frameRate(framerate);
+
+  diffImage = createImage(canvasWidth,canvasHeight);
 }
+
+var diffImage;
 
 function draw() {
 
-  differenceFrames(imgArray[curImg-1].loaded,imgArray[curImg].loaded);
+  differenceFrames(imgArray[curImg-1].loaded,imgArray[curImg].loaded, removeSmallBlobs);
 
   if (curImg < imgArray.length-1) {
     curImg++;
@@ -86,11 +35,83 @@ function draw() {
 }
 
 
-function differenceFrames(_frame, _second) {
+
+function removeSmallBlobs(secondFrame) {
+  var blobRemovedImage = createImage(canvasWidth,canvasHeight);
+  blobRemovedImage.loadPixels();
+  diffImage.loadPixels();
+  for (var y = 1; y < canvasHeight-1; y+=4) {  // look at a 4x4 area
+    for (var x = 1; x < canvasWidth-1; x+=4) {
+      var index = (x + y*canvasWidth) * 4;
+
+      var sum = 0; // blob size
+      // evaluate only a 3x3 area
+      for (var ky = -1; ky <= 1; ky++) {
+        for (var kx = -1; kx <= 1; kx++) {
+          // Calculate the adjacent pixel for center kernel point
+          var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
+
+          var kR = diffImage.pixels[pos];
+          var kG = diffImage.pixels[pos+1];
+          var kB = diffImage.pixels[pos+2];
+          var kA = diffImage.pixels[pos+3];
+
+          // if this pixel is cyan, add to the incrementer
+          if (kR == 0 && kG == 255 && kB == 255) {
+            sum++;
+          }
+        }
+      }
+
+      if (sum >= 1) {
+        for (var ky = -1; ky <= 1; ky++) {
+          for (var kx = -1; kx <= 1; kx++) {
+            var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
+            blobRemovedImage.pixels[pos] = 255;
+            blobRemovedImage.pixels[pos+1] = 255;
+            blobRemovedImage.pixels[pos+2] = 255;
+            blobRemovedImage.pixels[pos+3] = 255;
+          }
+        }
+      } else {
+        for (var ky = -1; ky <= 1; ky++) {
+          for (var kx = -1; kx <= 1; kx++) {
+            // Calculate the adjacent pixel for center kernel point
+            var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
+
+            var kR = diffImage.pixels[pos];
+            var kG = diffImage.pixels[pos+1];
+            var kB = diffImage.pixels[pos+2];
+            var kA = diffImage.pixels[pos+3];
+
+            // remove cyan pixels
+            // if (kR == 0 && kG == 255 && kB == 255) {
+            //   // revert to the original pixel
+            //   // THIS ISNT ACTUALLY DOING ANYTHING
+            //   secondFrame[pos] = 255;
+            //   secondFrame[pos+1] = 255;
+            //   secondFrame[pos+2] = 255;
+            //   secondFrame[pos+3] = 255;
+            // } else {
+              // assign colored different pixel to new image
+              blobRemovedImage.pixels[pos] = kR;
+              blobRemovedImage.pixels[pos+1] = kG;
+              blobRemovedImage.pixels[pos+2] = kB;
+              blobRemovedImage.pixels[pos+3] = 255;
+            // }
+          }
+        }
+      }
+    }
+  }
+  blobRemovedImage.updatePixels();
+  image(blobRemovedImage,0,0);
+}
+
+function differenceFrames(_frame, _second, callback) {
   _frame.loadPixels();
   _second.loadPixels();
 
-  var diffImage = createImage(canvasWidth,canvasHeight);
   diffImage.loadPixels();
 
   for (var y = 0; y < canvasHeight; y++) {
@@ -116,7 +137,7 @@ function differenceFrames(_frame, _second) {
         diffImage.pixels[index+2] = bB;
         diffImage.pixels[index+3] = 255;
       } else {
-        diffImage.pixels[index] = 255;
+        diffImage.pixels[index] = 0;
         diffImage.pixels[index+1] = 255;
         diffImage.pixels[index+2] = 255;
         diffImage.pixels[index+3] = sameTransparency;
@@ -124,5 +145,5 @@ function differenceFrames(_frame, _second) {
     }
   }
   diffImage.updatePixels();
-  image(diffImage,0,0);
+  callback(_second.pixels);
 }
