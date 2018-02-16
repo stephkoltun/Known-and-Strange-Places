@@ -1,0 +1,29 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper {
+	position: absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
+
+#replace {
+	position: absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
+
+.tile {
+	z-index: 0;
+	margin: 0;
+	float: left;
+	display: inline;
+}
+
+.mapboxgl-control-container {
+	display: none;
+}
