@@ -48,14 +48,18 @@
   $(document).ready(function() {
     console.log("document is ready");
     //setUpContainers(configLargest);
-    setInterval(setUpContainers,3500,configLargest);
+    showSimilar = setInterval(setUpContainers,1800,configLargest);
   });
   </script>
 </head>
 
 <body>
-  <div id="wrapper">
+  <div id="replace">
   </div>
+  <canvas id="tempWrapper">
+  </canvas>
+  <canvas id="tempReplace">
+  </canvas>
   <script src='frankenstein.js'></script>
 </body>
 

@@ -1,3 +1,4 @@
+var showSimilar;
 var allTiles = [
   {
     id: 1,
