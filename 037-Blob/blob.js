@@ -8,9 +8,7 @@ var visibleSubSize = displaySize/(Math.pow(2,multiplier));
 console.log(visibleSubSize);
 
 var rgbImage,
-    irImage;
-
-var minBlobSize = 5;
+var irImage;
 
 function preload(){
   rgbImage = loadImage('img/SouthSlope_1200.png');
@@ -23,7 +21,7 @@ function setup() {
   cnv.parent("wrapper");  // set parent of canvas
   background(240);
 
-  image(irImage,0,0);
+  image(irImage,0,-1200);
 
   var source = canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height)
 
@@ -32,6 +30,8 @@ function setup() {
   var counts = groupedBlobs.counts;
   console.log(blobs);
   console.log(counts);
+
+  image(rgbImage,0,-1200);
 
   for(y = 0; y < source.height; y++){
     for(x = 0; x < source.width; x++){
@@ -43,13 +43,13 @@ function setup() {
       //   console.log('count', thisCount);
       // }
 
-      if (thisPix == 0) {
+      if (thisPix <= 10) {
         noStroke();
         fill(255,255,255);
         rect(x,y,1,1);
       } else {
         // look up size of blob in the unique labels
-        if (thisCount < minBlobSize) {
+        if (thisCount < 10) {
           noStroke();
           fill(0,255,255);
           rect(x,y,1,1);
@@ -64,13 +64,87 @@ function draw() {
 
 }
 
+function removeSmallBlobs(secondFrame) {
+  var blobRemovedImage = createImage(canvasWidth,canvasHeight);
+  blobRemovedImage.loadPixels();
+  diffImage.loadPixels();
+  for (var y = 1; y < canvasHeight-1; y+=4) {  // look at a 4x4 area
+    for (var x = 1; x < canvasWidth-1; x+=4) {
+      var index = (x + y*canvasWidth) * 4;
+
+      var sum = 0; // blob size
+      // evaluate only a 3x3 area
+      for (var ky = -1; ky <= 1; ky++) {
+        for (var kx = -1; kx <= 1; kx++) {
+          // Calculate the adjacent pixel for center kernel point
+          var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
+
+          var kR = diffImage.pixels[pos];
+          var kG = diffImage.pixels[pos+1];
+          var kB = diffImage.pixels[pos+2];
+          var kA = diffImage.pixels[pos+3];
+
+          // if this pixel is cyan, add to the incrementer
+          if (kR == 0 && kG == 255 && kB == 255) {
+            sum++;
+          }
+        }
+      }
+
+      if (sum >= 1) {
+        for (var ky = -1; ky <= 1; ky++) {
+          for (var kx = -1; kx <= 1; kx++) {
+            var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
+            blobRemovedImage.pixels[pos] = 255;
+            blobRemovedImage.pixels[pos+1] = 255;
+            blobRemovedImage.pixels[pos+2] = 255;
+            blobRemovedImage.pixels[pos+3] = 255;
+          }
+        }
+      } else {
+        for (var ky = -1; ky <= 1; ky++) {
+          for (var kx = -1; kx <= 1; kx++) {
+            // Calculate the adjacent pixel for center kernel point
+            var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
+
+            var kR = diffImage.pixels[pos];
+            var kG = diffImage.pixels[pos+1];
+            var kB = diffImage.pixels[pos+2];
+            var kA = diffImage.pixels[pos+3];
+
+            // remove cyan pixels
+            // if (kR == 0 && kG == 255 && kB == 255) {
+            //   // revert to the original pixel
+            //   // THIS ISNT ACTUALLY DOING ANYTHING
+            //   secondFrame[pos] = 255;
+            //   secondFrame[pos+1] = 255;
+            //   secondFrame[pos+2] = 255;
+            //   secondFrame[pos+3] = 255;
+            // } else {
+              // assign colored different pixel to new image
+              blobRemovedImage.pixels[pos] = kR;
+              blobRemovedImage.pixels[pos+1] = kG;
+              blobRemovedImage.pixels[pos+2] = kB;
+              blobRemovedImage.pixels[pos+3] = 255;
+            // }
+          }
+        }
+      }
+    }
+  }
+  blobRemovedImage.updatePixels();
+  image(blobRemovedImage,0,0);
+}
+
+
+
 //http://blog.acipo.com/blob-detection-js/
 function findBlobs(src) {
 
   var xSize = src.width,
-      ySize = src.height,
-      srcPixels = src.data,
-      x, y, pos;
+  ySize = src.height,
+  srcPixels = src.data,
+  x, y, pos;
 
   console.log(xSize, ySize);
 
@@ -98,7 +172,7 @@ function findBlobs(src) {
   // We're going to run this algorithm twice
   // The first time identifies all of the blobs candidates the second pass
   // merges any blobs that the first pass failed to merge
-  var nIter = 5;
+  var nIter = 2;
   while( nIter-- ){
 
     // We leave a 1 pixel border which is ignored so we do not get array
@@ -116,7 +190,7 @@ function findBlobs(src) {
         var mapHue = map(hsl[0], 0,1,0,360);
 
         // check red hue to see if within range
-        isVisible = (mapHue >= 340 || mapHue <=7);
+        isVisible = (mapHue >= 344 || mapHue <=7);
 
         if (isVisible) {
           // Find the lowest blob index nearest this pixel
@@ -145,9 +219,9 @@ function findBlobs(src) {
             labelTable.push(label);
             label += 1;
 
-          // This point is part of an old blob -- update the labels of the
-          // neighboring pixels in the label table so that we know a merge
-          // should occur and mark this pixel with the label.
+            // This point is part of an old blob -- update the labels of the
+            // neighboring pixels in the label table so that we know a merge
+            // should occur and mark this pixel with the label.
           } else {
             if( minIndex < labelTable[nw] ){ labelTable[nw] = minIndex; }
             if( minIndex < labelTable[nn] ){ labelTable[nn] = minIndex; }
@@ -161,7 +235,7 @@ function findBlobs(src) {
             blobMap[y][x] = minIndex;
           }
 
-        // This pixel isn't visible so we won't mark it as special
+          // This pixel isn't visible so we won't mark it as special
         } else {
           blobMap[y][x] = 0;
         }
@@ -201,62 +275,69 @@ function findBlobs(src) {
     labelTable[label] = i++;
   }
 
+  var blobCounts = {};
+
   // convert the blobs to the minimized labels
   for(y=0; y<ySize; y++){
     for(x=0; x<xSize; x++){
       label = blobMap[y][x];
       blobMap[y][x] = labelTable[label];
+
+      if (blobCounts[blobMap[y][x]] == undefined) {
+        var temp = blobMap[y][x]
+        blobCounts[temp] = 1;
+      } else {
+        blobCounts[temp] = blobCounts[temp] + 1;
+      }
     }
   }
 
-  //console.log(blobMap);
+
+
+  console.log(blobCounts);
 
   // Return the blob data:
-  return {blobs: blobMap, counts: uniqueLabels};
+  return {blobs: blobMap, counts: blobCounts};
 };
 
-function unique(arr){
-/// Returns an object with the counts of unique elements in arr
-/// unique([1,2,1,1,1,2,3,4]) === { 1:4, 2:2, 3:1, 4:1 }
+function unique(arr) {
+  /// Returns an object with the counts of unique elements in arr
+  /// unique([1,2,1,1,1,2,3,4]) === { 1:4, 2:2, 3:1, 4:1 }
 
-    var value, counts = {};
-    var i, l = arr.length;
-    for( i=0; i<l; i+=1) {
-        value = arr[i];
-        if( counts[value] ){
-            counts[value] += 1;
-        }else{
-            counts[value] = 1;
-        }
+  var value, counts = {};
+  var i, l = arr.length;
+  for( i=0; i<l; i+=1) {
+    value = arr[i];
+    if( counts[value] ){
+      counts[value] += 1;
+    }else{
+      counts[value] = 1;
     }
+  }
 
-    console.log(counts);
-    return counts;
+  console.log(counts);
+  return counts;
 }
 
 
 
-
-
-
-
 function rgbToHsl(r, g, b){
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
+  r /= 255, g /= 255, b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
 
-    if (max == min) {
-        h = s = 0; // achromatic
-    } else {
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch(max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
+  if (max == min) {
+    h = s = 0; // achromatic
+  } else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch(max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
     }
+    h /= 6;
+  }
 
-    return [h, s, l];
+  return [h, s, l];
 }

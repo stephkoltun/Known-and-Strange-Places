@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blob (036)</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+
+    <script src="lib/p5.js"></script>
+    <script src="lib/p5.dom.js"></script>
+    <script>
+        window.Module = {
+            loaded: false,
+            print: console.log,
+            printErr: function(text) {
+
+            },
+            setStatus: function(text) {
+
+            },
+            onRuntimeInitialized: function() {
+
+                this.loaded = true;
+                // it would be better if we created the sketch at this point
+            }
+        };
+    </script>
+    <script async src="https://huningxin.github.io/opencv.js/build/asm.js/opencv.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+    </div>
+    <script src="sketch.js"></script>
+</body>
+
+</html>
