@@ -1,7 +1,7 @@
 # Known-and-Strange-Places
-100 days of known and strange places, or
-100 days of interactive web maps, or
-100 days of endless file exports, or
+100 days of known and strange places, or  
+100 days of interactive web maps, or  
+100 days of endless file exports, or  
 100 days of long walks, or...
 
 Everything here is made in a single day, so forgive the lack of comments and hacky fixes. On day 101, the documentation process begins.
