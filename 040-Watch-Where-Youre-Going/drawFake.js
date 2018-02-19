@@ -79,8 +79,9 @@ function draw() {
   endShape();
 }
 
-function configure(position) {
-  geoArray.push(position.coords);
+function configure() {
+
+  var position = 
   // radians
   var northBearing = 0;
   var eastBearing = Math.PI/2;
