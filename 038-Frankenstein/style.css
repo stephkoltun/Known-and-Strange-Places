@@ -14,8 +14,15 @@ body {
 #tempWrapper,#tempReplace{
 	position: absolute;
 	top: 50%;
-	left:50%;
-	transform: translate(-50%,-50%);
+	left: 51%;
+	transform: translate(0,-50%);
+}
+
+#original {
+	position: absolute;
+	top: 50%;
+	right: 51%;
+	transform: translate(0,-50%);
 }
 
 .tile {

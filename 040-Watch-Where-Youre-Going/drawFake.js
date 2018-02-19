@@ -1,16 +1,9 @@
 var displayWidth;
 var displayHeight;
 
-var geoArray = [];
 var minX, maxX, minY, maxY;
 
-var distance = 4000; // metres
-
-var geoOptions = {
-  enableHighAccuracy: true,
-  maximumAge        : 30000,
-  timeout           : 27000
-};
+var distance = 700; // metres
 
 var colorPairs = [
   {
@@ -36,52 +29,70 @@ var colorPairs = [
 ]
 var randomNum = Math.floor(Math.random()*colorPairs.length);
 var thisColor = colorPairs[randomNum];
-
-// $("#desc").css("color",thisColor.line);
-// $("#desc").delay(5000).fadeOut(1000);
+var saveColor = colorPairs[randomNum].line;
 
 function setup() {
   displayWidth = $(window).width();
   displayHeight = $(window).height();
-  createCanvas(displayWidth,displayHeight);
-  background(thisColor.background);
-  //start tracking location
-  //navigator.geolocation.watchPosition(addLocation, gotError, geoOptions);
+  var cnv = createCanvas(displayWidth,displayHeight);
+  cnv.parent("drawArea");
+    configure();
+}
+
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
+var mapObj = new mapboxgl.Map({
+   container: 'mapArea',
+   style: 'mapbox://styles/mapbox/satellite-v9',
+   center:[hello.features[140].properties.lon,hello.features[140].properties.lat,],
+   zoom: 16,
+   interactive: false,
+ });
+
+var geoArray = hello.features;
+var drawPosition = 1;
+
+$("#drawArea").css("background-color", thisColor.background);
+
+function mousePressed() {
+  $("#drawArea").css("background-color", "rgba(0,0,0,0)");
+  thisColor.line = "#FFFFFF";
+}
+
+function mouseReleased() {
+  $("#drawArea").css("background-color", thisColor.background);
+  thisColor.line = saveColor;
 }
 
 function draw() {
 
-  if (frameCount % 30 == 0) {
-    navigator.geolocation.getCurrentPosition(addLocation,gotError, geoOptions)
+  if (frameCount % 5 == 0) {
+    console.log("draw");
+    noFill();
+    strokeCap(ROUND);
+    strokeJoin(ROUND);
+    stroke(thisColor.line);
+    strokeWeight(8);
+    beginShape();
+
+    for (var i = 0; i < drawPosition; i++) {
+      //map geo location to drawing coords
+      var thisPoint = geoArray[i].properties;
+      var curX = map(thisPoint.lon, minX, maxX, 0, displayWidth);
+      var curY = map(thisPoint.lat, minY, maxY, 0, displayHeight);
+      vertex(curX, curY);
+    }
+
+    endShape();
+
+    if (drawPosition < geoArray.length-1) {
+      drawPosition++;
+    }
   }
-
-
-  noFill();
-  stroke(thisColor.line);
-  strokeWeight(5);
-  beginShape();
-
-  for (var i = 0; i < geoArray.length; i++) {
-    //map geo location to drawing coords
-    var thisPoint = geoArray[i];
-    var curX = map(thisPoint.longitude, minX, maxX, 0, displayWidth);
-    var curY = map(thisPoint.latitude, minY, maxY, 0, displayHeight);
-    vertex(curX, curY);
-
-    // if (i != 0) {
-    //   var prevX = map(geoArray[i-1].longitude, minX, maxX, 0, displayWidth);
-    //   var prevY = map(geoArray[i-1].latitude, minY, maxY, 0, displayHeight);
-    //   var d = abs(dist(curX,curY,prevX,prevY));
-    // }
-
-  }
-
-  endShape();
 }
 
 function configure() {
 
-  var position = 
+  var position = hello.features[140];
   // radians
   var northBearing = 0;
   var eastBearing = Math.PI/2;
@@ -89,18 +100,17 @@ function configure() {
   var westBearing = 3*Math.PI/2;
 
   var vertOffset = distance;
-  var horOffset = vertOffset*(displayWidth/displayHeight);
+  var horOffset = (vertOffset+250)*(displayWidth/displayHeight);
 
   console.log(vertOffset);
   console.log(horOffset); // meters
-  //var vertOffset = horOffset*(displayWidth/displayHeight); // meters
 
-  var newNorth = offsetFromPoint(vertOffset, northBearing, position.coords);
-  var newSouth = offsetFromPoint(vertOffset, southBearing, position.coords);
-  var newEast = offsetFromPoint(horOffset, eastBearing, position.coords);
-  var newWest = offsetFromPoint(horOffset, westBearing, position.coords);
+  var newNorth = offsetFromPoint(vertOffset, northBearing, position.properties);
+  var newSouth = offsetFromPoint(vertOffset, southBearing, position.properties);
+  var newEast = offsetFromPoint(horOffset, eastBearing, position.properties);
+  var newWest = offsetFromPoint(horOffset, westBearing, position.properties);
 
-  console.log("orig", position.coords);
+  console.log("orig", position.properties);
   console.log(newNorth);
   console.log(newSouth);
   console.log(newEast);
@@ -112,34 +122,24 @@ function configure() {
   minY = newNorth.latitude;
   maxY = newSouth.latitude;
 
+  noStroke();
   fill(thisColor.line);
-  var curX = map(position.coords.longitude, minX, maxX, 0, displayWidth);
-  var curY = map(position.coords.latitude, minY, maxY, 0, displayHeight);
-  ellipse(curX, curY, 8);
+  var curX = map(position.properties.lon, minX, maxX, 0, displayWidth);
+  var curY = map(position.properties.lat, minY, maxY, 0, displayHeight);
+  //ellipse(curX, curY, 8);
 }
 
 function offsetFromPoint(dist, bearing, coords) {
   // used the formula here: https://gis.stackexchange.com/questions/5821/calculating-latitude-longitude-x-miles-from-point
-  var latInRadians = coords.latitude * (Math.PI/180);
+  var latInRadians = coords.lat * (Math.PI/180);
 
   var latitudeOffset = dist * Math.cos(bearing) / 111111;
-  var longitudeOffset = dist * Math.sin(bearing) / Math.cos(coords.latitude) / 111111;
+  var longitudeOffset = dist * Math.sin(bearing) / Math.cos(coords.lat) / 111111;
 
   var newCoords = {
-    latitude: coords.latitude + latitudeOffset,
-    longitude: coords.longitude + longitudeOffset,
+    latitude: coords.lat + latitudeOffset,
+    longitude: coords.lon + longitudeOffset,
   }
 
   return newCoords;
-}
-
-
-function gotError(position) {
-  console.log(position)
-  alert("Please enable location services for this device and browser.");
-}
-
-function addLocation(position) {
-  console.log("new position", position);
-  geoArray.push(position.coords);
 }
