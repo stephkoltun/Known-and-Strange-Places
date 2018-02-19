@@ -6,6 +6,6 @@
 
 Everything here is made in a single day, so forgive the lack of comments and hacky fixes. On day 101, the documentation process begins.
 
-[Follow daily on Instagram](https://www.instagram.com/knownandstrangeplaces/) or read about the daily process on the [blog](http://anotheridea.co/category/projects/known-and-strange-places/].
+[Follow daily on Instagram](https://www.instagram.com/knownandstrangeplaces/) or read about the daily process on the [blog](http://anotheridea.co/category/projects/known-and-strange-places/).
 
 -- A project by Stephanie Koltun, a relapsed architect, and Patrick Burke, a current architect
