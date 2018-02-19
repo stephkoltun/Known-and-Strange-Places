@@ -47,13 +47,15 @@
   <script type="text/javascript">
   $(document).ready(function() {
     console.log("document is ready");
-    //setUpContainers(configLargest);
-    showSimilar = setInterval(setUpContainers,1800,configLargest);
+    //setUpContainers(configSmallest);
+    showSimilar = setInterval(setUpContainers,1800,configSmallest);
   });
   </script>
 </head>
 
 <body>
+  <canvas id="original">
+  </canvas>
   <div id="replace">
   </div>
   <canvas id="tempWrapper">
