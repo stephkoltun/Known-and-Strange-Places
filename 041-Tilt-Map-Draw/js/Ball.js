@@ -27,7 +27,7 @@ Ball.prototype = {
         if (this.prevPositions.length > 1) {
           for (var i = 1; i < this.prevPositions.length; i++) {
             window.mGame.playgroundContext.strokeStyle = this.trace;
-            window.mGame.playgroundContext.lineWidth=3;
+            window.mGame.playgroundContext.lineWidth=7;
             window.mGame.playgroundContext.beginPath();
             window.mGame.playgroundContext.moveTo(this.prevPositions[i].x, this.prevPositions[i].y);
             window.mGame.playgroundContext.lineTo(this.prevPositions[i-1].x, this.prevPositions[i-1].y);
@@ -47,8 +47,8 @@ Ball.prototype = {
      */
     roll: function(motionX, motionY) {
 
-        this.position.y += motionY;
-        this.position.x += motionX;
+        this.position.y += motionY*2;
+        this.position.x += motionX*2;
 
         window.mGame.clearPlayground();
         this.draw();

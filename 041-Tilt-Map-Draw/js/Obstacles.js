@@ -13,7 +13,7 @@ Obstacles.prototype = {
 
       for (var i = 0; i < this.items.length; i++) {
         var shape = this.items[i];
-        fill("#BFCE54");
+        fill("#28788E");
 
         noStroke();
         beginShape();

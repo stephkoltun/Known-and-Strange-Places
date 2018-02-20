@@ -40,7 +40,7 @@ var CollisionManager = {
   obstacles: function(x, y) {
 
     var obstacles = window.mObstacles.items;
-    var buffer = (window.mBall.size+2)/2;
+    var buffer = (window.mBall.size+4)/2;
 
     var leftEdge = {
       x: window.mBall.position.x - buffer,

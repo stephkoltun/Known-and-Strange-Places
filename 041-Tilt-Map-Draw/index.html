@@ -36,7 +36,7 @@
       cnv.parent('game');
       noLoop();
 
-      $("#game").css("background-color", "#20A476");
+      $("#game").css("background-color", "#234994");
 
       var context = d3.select("canvas").node().getContext("2d");
 
@@ -45,15 +45,15 @@
 
       projection = d3.geoMercator()
       .translate([w/2, h/2])
-      .center([-73.968672, 40.767288])
-      .scale([9500000]);          // scale things wayyyy up
+      .center([-73.970263,40.768044])
+      .scale([18000000]);          // scale things wayyyy up
 
       path = d3.geoPath()
        .projection(projection)  // tell path generator to use albersUsa projection
        .context(context);
 
        // Initialize the point in a known okay location
-      startPoint = (projection([-73.966645,40.767316]));
+      startPoint = (projection([-73.970263,40.768044]));
 
       d3.json('Manhattan_Reduced.geojson', function(error, mapData) {
         var features = mapData.features;

@@ -21,7 +21,7 @@ function init() {
     window.mBall = new Ball({
         color: "#E7493D",
         trace: "#F05B53",
-        size: 10,
+        size: 18,
         xPos: startPoint[0],
         yPos: startPoint[1]
     });
