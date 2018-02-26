@@ -12,7 +12,7 @@ function Ball(settings) {
     this.prevPositions = [];
 
     /* Draw the ball */
-    this.draw();
+    //this.draw();
 }
 
 
@@ -51,9 +51,9 @@ Ball.prototype = {
         this.position.x += motionX*2;
 
         window.mGame.clearPlayground();
-        this.draw();
         window.mBoundaries.draw();
         window.mObstacles.draw();
+        this.draw();
     },
     /*
      * crash

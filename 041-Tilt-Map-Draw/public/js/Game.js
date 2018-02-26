@@ -16,20 +16,13 @@ function Game() {
 }
 
 Game.prototype = {
-    /*
-     * start
-     * Starts the level
-     */
+
     start: function() {
         /* Clear the playground */
-        this.clearPlayground();
-
-        // this.playground.setAttribute('width', window.innerWidth-5);
-        // this.playground.setAttribute('height', window.innerHeight-5);
+        //this.clearPlayground();
 
         /* Draw toy pieces */
         window.mBoundaries.init();
-        //this.generateObstacles();
         this.generateBall();
 
         /* Activate the device motion control */
@@ -38,14 +31,7 @@ Game.prototype = {
         /* The game is running now */
         this.status = 'running';
     },
-    /*
-     * step
-     * Push the game a step forward, called every time the ball moves
-     * @param {Double} motionX
-     * @param {Double} motionY
-     * @param {Double} motionZ
-     * @param {Integer} interval
-     */
+
     step: function(motionX, motionY, motionZ, interval) {
 
         var self = this;
@@ -75,9 +61,7 @@ Game.prototype = {
                     motionY = 0;
                 }
             }
-            else if (collision === 'topleft' || collision === 'topright' || collision === 'bottomleft' || collision === 'bottomright') {
-                return;
-            }
+
         }
 
         /* Make the ball roll at the right speed */
@@ -101,96 +85,36 @@ Game.prototype = {
             this.lastMotionY = motionY;
         }
 
+        $.ajax({
+          url: "/add",
+          type: 'POST',
+          dataType: 'application/json',
+          data: {
+            'x': window.mBall.position.x,
+            'y': window.mBall.position.y,
+          },
+        })
     },
-    /*
-     * pause
-     * Pause the game
-     */
+
     pause: function() {
         this.status = 'paused';
     },
-    /*
-     * resume
-     * Resume the game
-     */
+
     resume: function() {
         var self = this;
         setTimeout(function() {
             self.status = 'running';
         }, 1000);
     },
-    /*
-     * stop
-     * Stop the game
-     */
+
     stop: function() {
         this.status = 'stopped';
     },
-    /*
-     * clearPlayground
-     * Remove toy pieces from the playground
-     */
+
     clearPlayground: function() {
         this.playgroundContext.clearRect(0, 0, this.playground.width, this.playground.height);
     },
-    /*
-     * generateObstacles
-     * Draw obstacles in random positions
-     */
-    generateObstacles: function() {
-        window.mObstacles.items = [];
 
-        var numberOfVerticalWalls = 1 + (Math.random() * 2 * window.mBoundaries.width / 480);
-        var numberOfHorizontalWalls = 1 + (Math.random() * 2 * window.mBoundaries.height / 320);
-
-        /* vertical positioned obstacles */
-        for (var i = 0; i < numberOfVerticalWalls; i++) {
-            var width = 20;
-            var height = (Math.random() - 0 + 1) * 100 * window.mBoundaries.height / 320;
-
-            var topMax = window.mBoundaries.height - height + window.mBoundaries.top - window.mTarget.size;
-            var topMin = window.mBoundaries.top - 0 + window.mTarget.size;
-            var top = (Math.random() * (topMax - topMin)) - 0 + topMin;
-
-            var leftMax = window.mBoundaries.width - width + window.mBoundaries.left - window.mBall.size;
-            var leftMin = window.mBoundaries.left - 0 + window.mBall.size;
-            var left = (Math.random() * (leftMax - leftMin)) - 0 + leftMin;
-
-            window.mObstacles.items.push({
-                top: top,
-                left: left,
-                width: width,
-                height: height
-            });
-        }
-
-        /* horizontal positioned obstacles */
-        for (var i = 0; i < numberOfHorizontalWalls; i++) {
-            var width = (Math.random() - 0 + 1) * 100 * window.mBoundaries.width / 480;
-            var height = 20;
-
-            var topMax = window.mBoundaries.height - height + window.mBoundaries.top - window.mTarget.size;
-            var topMin = window.mBoundaries.top - 0 + window.mTarget.size;
-            var top = (Math.random() * (topMax - topMin)) - 0 + topMin;
-
-            var leftMax = window.mBoundaries.width - width + window.mBoundaries.left - window.mBall.size;
-            var leftMin = window.mBoundaries.left - 0 + window.mBall.size;
-            var left = (Math.random() * (leftMax - leftMin)) - 0 + leftMin;
-
-            window.mObstacles.items.push({
-                top: top,
-                left: left,
-                width: width,
-                height: height
-            });
-        }
-
-        window.mObstacles.draw();
-    },
-    /*
-     * generateBall
-     * Draw the ball in a random position
-     */
     generateBall: function() {
         window.mBall.size = window.mBall.originalSize;
 

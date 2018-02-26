@@ -2,8 +2,6 @@
 // https://developer.mozilla.org/en-US/Apps/Fundamentals/gather_and_modify_data/responding_to_device_orientation_changes
 // https://github.com/voronomari/rolling-ball
 
-var startPoint;
-
 function init() {
     console.log("start game");
 

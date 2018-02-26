@@ -39,8 +39,8 @@ var CollisionManager = {
   */
   obstacles: function(x, y) {
 
-    var obstacles = window.mObstacles.items;
-    var buffer = (window.mBall.size+4)/2;
+    //var buffer = (window.mBall.size+4)/2;
+    var buffer = (window.mBall.size-2)/2;
 
     var leftEdge = {
       x: window.mBall.position.x - buffer,
@@ -82,28 +82,31 @@ var CollisionManager = {
       y: window.mBall.position.y + buffer
     };
 
+    var obstacles = window.mObstacles.items;
 
     for (var i = 0; i < obstacles.length; i++) {
-      var poly = obstacles[i].poly;
-      var hitLeft = collidePointPoly(leftEdge.x,leftEdge.y,poly);
-      var hitLeftTop = collidePointPoly(leftTop.x,leftTop.y,poly);
-      var hitLeftBottom = collidePointPoly(leftBottom.x,leftBottom.y,poly);
+      if (obstacles[i].visible == true) {
+        var poly = obstacles[i].poly;
+        var hitLeft = collidePointPoly(leftEdge.x,leftEdge.y,poly);
+        var hitLeftTop = collidePointPoly(leftTop.x,leftTop.y,poly);
+        var hitLeftBottom = collidePointPoly(leftBottom.x,leftBottom.y,poly);
 
-      var hitRight = collidePointPoly(rightEdge.x,rightEdge.y,poly);
-      var hitRightTop = collidePointPoly(rightTop.x,rightTop.y,poly);
-      var hitRightBottom = collidePointPoly(rightBottom.x,rightBottom.y,poly);
+        var hitRight = collidePointPoly(rightEdge.x,rightEdge.y,poly);
+        var hitRightTop = collidePointPoly(rightTop.x,rightTop.y,poly);
+        var hitRightBottom = collidePointPoly(rightBottom.x,rightBottom.y,poly);
 
-      var hitTop = collidePointPoly(topEdge.x,topEdge.y,poly);
-      var hitBottom = collidePointPoly(bottomEdge.x,bottomEdge.y,poly);
+        var hitTop = collidePointPoly(topEdge.x,topEdge.y,poly);
+        var hitBottom = collidePointPoly(bottomEdge.x,bottomEdge.y,poly);
 
-      if (hitLeft) {
-        return 'left';
-      } else if (hitRight) {
-        return 'right';
-      } else if (hitTop || hitLeftTop || hitRightTop) {
-        return 'top';
-      } else if (hitBottom || hitLeftBottom || hitRightBottom) {
-        return 'bottom';
+        if (hitLeft || hitLeftTop || hitLeftBottom) {
+          return 'left';
+        } else if (hitRight || hitRightTop || hitRightBottom) {
+          return 'right';
+        } else if (hitTop) {
+          return 'top';
+        } else if (hitBottom) {
+          return 'bottom';
+        }
       }
     }
 

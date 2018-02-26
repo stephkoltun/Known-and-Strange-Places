@@ -23,7 +23,7 @@ Boundaries.prototype = {
      * Draw the boundaries
      */
     draw: function() {
-        window.mGame.playgroundContext.strokeStyle = '#000000';
+        window.mGame.playgroundContext.strokeStyle = '#234994';
         window.mGame.playgroundContext.beginPath();
         window.mGame.playgroundContext.rect(this.left, this.top, this.width, this.height);
         window.mGame.playgroundContext.closePath();
