@@ -27,31 +27,32 @@ var colorPairs = [
     background: "#3385B7"
   },
 ]
-var randomNum = Math.floor(Math.random()*colorPairs.length);
-var thisColor = colorPairs[randomNum];
-var saveColor = colorPairs[randomNum].line;
+var randomNum;
+var thisColor;
+var saveColor;
+
+var curDataset = 0;
+var geoArray = hello[curDataset].features;
+console.log(geoArray);
+var drawPosition = 1;
 
 function setup() {
   displayWidth = $(window).width();
   displayHeight = $(window).height();
   var cnv = createCanvas(displayWidth,displayHeight);
   cnv.parent("drawArea");
-    configure();
+  configure();
 }
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
 var mapObj = new mapboxgl.Map({
    container: 'mapArea',
    style: 'mapbox://styles/mapbox/satellite-v9',
-   center:[hello.features[140].properties.lon,hello.features[140].properties.lat,],
+   center:[geoArray[140].properties.lon,geoArray[140].properties.lat],
    zoom: 16,
    interactive: false,
  });
 
-var geoArray = hello.features;
-var drawPosition = 1;
-
-$("#drawArea").css("background-color", thisColor.background);
 
 function mousePressed() {
   $("#drawArea").css("background-color", "rgba(0,0,0,0)");
@@ -64,35 +65,53 @@ function mouseReleased() {
 }
 
 function draw() {
-
   if (frameCount % 5 == 0) {
-    console.log("draw");
     noFill();
     strokeCap(ROUND);
     strokeJoin(ROUND);
     stroke(thisColor.line);
     strokeWeight(8);
+
     beginShape();
-
-    for (var i = 0; i < drawPosition; i++) {
-      //map geo location to drawing coords
-      var thisPoint = geoArray[i].properties;
-      var curX = map(thisPoint.lon, minX, maxX, 0, displayWidth);
-      var curY = map(thisPoint.lat, minY, maxY, 0, displayHeight);
-      vertex(curX, curY);
-    }
-
+      for (var i = 0; i < drawPosition; i++) {
+        //map geo location to drawing coords
+        var thisPoint = geoArray[i].properties;
+        var curX = map(thisPoint.lon, minX, maxX, 0, displayWidth);
+        var curY = map(thisPoint.lat, minY, maxY, 0, displayHeight);
+        vertex(curX, curY);
+      }
     endShape();
 
-    if (drawPosition < geoArray.length-1) {
+    if (drawPosition == (geoArray.length-1)) {
+      if (curDataset < hello.length-1) {
+        curDataset++;
+      } else {
+        curDataset = 0;
+      }
+
+      geoArray = hello[curDataset].features;  // change to next hello
+      clear();  // erase the canvas
+      configure();  // reset the extents
+      drawPosition = 0; //start from the beginning
+
+    } else if (drawPosition < geoArray.length-1) {
       drawPosition++;
     }
   }
 }
 
 function configure() {
+  // set colors
+  randomNum = Math.floor(Math.random()*colorPairs.length);
+  thisColor = colorPairs[randomNum];
+  saveColor = colorPairs[randomNum].line;
+  $("#drawArea").css("background-color", thisColor.background);
 
-  var position = hello.features[140];
+  var position = hello[curDataset].features[140];
+
+  // recenter map
+  mapObj.jumpTo({center:[geoArray[140].properties.lon,geoArray[140].properties.lat]});
+
   // radians
   var northBearing = 0;
   var eastBearing = Math.PI/2;
@@ -122,11 +141,11 @@ function configure() {
   minY = newNorth.latitude;
   maxY = newSouth.latitude;
 
-  noStroke();
-  fill(thisColor.line);
-  var curX = map(position.properties.lon, minX, maxX, 0, displayWidth);
-  var curY = map(position.properties.lat, minY, maxY, 0, displayHeight);
-  //ellipse(curX, curY, 8);
+  // noStroke();
+  // fill(thisColor.line);
+  // var curX = map(position.properties.lon, minX, maxX, 0, displayWidth);
+  // var curY = map(position.properties.lat, minY, maxY, 0, displayHeight);
+  // ellipse(curX, curY, 8);
 }
 
 function offsetFromPoint(dist, bearing, coords) {

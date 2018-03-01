@@ -13,31 +13,36 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
     <script src="p5.js"></script>
-    <script src="HelloWorld.js"></script>
+    <script src="p5.dom.js"></script>
+    <script src="drawHello.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             console.log("document is ready");
-          
-
         });
     </script>
 </head>
 
 <body>
-  <!-- <div id="desc">
-    <h1>Watch Where You're Going (040)</h1>
-    <h2>Walk around to draw based on your location</h2>
-  </div> -->
-
-
   <div id="mapArea">
   </div>
 
-  <div id="drawArea">
+  <div id="wrapper">
   </div>
 
-  <script src='drawFake.js'></script>
+  <!-- <div id="handVid">
+    <video autoplay loop>
+      <source src="vid/handHello.mp4" type="video/mp4">
+    </video>
+  </div> -->
+
+  <div id="tiltVid">
+    <video autoplay loop>
+      <source src="vid/tiltHello.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <script src='display.js'></script>
 </body>
 
 </html>
