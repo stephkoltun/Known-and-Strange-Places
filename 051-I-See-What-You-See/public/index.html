@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>I See What You See - But Not Really (051)</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+    <script src="interaction.js"></script>
+
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        getLocation();
+      });
+    </script>
+  </head>
+
+  <body>
+    <form method="POST" action="/addUser">
+        <label for="myname">Give yourself a name.</label><br>
+        <input type="text" name="myname"/><br>
+        <input type="button" name="mynamebutton" value="Next" /><br>
+        <label for="who">Who are you looking for?</label><br>
+        <input type="text" name="who"/><br>
+        <label for="lat">lat</label><br>
+        <input type="number" name="lat" id="lat" step="0.0000001"/><br>
+        <label for="lon">long</label><br>
+        <input type="number" name="lon" id="lon" step="0.0000001"/><br>
+        <input type="submit" name="mynamebutton" value="Connect us!" />
+    </form>
+  </body>
+</html>

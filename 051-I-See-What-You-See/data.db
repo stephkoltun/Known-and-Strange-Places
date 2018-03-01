@@ -1,0 +1,6 @@
+{"name":"Patrick","lookingFor":"Steph","startTime":"2018-03-01T11:30:06-0500","curLocation":{"lat":40.6752759,"lon":-73.9540804},"connected":true,"_id":"7lH7t46aNEHlG5dM"}
+{"name":"Steph","lookingFor":"Patrick","startTime":"2018-03-01T11:29:52-0500","curLocation":{"lat":40.6752542,"lon":-73.9541055},"connected":false,"_id":"MQ2HTJO3Z25ugGsf"}
+{"$$deleted":true,"_id":"7lH7t46aNEHlG5dM"}
+{"$$deleted":true,"_id":"MQ2HTJO3Z25ugGsf"}
+{"name":"Patrick","lookingFor":"Steph","startTime":"2018-03-01T11:38:44-0500","curLocation":{"lat":40.6752759,"lon":-73.9540804},"connected":false,"_id":"6cwQIsnxUvQYaOAs"}
+{"name":"Steph","lookingFor":"Patrick","startTime":"2018-03-01T11:41:08-0500","curLocation":{"lat":40.675261,"lon":-73.9541151},"connected":true,"_id":"CTGjL3L8zNm0CSXh"}
