@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tilt Map Draw (041)</title>
+
+  <link rel='stylesheet' href='style.css' type='text/css'>
+
+  <!-- LIBRARIES! -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="js/p5.js"></script>
+  <script src="js/p5.collide2d.js"></script> <!-- https://github.com/bmoren/p5.collide2D#collidepointpoly -->
+
+  <script src="js/Boundaries.js"></script>
+  <script src="js/Obstacles.js"></script>
+  <script src="js/Ball.js"></script>
+  <script src="js/CollisionManager.js"></script>
+  <script src="js/DeviceMotionControl.js"></script>
+  <script src="js/Game.js"></script>
+  <script src="js/start.js"></script>
+
+</head>
+
+<body>
+  <div id="game">
+  </div>
+  <script type="text/javascript">
+    var w;
+    var h;
+    function setup() {
+      console.log("setup canvas");
+      w = $(window).width();
+      h = $(window).height();
+      var cnv = createCanvas(w-5,h-5);
+      cnv.parent('game');
+      noLoop();
+
+      var backgroundCols = ["#20A476", "#B5BDC8", "#BFCE54", "#E7493D","#8B508F"];
+      var randomback = backgroundCols[Math.floor(Math.random()*backgroundCols.length)];
+
+      $("#game").css("background-color", randomback);
+
+      var context = d3.select("canvas").node().getContext("2d");
+
+      var path;
+      var projection;
+
+      projection = d3.geoMercator()
+      .translate([w/2, h/2])
+      .center([-73.970263,40.768044])
+      .scale([18000000]);          // scale things wayyyy up
+
+      path = d3.geoPath()
+       .projection(projection)  // tell path generator to use albersUsa projection
+       .context(context);
+
+       // Initialize the point in a known okay location
+      startPoint = (projection([-73.970263,40.769244]));
+
+      d3.json('Manhattan_Reduced.geojson', function(error, mapData) {
+        var features = mapData.features;
+
+        for (var f = 0; f < features.length; f++) {
+          var thisFeature = features[f];
+
+          // check if the feature is within the visible area
+          var bounds = path.bounds(thisFeature);
+
+          if (bounds[0][0] > -350 && bounds[0][1] > -350 && bounds[1][0] > -350 && bounds[1][1] > -350) {
+            var featObj = {
+              vertices:[],
+              poly: [],
+            }
+
+            for (var c = 0; c < thisFeature.geometry.coordinates[0].length; c++) {
+
+              var point = thisFeature.geometry.coordinates[0][c];
+              var mappedPoint = projection(point);
+
+              var vert = {
+                "x": mappedPoint[0],
+                "y": mappedPoint[1]
+              }
+
+              featObj.vertices.push(vert);
+            }
+
+            blocks.push(featObj);
+          }
+          if (f == features.length-1) {
+            init();
+          }
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>
