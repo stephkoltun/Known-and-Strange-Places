@@ -9,6 +9,11 @@ var express = require('express');			// include express.js
 var app = express();						// a local instance of it
 var bodyParser = require('body-parser');	// include body-parser
 
+var ExpressPeerServer = require('peer').ExpressPeerServer;
+var options = {
+    debug: true
+}
+
 // set up a database for storing info
 var Datastore = require('nedb');
 var bodyUser = new Datastore({filename: "data.db", autoload: true});
@@ -22,6 +27,8 @@ var credentials = {
 app.use(bodyParser.json({limit: '50mb'})); 						               // for  application/json
 app.use(bodyParser.urlencoded({extended: false}));    // for application/x-www-form-urlencoded
 app.use(express.static('public'));
+
+
 
 app.set('view engine', 'ejs');
 
@@ -133,6 +140,7 @@ function addNewUser(info) {
 
 // start the server
 var server = http.createServer(credentials, app);
+app.use('/peerjs', ExpressPeerServer(server, options));
 //var server = http.createServer(app);
 server.listen(port, serverStart);
 // route handlers

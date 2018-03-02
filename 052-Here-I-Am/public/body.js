@@ -14,7 +14,13 @@ function setup() {
   cnv.parent("cnv");  // set parent of canvas
 
   var kinectronIP = "192.168.1.5";
-  kinectron = new Kinectron(kinectronIP);
+  kinectron = new Kinectron("stephanie",
+  {
+    "host": "sk6385.itp.io",
+    "port": "443",
+    "path": "/peerjs",
+    "secure":"true"
+  });
 
   kinectron.makeConnection();
 
