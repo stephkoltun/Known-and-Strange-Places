@@ -15,7 +15,5 @@ xxx-Satellite-Clustering/generateBlockImages
 034-Routine-Grid/img
 035-Routine-Differencing/img
 */*/node_modules
-*/data.db
-*/my-cert.pem
-*/my-key.pem
 *.db
+*.pem
