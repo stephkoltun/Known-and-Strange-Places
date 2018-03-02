@@ -1,8 +1,7 @@
-var port = 443;
+var port = 3040;
 
-var fs = require('fs'); // Using the filesystem module
 var express = require('express');			// include express.js
-var app = express();						// a local instance of it
+var server = express();						// a local instance of it
 var bodyParser = require('body-parser');	// include body-parser
 var dateFormat = require('dateformat');
 var http = require('https');
@@ -11,21 +10,16 @@ var http = require('https');
 var Datastore = require('nedb');
 var activeUsers = new Datastore({filename: "data.db", autoload: true});
 
-var credentials = {
-    key: fs.readFileSync('my-key.pem'),
-    cert: fs.readFileSync('my-cert.pem')
-};
-
 // you need a couple of parsers for the body of a POST request:
-app.use(bodyParser.json()); 						               // for  application/json
-app.use(bodyParser.urlencoded({extended: false}));    // for application/x-www-form-urlencoded
-app.use(express.static('public'));
+server.use(bodyParser.json()); 						               // for  application/json
+server.use(bodyParser.urlencoded({extended: false}));    // for application/x-www-form-urlencoded
+server.use(express.static('public'));
 
-app.set('view engine', 'ejs');
+server.set('view engine', 'ejs');
 
 // this runs after the server successfully starts:
 function serverStart() {
-  var p = server.address().port;
+  var p = this.address().port;
   console.log('Server listening on port '+ p);
 
   // clear all users when the server restarts
@@ -204,11 +198,10 @@ function checkForPartner(partner) {
 };
 
 // start the server
-var server = http.createServer(credentials, app);
 server.listen(port, serverStart);
 // route handlers
-app.post('/addUser', sessionOpened);
-app.post('/updateLocation', updateLocation);
-app.post('/waitingPartner', isMyPartnerHereYet);
-app.post('/getPartnerLocation', lookupPartnerLocation);
-app.get('/', homePage);
+server.post('/addUser', sessionOpened);
+server.post('/updateLocation', updateLocation);
+server.post('/waitingPartner', isMyPartnerHereYet);
+server.post('/getPartnerLocation', lookupPartnerLocation);
+server.get('/', homePage);

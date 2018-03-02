@@ -13,7 +13,6 @@ function checkForPartner(partner) {
       console.log(data);
       if (data.connected) {
         myUserData.connected = false;
-        $("h1").css("color", "#FFFFFF");
         clearInterval(lookupPartner);
         // update view...
         updateText();

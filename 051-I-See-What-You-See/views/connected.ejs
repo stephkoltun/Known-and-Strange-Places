@@ -19,7 +19,6 @@
     $(document).ready(function() {
       // let's make sure I'm updating my location with the server
       navigator.geolocation.watchPosition(sendNewLocation, locationError, geoOptions);
-      $("h1").css("color", "#FFFFFF");
       var refreshStreetview = setInterval(getPartnerImage,2000);
     });
 
