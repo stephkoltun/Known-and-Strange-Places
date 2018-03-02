@@ -15,6 +15,8 @@ server.use(bodyParser.json()); 						               // for  application/json
 server.use(bodyParser.urlencoded({extended: false}));    // for application/x-www-form-urlencoded
 server.use(express.static('public'));
 
+server.set('view engine', 'ejs');
+
 // this runs after the server successfully starts:
 function serverStart() {
   var p = this.address().port;
@@ -23,7 +25,12 @@ function serverStart() {
   // clear all users when the server restarts
   activeUsers.remove({}, {multi: true}, function (err, numRemoved) {
     console.log(numRemoved + " documents were removed");
-  })
+  });
+}
+
+// handler for /
+function homePage(request, response) {
+  response.render("home.ejs");
 }
 
 // handler for /addUser
@@ -43,12 +50,13 @@ function sessionOpened(request, response) {
         .then(function(newUserObj) {
           console.log("-- new user added to database");
           console.log(newUserObj)
+
           if (newUserObj.connected) {
             console.log("who they're looking for is also here!");
-            // send to the connected page, using EJS template so I can pass in data to it.
+            response.render("connected.ejs", {"data":newUserObj});
           } else {
             console.log("we need to wait for their partner");
-            // send to the connected page, using EJS template so I can pass in data to it.
+            response.render("waiting.ejs", {"data":newUserObj});
           }
         })
         .catch(function(err) {
@@ -56,12 +64,83 @@ function sessionOpened(request, response) {
         })
       // check if who they're looking for is there?
     } else {
-      console.log("this user already exists");
+      console.log("this user already exists. let's delete them. and then add them");
+      activeUsers.remove({name: request.body.myname}, {}, function (err, numRemoved) {
+        console.log(numRemoved + " documents were removed");
+        var newUserPromise = addNewUser(request.body)
+          .then(function(newUserObj) {
+            console.log("-- new user added to database");
+            console.log(newUserObj)
+
+            if (newUserObj.connected) {
+              console.log("who they're looking for is also here!");
+              response.render("connected.ejs", {"data":newUserObj});
+            } else {
+              console.log("we need to wait for their partner");
+              response.render("waiting.ejs", {"data":newUserObj});
+            }
+          })
+          .catch(function(err) {
+            console.log("couldn't add new user", err);
+          })
+      });
     }
-    response.status(204).send();   // sends nothing back
   })
 }
 
+// handler to get partner's location
+function lookupPartnerLocation(request, response) {
+  activeUsers.findOne({name: request.body.lookingFor}, function (err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    if (doc != null) {
+      var partnerLocation = doc.curLocation;
+      response.send({"location": partnerLocation});
+    }
+  })
+}
+
+// handler to keep tabs on an absent partner
+function isMyPartnerHereYet(request, response) {
+  console.log("--- let's see if " + request.body.lookingFor + " is here yet");
+
+  var areTheyHere = checkForPartner(request.body.lookingFor)
+    .then(function(resStatus) {
+      console.log("partner is " + resStatus.here);
+      response.send({"connected": resStatus.here});
+    })
+    .catch(function(err) {
+      console.log("couldn't check for partner", err);
+    })
+}
+
+// handler to update a user's location
+function updateLocation(request, response) {
+  console.log("--- let's update " + request.body.username);
+  console.log(request.body);
+
+  var query = {'name': request.body.username};
+  var options = {};
+
+  var newCoords = {
+    'lat': parseFloat(request.body.lat),
+    'lon': parseFloat(request.body.lon)
+  };
+
+  activeUsers.update(query, {$set: {'curLocation': newCoords}}, options, function (err, numUpdated) {
+    if (err) {
+      console.log("unable to update", err);
+    } else {
+      console.log("updated " + request.body.username + " with location " + newCoords.lat + "," + newCoords.lon);
+      response.status(204).send();   // sends nothing back
+    }
+  });
+}
+
+
+
+// ----- HELPER DATABASE FUNCTIONS ------ //
 function addNewUser(info) {
   return new Promise(function(resolve, reject) {
     var now = new Date();
@@ -122,4 +201,7 @@ function checkForPartner(partner) {
 server.listen(port, serverStart);
 // route handlers
 server.post('/addUser', sessionOpened);
-//server.get('/allReadings', allReadings);
+server.post('/updateLocation', updateLocation);
+server.post('/waitingPartner', isMyPartnerHereYet);
+server.post('/getPartnerLocation', lookupPartnerLocation);
+server.get('/', homePage);
