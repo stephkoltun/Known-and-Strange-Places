@@ -1,0 +1,16 @@
+body {
+	margin: 0 0 0 0;
+	padding: 0;
+	font-family: Inconsolata;
+}
+
+#wrapper {
+	/* margin: 0;
+	padding: 0;
+	font-size: 0;
+	line-height: 0;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%); */
+}
