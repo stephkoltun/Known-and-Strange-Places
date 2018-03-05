@@ -1,7 +1,7 @@
 from os import listdir
 from os.path import isfile, join
 
-mypath = 'img/monday/'
+mypath = '/Users/pburke/Documents/GitHub/Known-and-Strange-Places/034-Routine-Grid/img/monday/'
 
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
@@ -11,7 +11,7 @@ for index, filename in enumerate(onlyfiles):
     # a photo every five minutes
     if (index % 1 == 0):
         # create HTML structure
-        base = "'" + mypath + filename + "',\n"
+        base = "'/img/monday/" + filename + "',\n"
         totalString += base
 
 totalString += "]"

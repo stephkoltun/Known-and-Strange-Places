@@ -62,7 +62,7 @@ function showClasses() {
 
     var xPos = width/2 - bWidth*3/2;
     var yPos = height/2 - bHeight*3/2;
-    image(detected, xPos, yPos, bWidth*3, bHeight*3);
+    image(detected, 0, yPos, bWidth*3, bHeight*3);
 
     fill(0);
     textFont("Karla");
