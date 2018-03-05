@@ -11,7 +11,7 @@ for index, filename in enumerate(onlyfiles):
     # a photo every five minutes
     if (index % 1 == 0):
         # create HTML structure
-        base = "'/img/monday/" + filename + "',\n"
+        base = "'img/monday/" + filename + "',\n"
         totalString += base
 
 totalString += "]"

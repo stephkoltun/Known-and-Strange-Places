@@ -69,7 +69,14 @@ function showClasses() {
     textSize(48);
 
     textAlign(LEFT,CENTER);
-    text("This is a " + predictions[predIndex].class, 0, height-60);
+    var a = "";
+    var firstLetter = predictions[predIndex].class.substring(0,1);
+    if (firstLetter == "e" || firstLetter == "a" || firstLetter == "u" || firstLetter == "i" || firstLetter == "o") {
+      a = "an ";
+    } else {
+      a = "a ";
+    }
+    text("This is " + a + predictions[predIndex].class, 0, height-60);
     // textAlign(CENTER,CENTER);
     // text(predictions[predIndex].class, width/2, height-60);
 
