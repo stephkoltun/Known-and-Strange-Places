@@ -1,0 +1,16 @@
+body {
+	margin: 0 0 0 0;
+	padding: 0;
+}
+
+#wrapper {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+video {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
