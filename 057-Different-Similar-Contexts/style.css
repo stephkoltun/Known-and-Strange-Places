@@ -3,34 +3,29 @@ body {
 	padding: 0;
 }
 
-#wrapper, #replace {
-	opacity: 0;
+#displayCanvas{
 	position: absolute;
 	top: 50%;
 	left:50%;
 	transform: translate(-50%,-50%);
+	width: 768px;
+	height: 768px;
 }
 
-#tempWrapper,#tempReplace{
-	position: absolute;
-	top: 50%;
-	left: 51%;
-	transform: translate(0,-50%);
+#stagingCanvas, #tempCanvas{
+	opacity: 0;
+	width: 768px;
+	height: 768px;
 }
 
-#original {
-	position: absolute;
-	top: 50%;
-	right: 51%;
-	transform: translate(0,-50%);
-}
-
-.tile {
-	z-index: 0;
-	margin: 0;
+div {
 	float: left;
-	display: inline;
 }
+
+canvas {
+	float: left;
+}
+
 
 .mapboxgl-control-container {
 	display: none;

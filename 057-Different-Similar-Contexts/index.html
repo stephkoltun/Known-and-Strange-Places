@@ -3,66 +3,43 @@
 <html lang="en">
 
 <head>
-  <title>Frankenstein (038)</title>
+  <title>Different Similar Contexts (057)</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' href='style.css' type='text/css'>
 
   <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
-  <script src='config.js'></script>
 
-  <script src='GEOJSON/001.js'></script>
-  <script src='GEOJSON/002.js'></script>
-  <script src='GEOJSON/003.js'></script>
-  <script src='GEOJSON/004.js'></script>
-  <script src='GEOJSON/005.js'></script>
-  <script src='GEOJSON/006.js'></script>
-  <script src='GEOJSON/007.js'></script>
-  <script src='GEOJSON/008.js'></script>
-  <script src='GEOJSON/009.js'></script>
-  <script src='GEOJSON/010.js'></script>
-  <script src='GEOJSON/011.js'></script>
-  <script src='GEOJSON/012.js'></script>
-  <script src='GEOJSON/013.js'></script>
-  <script src='GEOJSON/014.js'></script>
-  <script src='GEOJSON/015.js'></script>
-  <script src='GEOJSON/016.js'></script>
-  <script src='GEOJSON/017.js'></script>
-  <script src='GEOJSON/018.js'></script>
-  <script src='GEOJSON/019.js'></script>
-  <script src='GEOJSON/020.js'></script>
-  <script src='GEOJSON/021.js'></script>
-  <script src='GEOJSON/022.js'></script>
-  <script src='GEOJSON/023.js'></script>
-  <script src='GEOJSON/024.js'></script>
-  <script src='GEOJSON/025.js'></script>
-  <script src='allTiles.js'></script>
   <!-- LIBRARIES! -->
-
   <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
-  <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script> -->
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
+
+  <script src='config.js'></script>
+  <!-- <script src='stepped-first.js'></script> -->
+  <script src='stepped-tenth.js'></script>
+  <!-- <script src='stepped-tennis.js'></script> -->
+
   <script type="text/javascript">
   $(document).ready(function() {
     console.log("document is ready");
-    //setUpContainers(configSmallest);
-    showSimilar = setInterval(setUpContainers,1800,configSmallest);
+
+    setInterval(copyTile, 500);
+    setInterval(changeLocation, 4500);
   });
   </script>
 </head>
 
 <body>
-  <canvas id="original">
+  <canvas id="displayCanvas" width="768" height="768">
   </canvas>
-  <div id="replace">
+  <canvas id="tempCanvas" width="768" height="768">
+  </canvas>
+  <div id="stagingCanvas">
   </div>
-  <canvas id="tempWrapper">
-  </canvas>
-  <canvas id="tempReplace">
-  </canvas>
-  <script src='frankenstein.js'></script>
+
+  <script src='display.js'></script>
 </body>
 
 </html>
