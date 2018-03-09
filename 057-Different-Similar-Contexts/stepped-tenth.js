@@ -42,23 +42,6 @@ var steppedPlaces = {
     },
     {
       "type": "Feature",
-      "id": "New_York_40.8008443_-73.9348954_z19.png",
-      "properties": {
-        "cluster": {
-          "x": 0.0312159,
-          "y": 0.203045
-        }
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -73.9348954,
-          40.8008443
-        ]
-      }
-    },
-    {
-      "type": "Feature",
       "id": "New_York_40.8154743_-73.9438199_z19.png",
       "properties": {
         "cluster": {
