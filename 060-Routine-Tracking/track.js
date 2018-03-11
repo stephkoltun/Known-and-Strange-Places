@@ -1,81 +1,108 @@
 var trackingData;
+var capture;
+
+//var videoLoad = false;
 
 function preload(){
-  trackingData = loadTable('tsq-monday.csv','csv','header');
+  trackingData = loadTable('data/timesquare_720.csv','csv','header');
 }
 
 function setup() {
-  var cnv = createCanvas(800,640);
+  var cnv = createCanvas(1280,720);
   cnv.parent("wrapper");
 
-  frameRate(5);
+
+  frameRate(60);
+
+  // for (var i = 1; i < 500; i++) {
+  //   drawTrackedBody(i);
+  // }
+
 }
+
+
+
+var curFrame = 1;
+
 
 function draw() {
 
-  //get rows with frame count number
-  var prevFrame = frameCount + 1;
-  var nextFrame = frameCount + 2;
+  //background(255,50);
 
-  var regexPrev = '^' + prevFrame + '$';
-  var regexPrevInput = new RegExp(regexPrev, 'g');
-  var prevRows = trackingData.matchRows(regexPrevInput, 'frame_id');
+  var path = "frames/frame_" + (curFrame-1) + ".jpg";
+  loadImage(path, function(thisImg) {
 
-  var regexNext = '^' + nextFrame + '$';
-  var regexNextInput = new RegExp(regexNext, 'g');
-  var nextRows = trackingData.matchRows(regexNextInput, 'frame_id');
+    //get rows with frame count number
+    var regex = '^' + curFrame + '$';
+    var regexInput = new RegExp(regex, 'g');
+    var rows = trackingData.matchRows(regexInput, 'frame_id');
 
+    for (var r = 0; r < rows.length; r++) {
+      var feature = rows[r].obj;
 
+      var colorNum = feature.track_id % 120 *2;
+      var color = hexLarge[colorNum];
 
-  for (var r = 0; r < prevRows.length; r++) {
-    var prevFeature = prevRows[r].obj;
+      // stroke(color);
+      // strokeWeight(3);
+      // fill(color);
 
-    var colorNum = prevFeature.track_id % 147;
-    var color = CSS_COLOR_NAMES[colorNum];
-    noStroke();
-    fill(color);
-    var xPos = prevFeature.x;
-    var yPos = prevFeature.y;
-    ellipse(xPos,yPos,5,5);
+      if (feature.w < 200) {
 
-    stroke(color);
-    strokeWeight(3);
-    noFill();
-    // find matching object in next frame
-    for (var m = 0; m < nextRows.length; m++) {
-      var nextFeature = nextRows[m].obj;
-      if (nextFeature.track_id == prevFeature.track_id) {
-        line(prevFeature.x, prevFeature.y, nextFeature.x, nextFeature.y)
+        //rect(feature.x,feature.y,feature.w,feature.h);
+        var detected = thisImg.get(feature.x,feature.y,feature.w,feature.h);
+        image(detected, feature.x,feature.y);
+
       }
     }
+  });
+  curFrame++;
+}
 
 
+function drawTrackedBody(id) {
+  var regex = '^' + id + '$';
+  var regexInput = new RegExp(regex, 'g');
+  //console.log(regexInput);
+  var tracked = trackingData.matchRows(regexInput, 'track_id');
 
+  var colorNum = id % 147;
+  var color = CSS_COLOR_NAMES[colorNum];
+  stroke(color);
+  strokeCap(ROUND);
+  strokeJoin(ROUND);
+  strokeWeight(11);
+  noFill();
 
-    //rect(feature.x,feature.y,feature.w,feature.h);
+  if (tracked.length > 25) {
+    var simplePoints = smoothCurve(tracked);
+
+    var d = dist(simplePoints[0].x, simplePoints[0].y,simplePoints[simplePoints.length-1].x, simplePoints[simplePoints.length-1].y);
+
+    if (d > 30) {
+      beginShape();
+      curveVertex(simplePoints[0].x, simplePoints[0].y);
+
+      for (var s = 0; s < simplePoints.length; s++) {
+        curveVertex(simplePoints[s].x, simplePoints[s].y);
+      }
+      curveVertex(simplePoints[simplePoints.length-1].x, simplePoints[simplePoints.length-1].y);
+      endShape();
+    }
   }
 }
 
-// var table;
-// function setup()
-// { table = new p5.Table();
-//   table.addColumn('name');
-//   table.addColumn('type');
-//   var newRow = table.addRow();
-//   newRow.setString('name', 'Lion');
-//   newRow.setString('type', 'Mammal');
-//   newRow = table.addRow();
-//   newRow.setString('name', 'Snake');
-//   newRow.setString('type', 'Reptile');
-//   newRow = table.addRow();
-//   newRow.setString('name', 'Mosquito'); n
-//   ewRow.setString('type', 'Insect');
-//   newRow = table.addRow();
-//   newRow.setString('name', 'Lizard');
-//   newRow.setString('type', 'Reptile');
-//   var rows = table.matchRows('R.*', 'frame_id');
-//
-//   for (var i = 0; i < rows.length; i++) {
-//     print(rows[i].getString('name') + ': ' + rows[i].getString('type'));
-//   }
-// } // Sketch prints: // Snake: Reptile // Lizard: Reptile
+function smoothCurve(tracked) {
+  var arrayOfPoints = [];
+  var tolerance = 10;
+  for (var p = 0; p < tracked.length; p++) {
+    var feature = tracked[p].obj;
+    var pair = {};
+    pair.x = parseInt(feature.x);
+    pair.y = parseInt(feature.y);
+    arrayOfPoints.push(pair);
+  }
+
+  var simplePoints = simplify(arrayOfPoints,tolerance);
+  return simplePoints;
+}
