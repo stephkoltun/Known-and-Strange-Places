@@ -25,8 +25,10 @@
   $(document).ready(function() {
     console.log("document is ready");
 
-    setInterval(copyTile, 750);
-    setInterval(changeLocation, 6750);
+    var timing = 5000;
+    var locationTiming = 9 * timing;
+    setInterval(copyTile, timing);
+    setInterval(changeLocation, locationTiming);
   });
   </script>
 </head>
