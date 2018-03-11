@@ -110,7 +110,6 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
         return s != match
       })
       .attr("fill", "#d2d2d2");
-
   })
   .on("mouseout", function(d) {
     d3.selectAll('path.block')

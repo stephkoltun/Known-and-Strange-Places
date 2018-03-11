@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <title>All The Blocks</title>
+    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet">
+    <link rel='stylesheet' href='style.css' type='text/css'>
+
+    <!-- LIBRARIES! -->
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <script src="tsne/tsnedata-8.js"></script>
+    <script src="tsne/tsnedata-5.js"></script>
+    <script src="tsne/tsnedata-30.js"></script>
+    <script src="kmeans/labels-6.js"></script>
+    <script src="kmeans/labels-10.js"></script>
+    <script src="kmeans/labels-20.js"></script>
+    <script src="kmeans/labels-50.js"></script>
+    <!-- <script src="gmm/z-labels-50.js"></script> -->
+    <script src="colors.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("document is ready");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="controls">
+      <h1>Color Scheme</h1>
+      <button id="neighborhood">By Neighborhood</button><br>
+      <button id="similarity">By Similarity</button><br>
+      <h2>Perplexity</h2>
+      <button id="perplexityFive">5</button>
+      <button id="perplexityEight">8</button>
+      <button id="perplexityThirty">30</button>
+      <br>
+      <br>
+      <h1>Layout</h1>
+      <button id="cluster">Clusters</button><br>
+      <button id="geography">Geography</button>
+      <br>
+      <br>
+      <h1>Clustering Options</h1>
+      <button id="kmeans">KMeans</button><br>
+      <button id="gmm">Guassian Mixture Model</button><br>
+      <h2>Number of Clusters</h2>
+      <button id="clusterSix">6</button>
+      <button id="clusterTen">10</button>
+      <button id="clusterTwenty">20</button>
+      <button id="clusterFifty">50</button><br><br>
+    </div>
+    <div id="blocks"></div>
+    <script src='display.js'></script>
+</body>
+</html>
