@@ -30,6 +30,8 @@ map.on('render', function() {
 var copyTileIndex = 4;
 var subSize = 256;
 
+var newOrder = shuffleArray([0,1,2,3,4,5,6,7,8]);
+
 function copyTile() {
   if (readyToCopy) {
     var target2D = document.getElementById("tempCanvas");
@@ -38,8 +40,12 @@ function copyTile() {
     var displayCanvas = document.getElementById("displayCanvas");
     var ctxDisplayCanvas = displayCanvas.getContext("2d");
 
-    var yIndex = Math.floor(copyTileIndex/3);
-    var xIndex = copyTileIndex - yIndex*3;
+    var randomIndex = newOrder[copyTileIndex];
+
+    var yIndex = Math.floor(randomIndex/3);
+    var xIndex = randomIndex - yIndex*3;
+
+    //console.log(xIndex, yIndex);
 
     console.log(xIndex, yIndex);
 
@@ -52,7 +58,11 @@ function copyTile() {
     // duplicate this data
     var duplicateTarget = targetData.slice();
 
+<<<<<<< HEAD
     var replaceImage = ctxDisplayCanvas.getImageData(targetX, replaceY, targetY, subSize);
+=======
+    var replaceImage = ctxDisplayCanvas.getImageData(targetX, targetY, subSize, subSize);
+>>>>>>> 6e17a30499556accd070c37de9b60ff908458da0
     var replaceData = replaceImage.data;
 
     // swap arrays
@@ -62,7 +72,7 @@ function copyTile() {
       replaceData[k+2]  = duplicateTarget[k+2];
     }
 
-    ctxDisplayCanvas.putImageData(replaceImage, replaceX, replaceY);
+    ctxDisplayCanvas.putImageData(replaceImage, targetX, targetY);
 
     if (copyTileIndex < 8) {
       copyTileIndex++;
@@ -84,6 +94,8 @@ function copyCanvas(copyTo) {
 }
 
 function changeLocation() {
+  newOrder = shuffleArray([0,1,2,3,4,5,6,7,8]);
+  
   if (!initialized) {
     initialized = true;
   }
@@ -95,4 +107,24 @@ function changeLocation() {
   }
 
   map.jumpTo({'center': steppedPlaces.features[mapPosition].geometry.coordinates});
+}
+
+function shuffleArray (originalArray) {
+
+    var array = [].concat(originalArray);
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+    // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }
