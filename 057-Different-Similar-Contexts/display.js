@@ -58,11 +58,8 @@ function copyTile() {
     // duplicate this data
     var duplicateTarget = targetData.slice();
 
-<<<<<<< HEAD
-    var replaceImage = ctxDisplayCanvas.getImageData(targetX, replaceY, targetY, subSize);
-=======
+
     var replaceImage = ctxDisplayCanvas.getImageData(targetX, targetY, subSize, subSize);
->>>>>>> 6e17a30499556accd070c37de9b60ff908458da0
     var replaceData = replaceImage.data;
 
     // swap arrays
@@ -95,7 +92,7 @@ function copyCanvas(copyTo) {
 
 function changeLocation() {
   newOrder = shuffleArray([0,1,2,3,4,5,6,7,8]);
-  
+
   if (!initialized) {
     initialized = true;
   }
