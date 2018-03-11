@@ -27,7 +27,7 @@ map.on('render', function() {
   }
 })
 
-var copyTileIndex = 0;
+var copyTileIndex = 4;
 var subSize = 256;
 
 function copyTile() {
@@ -41,6 +41,8 @@ function copyTile() {
     var yIndex = Math.floor(copyTileIndex/3);
     var xIndex = copyTileIndex - yIndex*3;
 
+    console.log(xIndex, yIndex);
+
     var targetX = xIndex*subSize;
     var targetY = yIndex*subSize;
     // get the target subdivision
@@ -50,11 +52,7 @@ function copyTile() {
     // duplicate this data
     var duplicateTarget = targetData.slice();
 
-    // use the next one in the sequence
-    var replaceX = xIndex*subSize;
-    var replaceY = yIndex*subSize;
-
-    var replaceImage = ctxDisplayCanvas.getImageData(replaceX, replaceY, subSize, subSize);
+    var replaceImage = ctxDisplayCanvas.getImageData(targetX, replaceY, targetY, subSize);
     var replaceData = replaceImage.data;
 
     // swap arrays
