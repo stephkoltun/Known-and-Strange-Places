@@ -4,10 +4,22 @@ var to = "kinect";
 // can omit id, if we want the server to auto generate it for us
 var options = {
   host: "sk6385.itp.io",
-	port: "443",
+	port: "9000",
 	path: '/peerjs',
-  secure: "true"
+  secure: "true",
+  // config: {
+  //     'iceServers': [
+  //         { url: 'stun:stun1.l.google.com:19302' },
+  //         {
+  //             url: 'turn:numb.viagenie.ca',
+  //             credential: 'muazkh',
+  //             username: 'webrtc@live.com'
+  //         }
+  //     ]
+  // }
 };
+
+console.log("make connections");
 
 var peer = new Peer(from, options);
 
@@ -22,10 +34,18 @@ peer.on('connection', function(connection) {
   console.log("we're connected!")
 })
 
+peer.on('close', function() {
+  console.log("connection closed");
+});
+
 $('#start-call').click(function(){
     console.log('starting call with ' + to + '...');
     getVideo(streamVideoToPartner, videoError);
     // arguments: success callback, error callback
+});
+
+$('#end-call').click(function(){
+    peer.destroy();
 });
 
 function streamVideoToPartner(MediaStream) {
@@ -61,11 +81,12 @@ function onReceiveCall(call){
       },
     videoError);
 
-    // commented this out because we dont need to see anything
-    // call.on('stream', onReceiveStream);
+    //commented this out because we dont need to see anything
+    call.on('stream', onReceiveStream);
 }
 
 function onReceiveStream(stream){
+  console.log(stream);
     var video = document.querySelector('video');
     video.src = window.URL.createObjectURL(stream);
     video.onloadedmetadata = function(){
