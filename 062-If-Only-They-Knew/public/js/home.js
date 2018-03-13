@@ -1,13 +1,30 @@
 var from = "kinect";
 var to = "live";
 
-// can omit id, if we want the server to auto generate it for us
+// var options = {
+//   host: "sk6385.itp.io",
+// 	port: "443",
+// 	path: '/peerjs',
+//   secure: "true"
+// };
 var options = {
   host: "sk6385.itp.io",
-	port: "443",
+	port: "9000",
 	path: '/peerjs',
-  secure: "true"
+  secure: "true",
+  // config: {
+  //     'iceServers': [
+  //         { url: 'stun:stun1.l.google.com:19302' },
+  //         {
+  //             url: 'turn:numb.viagenie.ca',
+  //             credential: 'muazkh',
+  //             username: 'webrtc@live.com'
+  //         }
+  //     ]
+  // }
 };
+
+console.log("make connections");
 
 var peer = new Peer(from, options);
 
@@ -17,6 +34,9 @@ peer.on('open', function(id) {
 
 peer.on('call', onReceiveCall);
 
+peer.on('close', function() {
+  console.log("connection closed");
+});
 
 peer.on('connection', function(connection) {
   console.log(connection);
@@ -27,6 +47,10 @@ $('#start-call').click(function(){
     console.log('starting call with ' + to + '...');
     getVideo(streamVideoToPartner, videoError);
     // arguments: success callback, error callback
+});
+
+$('#end-call').click(function(){
+    peer.destroy();
 });
 
 function streamVideoToPartner(MediaStream) {
@@ -67,6 +91,7 @@ function onReceiveCall(call){
 }
 
 function onReceiveStream(stream){
+  console.log(stream);
     var video = document.querySelector('video');
     video.src = window.URL.createObjectURL(stream);
     video.onloadedmetadata = function(){
