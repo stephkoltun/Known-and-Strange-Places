@@ -93,8 +93,6 @@ def get_objects(image):
     scores = np.squeeze(scores)
     boxes = np.squeeze(boxes)
 
-    print(classes)
-
     obj_above_thresh = sum(n > threshold for n in scores)
     print("detected %s objects in image above a %s score" % (obj_above_thresh, threshold))
 
@@ -105,6 +103,7 @@ def get_objects(image):
     # reset file pointer to start
     in_mem_file.seek(0)
     img_bytes = in_mem_file.read()
+
     base64_encoded_result_bytes = base64.b64encode(img_bytes)
     base64_encoded_result_str = base64_encoded_result_bytes.decode('ascii')
 
@@ -113,14 +112,14 @@ def get_objects(image):
     item.version = "0.0.1"
     item.numObjects = int(obj_above_thresh)
     item.threshold = float(threshold)
-    # item.picture = base64_encoded_result_str
+    item.picture = base64_encoded_result_str
     output.append(item)
 
     print("make json")
 
     for c in range(0, len(classes)):
         class_name = category_index[classes[c]]['name']
-        if scores[c] >= threshold and class_name == "person":      # only return confidences equal or greater than the threshold
+        if scores[c] >= threshold :      # only return confidences equal or greater than the threshold
             print(" object %s - score: %s, coordinates: %s" % (class_name, scores[c], boxes[c]))
 
             item = Object()

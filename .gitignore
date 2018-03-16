@@ -24,3 +24,11 @@ xxx-Satellite-Clustering/generateBlockImages
 063-Live-Body-Context/object_detection
 063-Live-Body-Context/__pycache__
 063-Live-Body-Context/ssd_mobilenet_v1_coco_2017_11_17
+063-Live-Body-Context/ssd_mobilenet_v1_coco_2017_11_17.tar.gz
+xxx-Live-Detection-Node
+064-Body-Swappers/opt1
+064-Body-Swappers/opt2
+064-Body-Swappers/opt3
+064-Body-Swappers/opt4/ssd_mobilenet_v1_coco_2017_11_17.tar.gz
+064-Body-Swappers/opt4/object_detection
+064-Body-Swappers/opt4/ssd_mobilenet_v1_coco_2017_11_17

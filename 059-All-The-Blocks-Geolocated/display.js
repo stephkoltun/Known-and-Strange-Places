@@ -23,19 +23,19 @@ var svg = d3.select("#blocks")
 
 var projection = d3.geoMercator()
 .translate([width/2, height/2])
-.center([-73.882508, 40.867529])
-.scale([550000]);
+.center([-73.899508, 40.876729])
+.scale([320000]);
 var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
 .projection(projection);  // tell path generator to use albersUsa projection
 
 
-var projectionBronx = d3.geoMercator()
-.translate([width/2, height/2])    // translate to center of screen
-.center([-73.882508, 40.867529])  // middle of the bronx
-.scale([550000]);          // scale things wayyyy up
-
-var pathGeo = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
-.projection(projectionBronx);
+// var projectionBronx = d3.geoMercator()
+// .translate([width/2, height/2])    // translate to center of screen
+// .center([-73.882508, 40.867529])  // middle of the bronx
+// .scale([200000]);          // scale things wayyyy up
+//
+// var pathGeo = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
+// .projection(projectionBronx);
 
 d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
 
@@ -56,7 +56,6 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
   //plotGeographically(features);
   plotAsTsne(features);
   addNeighborhoodIndex();
-  addTitle();
 });
 
 var layoutmode = "tsne";
@@ -65,33 +64,85 @@ var colormode = "similarity";
 var labels = labelsSix;
 var tsnedata = tsnedataThirty;
 
-$("#geography").on("click", locateByGeography);
-$("#cluster").on("click", locateByCluster);
+$("#geography").on("click", function() {
+  $("#geography").addClass("selected");
+  $("#cluster").removeClass("selected");
+  locateByGeography();
+  $("#perplexityFive").removeClass("selected");
+  $("#perplexityEight").removeClass("selected");
+  $("#perplexityThirty").removeClass("selected");
+});
+$("#cluster").on("click", function() {
+  $("#geography").removeClass("selected");
+  $("#cluster").addClass("selected");
+  locateByCluster();
+});
 
-$("#neighborhood").on("click", colorByNeighborhood);
-$("#similarity").on("click", colorBySimilarity);
+$("#neighborhood").on("click", function() {
+  $("#neighborhood").addClass("selected");
+  $("#similarity").removeClass("selected");
+  colorByNeighborhood();
+});
+$("#similarity").on("click", function() {
+  $("#neighborhood").removeClass("selected");
+  $("#similarity").addClass("selected");
+  colorBySimilarity();
+});
 
 $("#perplexityFive").on("click", function() {
-  changePerplexity(5)
+  $("#geography").removeClass("selected");
+  $("#cluster").addClass("selected");
+  $("#perplexityFive").addClass("selected");
+  $("#perplexityEight").removeClass("selected");
+  $("#perplexityThirty").removeClass("selected");
+  changePerplexity(5);
 });
 $("#perplexityEight").on("click", function() {
-  changePerplexity(8)
+
+  $("#geography").removeClass("selected");
+  $("#cluster").addClass("selected");
+  $("#perplexityFive").removeClass("selected");
+  $("#perplexityEight").addClass("selected");
+  $("#perplexityThirty").removeClass("selected");
+  changePerplexity(8);
 });
 $("#perplexityThirty").on("click", function() {
+
+  $("#geography").removeClass("selected");
+  $("#cluster").addClass("selected");
+  $("#perplexityFive").removeClass("selected");
+  $("#perplexityThirty").addClass("selected");
+  $("#perplexityEight").removeClass("selected");
   changePerplexity(30);
 });
 
 
 $("#clusterSix").on("click", function() {
-  changeClusterNumber(6)
+  $("#clusterSix").addClass("selected");
+  $("#clusterTen").removeClass("selected");
+  $("#clusterTwenty").removeClass("selected");
+  $("#clusterFifty").removeClass("selected");
+  changeClusterNumber(6);
 });
 $("#clusterTen").on("click", function() {
-  changeClusterNumber(10)
+  $("#clusterSix").removeClass("selected");
+  $("#clusterTen").addClass("selected");
+  $("#clusterTwenty").removeClass("selected");
+  $("#clusterFifty").removeClass("selected");
+  changeClusterNumber(10);
 });
 $("#clusterTwenty").on("click", function() {
+  $("#clusterSix").removeClass("selected");
+  $("#clusterTen").removeClass("selected");
+  $("#clusterTwenty").addClass("selected");
+  $("#clusterFifty").removeClass("selected");
   changeClusterNumber(20)
 });
 $("#clusterFifty").on("click", function() {
+  $("#clusterSix").removeClass("selected");
+  $("#clusterTen").removeClass("selected");
+  $("#clusterTwenty").removeClass("selected");
+  $("#clusterFifty").addClass("selected");
   changeClusterNumber(50)
 });
 
@@ -333,31 +384,14 @@ function addNeighborhoodIndex() {
     .enter()
     .append("text")
     .attr("class", "neighborhood")
-    .attr("x", function(d,i) {
-      return margin.left/2;
-    })
+    .attr("x", 50)
     .attr("y", function(d,i) {
-      return margin.top*1.5 + i*32;
+      return 50 + i*18;
     })
     .text(function(d,i) {
       return d;
     })
     .attr("font-family", "sans-serif")
-    .attr("font-size", "20px")
+    .attr("font-size", "12px")
     .attr("fill", "#000");
-}
-
-function addTitle() {
-  var title = "Zernike Moments, " + labels.method + ", Clusters: " + labels.count + ", tSNE perplexity: " + tsnedata.perplexity;
-  svg.append("text")
-  .text(title)
-  .attr("x", function() {
-    return margin.left/2;
-  })
-  .attr("y", function() {
-    return margin.top;
-  })
-  .attr("font-family", "sans-serif")
-  .attr("font-size", "30px")
-  .attr("fill", "#000");
 }

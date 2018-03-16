@@ -19,7 +19,6 @@
     <script src="kmeans/labels-10.js"></script>
     <script src="kmeans/labels-20.js"></script>
     <script src="kmeans/labels-50.js"></script>
-    <!-- <script src="gmm/z-labels-50.js"></script> -->
     <script src="colors.js"></script>
 
     <script type="text/javascript">
@@ -31,28 +30,23 @@
 
 <body>
     <div id="controls">
-      <h1>Color Scheme</h1>
-      <button id="neighborhood">By Neighborhood</button><br>
-      <button id="similarity">By Similarity</button><br>
-      <h2>Perplexity</h2>
+      <h1>Layout</h1>
+      <button id="geography">Geography</button>
+      <button id="cluster" class="selected">tSNE</button>
+      <h2 id="perp">Perplexity</h2>
       <button id="perplexityFive">5</button>
       <button id="perplexityEight">8</button>
-      <button id="perplexityThirty">30</button>
-      <br>
-      <br>
-      <h1>Layout</h1>
-      <button id="cluster">Clusters</button><br>
-      <button id="geography">Geography</button>
-      <br>
-      <br>
-      <h1>Clustering Options</h1>
-      <button id="kmeans">KMeans</button><br>
-      <button id="gmm">Guassian Mixture Model</button><br>
-      <h2>Number of Clusters</h2>
-      <button id="clusterSix">6</button>
+      <button id="perplexityThirty" class="selected">20</button>
+      <h1>Color Scheme</h1>
+      <button id="neighborhood">By Neighborhood</button><br>
+      <button id="similarity" class="selected">By Cluster</button><br>
+      <h2 id="clustNum">Number of Clusters</h2>
+      <button id="clusterSix" class="selected">6</button>
       <button id="clusterTen">10</button>
       <button id="clusterTwenty">20</button>
-      <button id="clusterFifty">50</button><br><br>
+      <button id="clusterFifty">50</button>
+
+
     </div>
     <div id="blocks"></div>
     <script src='display.js'></script>

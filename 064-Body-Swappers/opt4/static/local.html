@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>Local</title>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <!-- <script src="/static/js/jquery-3.3.1.min.js"></script> -->
+    <script src="/static/js/p5.js"></script>
+    <script src="https://itp.nyu.edu/kinectron/kinectron.bundle.js" type="text/javascript"></script>
   </head>
   <style>
     video {
@@ -13,21 +16,31 @@
         left: 0;
         z-index: -1;
         /* Mirror the local video */
-        transform: scale(-1, 1);            /*For Firefox (& IE) */
-        -webkit-transform: scale(-1, 1);     /*for Chrome & Opera (& Safari) */
+        /* transform: scale(-1, 1);            /*For Firefox (& IE) */
+        /* -webkit-transform: scale(-1, 1);     /*for Chrome & Opera (& Safari) */
     }
     canvas{
         position: absolute;
         top: 0;
         left: 0;
         z-index:1;
-        transform: scale(-1, 1);            /*For Firefox (& IE) */
-        -webkit-transform: scale(-1, 1);
+        /* transform: scale(-1, 1);            /*For Firefox (& IE) */
+        /* -webkit-transform: scale(-1, 1); */
+    }
+    canvas#cnv {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -10;
     }
   </style>
   <body id="body">
     <video id="myVideo" autoplay width="800" height="auto"></video>
     <script src="/static/local.js"></script>
+    <div id="cnv"></div>
+
+    <script src="/static/js/kinect.js"></script>
+
     <script id="objDetect" src="/static/objDetect.js" data-source="myVideo" data-mirror="true" data-uploadWidth="800"></script>
   </body>
 </html>

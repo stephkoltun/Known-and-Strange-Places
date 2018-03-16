@@ -23,7 +23,7 @@ var svg = d3.select("#blocks")
 .attr("height", height + margin.top + margin.bottom);
 
 projection = d3.geoMercator()
-.scale([1000000]);          // scale things wayyyy up
+.scale([600000]);          // scale things wayyyy up
 
 path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
 .projection(projection);  // tell path generator to use albersUsa projection
@@ -101,7 +101,7 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
       .filter(function(s) {
         return s.properties.ntaname == match
       })
-      .style('fill-opacity',.6)
+      .style('fill-opacity',.8)
       .style("stroke-width", 1)
       .style('stroke-opacity',1);
 
@@ -126,17 +126,15 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
     .enter()
     .append("text")
     .attr("class", "neighborhood")
-    .attr("x", function(d,i) {
-      return margin.left/2;
-    })
+    .attr("x", 50)
     .attr("y", function(d,i) {
-      return margin.top + i*32;
+      return 50 + i*18;
     })
     .text(function(d,i) {
       return d;
     })
     .attr("font-family", "sans-serif")
-    .attr("font-size", "20px")
+    .attr("font-size", "12px")
     .attr("fill", "#000");
 
 

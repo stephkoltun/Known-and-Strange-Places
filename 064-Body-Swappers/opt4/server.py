@@ -13,6 +13,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,POST') # Put any other methods you need here
     return response
 
+
 @app.route('/')
 def index():
     return Response('Tensor Flow object detection')
@@ -53,7 +54,7 @@ def image():
 
 if __name__ == '__main__':
 	# without SSL
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0', threaded=True)
 
 	# with SSL
     #app.run(debug=True, host='0.0.0.0', ssl_context=('ssl/server.crt', 'ssl/server.key'))

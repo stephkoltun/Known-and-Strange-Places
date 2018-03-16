@@ -18,12 +18,17 @@ let isPlaying = false,
 //create a canvas to grab an image for upload
 let imageCanvas = document.createElement('canvas'),
     imageCtx = imageCanvas.getContext("2d");
-
+imageCanvas.width = 800;
+imageCanvas.height = 600;
 imageCanvas.id = "origVid";
+// document.body.appendChild(imageCanvas);
 
 //create a canvas for drawing object boundaries
 let drawCanvas = document.createElement('canvas'),
     drawCtx = drawCanvas.getContext("2d");
+    drawCanvas.id = "drawCnv";
+    drawCanvas.width = 800;
+    drawCanvas.height = 600;
 document.body.appendChild(drawCanvas);
 
 //Used for motion detection
@@ -35,16 +40,6 @@ let print = false;
 let figure = true;
 
 var body = document.getElementById("body");
-
-body.addEventListener('mousemove', function(e) {
-
-  if (e.pageX > window.outerWidth/2 && figure != true) {
-    figure = true;
-  }
-  if (e.pageX < window.outerWidth/2 && figure != false) {
-    figure = false;
-  }
-});
 
 //Draw boxes and labels on each detected object
 function drawBoxes(objects) {
@@ -61,8 +56,8 @@ function drawBoxes(objects) {
     // newImage.height = drawCanvas.height;
 
     var receivedImage = new Image();
-    receivedImage.width = v.width;
-    receivedImage.height = v.height;
+    receivedImage.width = imageCanvas.width;
+    receivedImage.height = imageCanvas.height;
     receivedImage.onload = function() {
 
          //drawCtx.drawImage(receivedImage, 0, 0, drawCanvas.width, drawCanvas.height);
@@ -70,29 +65,27 @@ function drawBoxes(objects) {
          //filter out objects that contain a class_name and then draw boxes and labels on each
          objects.filter(object => object.class_name).forEach(object => {
 
-             let x = object.x * drawCanvas.width;
-             let y = object.y * drawCanvas.height;
+           if (object.class_name == "person") {
+             let x = object.x * drawCanvas.width - 150;
+             let y = object.y * drawCanvas.height - 150;
              let width = (object.width * drawCanvas.width) - x;
              let height = (object.height * drawCanvas.height) - y;
 
-             //flip the x axis if local video is mirrored
-             // if (mirror) {
-             //     x = drawCanvas.width - (x + width);
-             // }
+             // draw the person
+             // let xDraw = placeX;
+             // let yDraw = placeY;
+             let xDraw = placeX - width/2;
+             let yDraw = placeY - height/2;
 
-             if (figure) {
-               drawCtx.drawImage(receivedImage, x-40, y-40, width, height, x, y, width, height);
-             } else {
-               drawCtx.drawImage(receivedImage, 0, 0, drawCanvas.width, drawCanvas.height);
-               drawCtx.fillStyle="#FFFFFF";
-               drawCtx.fillRect(x, y, width, height);
-             }
+             let drawH = height * 1.5;
+             let drawW = width *1.5;
+
+             drawCtx.drawImage(receivedImage, x, y, width, (height+20), xDraw, yDraw, drawW, (drawH+20));
+           }
          });
 
     };
     receivedImage.src = src;
-
-
 }
 
 //Add file blob to a form and post
@@ -109,17 +102,16 @@ function postFile(file) {
           let objects = JSON.parse(this.response);
           //console.log(objects);
           if (objects.length > 1) {
-
             //draw the boxes
             drawBoxes(objects);
-
-            //dispatch an event
-            let event = new CustomEvent('objectDetection', {detail: objects});
-            document.dispatchEvent(event);
-
-            //start over
-            sendImageFromCanvas();
           }
+
+          //dispatch an event
+          let event = new CustomEvent('objectDetection', {detail: objects});
+          document.dispatchEvent(event);
+
+          //start over
+          sendImageFromCanvas();
         }
         else {
             console.error(xhr);
