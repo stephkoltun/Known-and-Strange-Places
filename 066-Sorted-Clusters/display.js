@@ -1,7 +1,7 @@
 var margin = {top: 100, left: 100, bottom: 100, right: 100};
 // var width = $(window).width();
 
-var width =  3771*50;  // num of features * max width * spacing;
+var width =  3771*60;  // num of features * max width * spacing;
 var height = $(window).height()/3;
 
 var yScale = d3.scaleLinear()
@@ -17,6 +17,7 @@ var svgGMM = d3.select("#gmm")
 .append("svg")
 .attr("width", width)
 .attr("height", height);
+
 
 var svgAgglom = d3.select("#agglom")
 .append("svg")
@@ -63,7 +64,7 @@ d3.json('labels50.geojson', function(error, features) {
   // download(JSON.stringify(features), 'labels50.geojson', 'application/json');
 
   xScale = d3.scaleLinear()
-  .domain([0, features.length+3])
+  .domain([-1, features.length+1])
   .range([0, width]);
 
   // figure out the spacing
@@ -72,6 +73,34 @@ d3.json('labels50.geojson', function(error, features) {
   plotRow(features, "kmeans", svgKmeans, 1);
   plotRow(features, "gmm", svgGMM, 1);
   plotRow(features, "agglom", svgAgglom, 1);
+
+  svgGMM.append("text")
+  .text("Gaussian Mixture Model")
+  .attr("x", 50)
+  .attr("y", 200)
+  .attr("font-family", "Karla")
+  .attr("font-size", "13px")
+  .attr("font-weight", 700)
+  .attr("fill", "#000");
+
+  svgKmeans.append("text")
+  .text("kMeans")
+  .attr("x", 50)
+  .attr("y", 200)
+  .attr("font-family", "Karla")
+  .attr("font-size", "13px")
+  .attr("font-weight", 700)
+  .attr("fill", "#000");
+
+  svgAgglom.append("text")
+  .text("Agglomerative Clustering")
+  .attr("x", 50)
+  .attr("y", 200)
+  .attr("font-family", "Karla")
+  .attr("font-size", "13px")
+  .attr("font-weight", 700)
+  .attr("fill", "#000");
+
 });
 
 function plotRow(features, _type, canvas, row) {
@@ -104,9 +133,17 @@ function plotRow(features, _type, canvas, row) {
     var gmmCluster = d.clusters.gmm;
     var agglomCluster = d.clusters.agglom;
 
-    resortByClusters("kmeans", selectedId, kmeansCluster, 1)
-    resortByClusters("gmm", selectedId, gmmCluster, 1)
-    resortByClusters("agglom", selectedId, agglomCluster, 1)
+
+    resortByClusters("kmeans", selectedId, kmeansCluster, 1);
+    resortByClusters("gmm", selectedId, gmmCluster, 1);
+    resortByClusters("agglom", selectedId, agglomCluster, 1);
+    // setTimeout(function() {
+    //
+    //   setTimeout(function() {
+    //
+    //   },410);
+    // },410);
+
   });
 }
 
@@ -129,6 +166,7 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
     return d3.descending(a.clusters[_cluster], b.clusters[_cluster]) || d3.ascending(a.properties.area, b.properties.area);
   })
   .transition()
+  .duration(150)
   .attr("transform",function(s,j) {
     var bounds = (path.bounds(s));
     var centroid = (path.centroid(s));
@@ -154,16 +192,22 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
   .filter(function(s) {
     return s.clusters[_cluster] == selectedCluster;
   })
+  .transition()
+  .duration(150)
   .style("fill", "#5599ff");
 
   var block = d3.selectAll(pathSelector)
   .filter(function(s) {
     return s.properties.fid == selectedId;
   })
+  .transition()
+  .duration(150)
   .style("fill", "#0044ff");
 
-
-  $(canvas).animate({scrollLeft: newPosition.toString()}, 500);
+  var pos = newPosition.toString();
+  setTimeout(function() {
+    $(canvas).animate({scrollLeft: pos}, { duration: 600, queue: 'my-animation' }).dequeue('my-animation');;
+  })
 
 }
 

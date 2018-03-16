@@ -1,10 +1,11 @@
 body {
 	margin: 0 0 0 0;
 	padding: 0;
+	font-family: 'Karla', monospace;
 }
 
 h1 {
-	font-family: 'Karla', monospace;
+
 	font-size: 30px;
 	color: #000;
 	font-weight: 700;
