@@ -1,24 +1,14 @@
 var margin = {top: 100, left: 100, bottom: 100, right: 100};
 // var width = $(window).width();
 
-var width =  3771*50;  // num of features * max width * spacing;
-var height = $(window).height()/3;
+var width =  3771*10;  // num of features * max width * spacing;
+var height = $(window).height();
 
 var yScale = d3.scaleLinear()
 .domain([0, 1])
 .range([0, height]);
 
-var svgKmeans = d3.select("#kmeans")
-.append("svg")
-.attr("width", width)
-.attr("height", height);
-
-var svgGMM = d3.select("#gmm")
-.append("svg")
-.attr("width", width)
-.attr("height", height);
-
-var svgAgglom = d3.select("#agglom")
+var svg = d3.select("#canvas")
 .append("svg")
 .attr("width", width)
 .attr("height", height);
@@ -36,42 +26,69 @@ var maxWidth = 0;
 var xScale;
 
 var clusterSorted = false;
+var numClusters = 50;
 
 d3.json('labels50.geojson', function(error, features) {
 // d3.json('Bronx-neighborhoods.geojson', function(error, map) {
 //  var features = map.features;
 
-  features.sort(function(x, y){
+  var kSorted = features.slice();
+  kSorted.sort(function(a, b){
     // this is the order that was used to generate the features/tsne
-    return d3.descending(x.properties.area, y.properties.area);
+    return d3.descending(a.clusters['kmeans'], b.clusters['kmeans']) || d3.ascending(a.properties.area, b.properties.area);
   })
 
-  // for (var i = 0; i < features.length; i++) {
-  //   features[i].clusters = {};
-  //   features[i].clusters["gmm"] = gmm.clusters[i].label;
-  //   features[i].clusters["kmeans"] = kmeans.clusters[i].label;
-  //   features[i].clusters["agglom"] = agglom.clusters[i].label;
+  var gmmSorted = features.slice();
+  gmmSorted.sort(function(a, b){
+    // this is the order that was used to generate the features/tsne
+    return d3.descending(a.clusters['gmm'], b.clusters['gmm']) || d3.ascending(a.properties.area, b.properties.area);
+  })
+
+  var agglomSorted = features.slice();
+  agglomSorted.sort(function(a, b){
+    // this is the order that was used to generate the features/tsne
+    return d3.descending(a.clusters['agglom'], b.clusters['agglom']) || d3.ascending(a.properties.area, b.properties.area);
+  })
+
+  // var kClust = [];
+  // for (var c = 0; c < numClusters; c++) {
+  //   var filt = kSorted.filter(function(d) {
+  //     return d.clusters.kmeans == c;
+  //   });
+  //   kClust.push(filt[0]);
   // }
   //
-  // function download(content, fileName, contentType) {
-  //     var a = document.createElement("a");
-  //     var file = new Blob([content], {type: contentType});
-  //     a.href = URL.createObjectURL(file);
-  //     a.download = fileName;
-  //     a.click();
+  // var gmmClust = [];
+  // for (var c = 0; c < numClusters; c++) {
+  //   var filt = gmmSorted.filter(function(d) {
+  //     return d.clusters.gmm == c;
+  //   });
+  //   gmmClust.push(filt[0]);
   // }
-  // download(JSON.stringify(features), 'labels50.geojson', 'application/json');
+  //
+  // var agglomClust = [];
+  // for (var c = 0; c < numClusters; c++) {
+  //   var filt = agglomSorted.filter(function(d) {
+  //     return d.clusters.agglom == c;
+  //   });
+  //   agglomClust.push(filt[0]);
+  // }
 
   xScale = d3.scaleLinear()
-  .domain([0, features.length+3])
+  .domain([-1, features.length+1])
   .range([0, width]);
 
+
   // figure out the spacing
-  gatherWidths(features);
-  console.log(maxWidth);
-  plotRow(features, "kmeans", svgKmeans, 1);
-  plotRow(features, "gmm", svgGMM, 1);
-  plotRow(features, "agglom", svgAgglom, 1);
+  // gatherWidths(features);
+  // console.log(maxWidth);
+  plotRow(kSorted, "kmeans", svg, 1);
+  plotRow(gmmSorted, "gmm", svg, 2);
+  //plotRow(agglomSorted, "agglom", svg, 3);
+  // plotRow(features, "gmm", svg, 2);
+  // plotRow(features, "agglom", svg, 3);
+
+  //drawLines();
 });
 
 function plotRow(features, _type, canvas, row) {
@@ -91,7 +108,7 @@ function plotRow(features, _type, canvas, row) {
     var centroid = (path.centroid(d));
     var centroidX = centroid[0];
     var centroidY = centroid[1];
-    var offsetY = (height/2*row);
+    var offsetY = (height/4*row);
 
     var x0 = xScale(i) - centroidX;
     var y0 = offsetY - centroidY;
@@ -99,16 +116,66 @@ function plotRow(features, _type, canvas, row) {
     return "translate(" + x0 + "," + y0 + ")";
   })
   .on("click", function(d,i) {
-    var selectedId = d.properties.fid;
     var kmeansCluster = d.clusters.kmeans;
     var gmmCluster = d.clusters.gmm;
     var agglomCluster = d.clusters.agglom;
 
-    resortByClusters("kmeans", selectedId, kmeansCluster, 1)
-    resortByClusters("gmm", selectedId, gmmCluster, 1)
-    resortByClusters("agglom", selectedId, agglomCluster, 1)
+    drawLines(kmeansCluster, gmmCluster, agglomCluster)
   });
 }
+
+function drawLines(kmeansCluster, gmmCluster, agglomCluster) {
+
+  // d3.selectAll("path.kmeans")
+  // .style("fill", "#d2d2d2");
+
+  d3.selectAll("path.kmeans")
+  .filter(function(d) {
+    return d.clusters.kmeans == kmeansCluster;
+  })
+  .style("fill", "#5599ff")
+  .each(function(d,i) {
+    var start = d3.select(this).node().getBoundingClientRect();
+    var startID = d.properties.fid;
+
+    var gmmTarget;
+    var gmmBlock = d3.selectAll("path.gmm")
+    .filter(function(s){
+      return s.properties.fid == startID;
+    })
+    .style("fill", "#5599ff")
+    .each(function(s) {
+      gmmTarget = d3.select(this).node().getBoundingClientRect();
+    })
+
+    var x1 = start.x + start.width/2;
+    var x2 =  gmmTarget.x + gmmTarget.width/2;
+
+    svg.append("line")
+    .attr("class", "connection")
+    .attr("x1", function() {
+      return x1
+    })
+    .attr("y1", start.y+start.height)
+    .attr("x2", function() {
+      return x2
+    })
+    .attr("y2", gmmTarget.y)
+    .style("stroke", "#0044ff")
+    .style("stroke-width", 0.5)
+    .style("fill", "none");
+
+    // svg.append("line")
+    // .attr("class", "connection")
+    // .attr("x1", start.x)
+    // .attr("y1", start.y)
+    // .attr("x2", agglomTarget.x)
+    // .attr("y2", agglomTarget.y)
+    // .style("stroke", "#000")
+    // .style("fill", "none");
+  })
+}
+
 
 var positions = {
   'kmeans': null,
@@ -121,7 +188,6 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
 
   var pathSelector = "path." + _cluster;
   var clusterSelector = _cluster;
-  var canvas = "#" + _cluster;
 
   // RESORT THE KMEANS
   d3.selectAll(pathSelector)
@@ -134,7 +200,7 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
     var centroid = (path.centroid(s));
     var centroidX = centroid[0];
     var centroidY = centroid[1];
-    var offsetY = (height/2*row);
+    var offsetY = (height/4*row);
 
     // var x0 = bounds[0][0]*(-1) + consecutiveWidths[i] + spacing*i + margin.right;
     var x0 = xScale(j) - centroidX;
@@ -163,8 +229,7 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
   .style("fill", "#0044ff");
 
 
-  $(canvas).animate({scrollLeft: newPosition.toString()}, 500);
-
+  //$(canvas).animate({scrollLeft: newPosition.toString()}, 500);
 }
 
 function gatherWidths(features) {
