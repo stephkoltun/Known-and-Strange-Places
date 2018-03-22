@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="Still_Life" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fLD-c6-QXb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alZ-aJ-o5Q">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </arscnView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iD8-jj-i22">
+                                <rect key="frame" x="56" y="629" width="263" height="29"/>
+                                <segments>
+                                    <segment title="Compound"/>
+                                    <segment title="Background"/>
+                                    <segment title="Video"/>
+                                </segments>
+                                <connections>
+                                    <action selector="modeDidTap:" destination="BV1-FR-VrT" eventType="valueChanged" id="A6K-xN-9rw"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="alZ-aJ-o5Q" firstAttribute="bottom" secondItem="fLD-c6-QXb" secondAttribute="bottom" id="AWc-vx-smd"/>
+                            <constraint firstItem="b5J-9I-1cB" firstAttribute="bottom" secondItem="iD8-jj-i22" secondAttribute="bottom" constant="10" id="Ms9-m5-1Rv"/>
+                            <constraint firstItem="iD8-jj-i22" firstAttribute="centerX" secondItem="fLD-c6-QXb" secondAttribute="centerX" id="XFb-Gp-sqz"/>
+                            <constraint firstItem="alZ-aJ-o5Q" firstAttribute="top" secondItem="fLD-c6-QXb" secondAttribute="top" id="uRd-E4-nHQ"/>
+                            <constraint firstItem="alZ-aJ-o5Q" firstAttribute="leading" secondItem="fLD-c6-QXb" secondAttribute="leading" id="w02-9s-tDj"/>
+                            <constraint firstItem="alZ-aJ-o5Q" firstAttribute="trailing" secondItem="fLD-c6-QXb" secondAttribute="trailing" id="zKO-qu-FDO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="b5J-9I-1cB"/>
+                    </view>
+                    <connections>
+                        <outlet property="captureMode" destination="iD8-jj-i22" id="ObI-EC-SOF"/>
+                        <outlet property="sceneView" destination="alZ-aJ-o5Q" id="YwA-wW-2NW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="117.39130434782609"/>
+        </scene>
+    </scenes>
+</document>
