@@ -1,18 +1,28 @@
+console.log("sketch loaded");
 
 var video;
 var videoWidth = 720;
-var subWidth = videoWidth/3;
-var x = [0,240,480];
-var y = [0,240,480];
+var subsX = 4;
+var totalSubs = subsX * subsX;
+var subWidth = videoWidth/subsX;
 var videoLoaded = false;
+
+var normalOrder;
+var shuffleOrder;
 
 function setup() {
   var cnv = createCanvas(720,720);
   cnv.parent("wrapper");
+  frameRate(30);
 
-  frameRate(60);
+  normalOrder = createOrder(subsX);
+  console.log(normalOrder);
+
+  shuffleOrder = shuffleArray(normalOrder);
+  console.log(shuffleOrder);
 
   video = createVideo(['park.mp4'], function() {
+    // callback for once the video is loaded
     videoLoaded = true;
     video.hide();
     video.loop();
@@ -21,37 +31,61 @@ function setup() {
 
 }
 
-function videoLoad() {
 
-}
 
 function draw() {
 
   if (videoLoaded) {
-    var topLeft = video.get(x[0],y[0],subWidth,subWidth);
-    var topMid = video.get(x[1],y[0],subWidth,subWidth);
-    var topRight = video.get(x[2],y[0],subWidth,subWidth);
 
-    var midLeft = video.get(x[0],y[1],subWidth,subWidth);
-    var midMid = video.get(x[1],y[1],subWidth,subWidth);
-    var midRight = video.get(x[2],y[1],subWidth,subWidth);
+    if (frameCount % 150 == 0) {
+      shuffleOrder = shuffleArray(normalOrder);
+    }
 
-    var botLeft = video.get(x[0],y[2],subWidth,subWidth);
-    var botMid = video.get(x[1],y[2],subWidth,subWidth);
-    var botRight = video.get(x[2],y[2],subWidth,subWidth);
+    var originalImages = [];
 
-    image(topLeft,x[2],y[1]);
-    image(topMid,x[1],y[1]);
-    image(topRight,x[1],y[2]);
-
-    image(midLeft,x[0],y[2]);
-    image(midMid,x[0],y[0]);
-    image(midRight,x[2],y[0]);
-
-    image(botLeft,x[1],y[0]);
-    image(botMid,x[2],y[2]);
-    image(botRight,x[0],y[1]);
+    for (var i = 0; i < totalSubs; i++) {
+      var imageObj = video.get(normalOrder[i].x, normalOrder[i].y, subWidth, subWidth);
+      image(imageObj, shuffleOrder[i].x, shuffleOrder[i].y);
+    }
+  } else {
+    background(255);
+    noStroke();
+    fill("#000");
+    textFont('Karla');
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text("loading...", width/2, height/2)
   }
+}
 
+function createOrder(subs) {
+    var xyPairs = [];
+    for (var x = 0; x < subs; x++) {
+        for (var y = 0; y < subs; y++) {
+              var pair = {
+                  'x': x*subWidth,
+                  'y': y*subWidth
+              };
+              xyPairs.push(pair);
+        }
+    }
+    return xyPairs;
+}
 
+function shuffleArray (originalArray) {
+    var array = [].concat(originalArray);
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+    // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
 }
