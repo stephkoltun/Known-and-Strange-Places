@@ -3,46 +3,40 @@ var curMode = 0;
 var modes = ["blob", "edge", "pixel"];
 var timer;
 
-$("#desc").delay(3000).fadeOut(1000);
+$("#desc").delay(5000).fadeOut(1000);
 
+var body = document.getElementsByTagName("body")[0];
+
+body.addEventListener("touchstart", showAnalysis);
+body.addEventListener("touchend", showAerial);
 
 $(document).keypress(function(e) {
-	console.log(e.keyCode);
 	if(e.keyCode == 32) {
-		console.log("--- change scale");
-		// hide current aerial
-		var curAerial = "#aer" + curScale;
-		console.log("hide " + curAerial);
-		$(curAerial).addClass("hid").removeClass("vis");
-
-		if (curScale < 4) {
-			curScale++;
-		} else {
-			curScale = 1;
-		}
-
-		// show new aerial
-		var nextAerial = "#aer" + (curScale);
-		// set new aerial
-		console.log("show " + nextAerial);
-		$(nextAerial).addClass("vis").removeClass("hid");
-
-		console.log("--- scale: " + curScale);
+		changeScale()
 	}
 });
 
+$("body").on("swipe", function() {
+	changeScale()
+});
 
 $("body").mousedown(function() {
-	console.log("show things");
+	showAnalysis();
+});
 
+$("body").mouseup(function() {
+	showAerial();
+});
+
+function showAnalysis() {
 	// show brightness mode
 	var targetImg = "#" + modes[curMode] + curScale;
 	console.log("show " + targetImg);
 	$(targetImg).addClass("vis").removeClass("hid");
-});
+}
 
 
-$("body").mouseup(function() {
+function showAerial() {
 	// hide brightness mode
 	var prevImg = "#" + modes[curMode] + curScale;
 	console.log("hide " + prevImg);
@@ -53,4 +47,23 @@ $("body").mouseup(function() {
 	} else {
 		curMode = 0
 	}
-});
+}
+
+function changeScale() {
+	// hide current aerial
+	var curAerial = "#aer" + curScale;
+	$(curAerial).addClass("hid").removeClass("vis");
+
+	if (curScale < 4) {
+		curScale++;
+	} else {
+		curScale = 1;
+	}
+
+	// show new aerial
+	var nextAerial = "#aer" + (curScale);
+	// set new aerial
+	$(nextAerial).addClass("vis").removeClass("hid");
+
+	console.log("--- scale: " + curScale);
+}

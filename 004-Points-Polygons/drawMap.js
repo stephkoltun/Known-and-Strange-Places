@@ -28,7 +28,7 @@ var map = new mapboxgl.Map({
     style: useStyle,
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: startPoints[randomStart],    // this should be a random point
-    zoom: zoomLevel,  
+    zoom: zoomLevel,
 });
 
 // disable map zoom
@@ -66,25 +66,20 @@ map.on('load', function () {
                 "metadata": {
                     "displaylabel": thisLayer.displaylabel,
                 },
-                "type": "line",
+                "type": "fill",
                 "source": thisLayer.dataName,
                 'paint': {
-                    "line-color": thisLayer.color,
-                    "line-width": .8
+                  "fill-color": 'rgba(255,255,255,0)',
+                  "fill-outline-color": thisLayer.color,
+                  //"line-width": .8
                 }
             });
         }
     };
 
-    $("#desc").delay(3000).fadeOut(1000);
-
-
     var currentlyHidden = false;
 
-    // consider adding debounding function....
-    // https://bl.ocks.org/ryanbaumann/0d72890cea4f97e0dbd10ea3cf7189b2
-
-    map.on('mousemove', function(e) {
+    map.on('click', function(e) {
         // set bbox as 5px reactangle area around clicked point
         var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
         var features = map.queryRenderedFeatures(bbox);
@@ -97,9 +92,19 @@ map.on('load', function () {
             // hide all other layers
             for (var i = 0; i < mapLayers.length; i++) {
                 if (mapLayers[i].layerId != isolateLayer) {
-                    map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'none');
+                    //map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'none');
+                    if (mapLayers[i].type == 'line') {
+                      map.setPaintProperty(mapLayers[i].layerId, 'fill-opacity',0.2);
+                    } else if (mapLayers[i].type == 'circle') {
+                      map.setPaintProperty(mapLayers[i].layerId, 'circle-opacity',0.2);
+                    }
                 } else {
                     map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
+
+                    if (mapLayers[i].type == 'line') {
+                      map.setPaintProperty(mapLayers[i].layerId, 'fill-color', mapLayers[i].color)
+                    }
+
                 }
             }
             // add text
@@ -110,7 +115,7 @@ map.on('load', function () {
             } else {
                 templabel = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
             }
-            
+
             $("body").append(templabel);
             $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
@@ -118,15 +123,21 @@ map.on('load', function () {
 
         } else if (features.length == 0 && currentlyHidden) {
 
-                currentlyHidden = false;
-                console.log("unhide");
+            currentlyHidden = false;
+            console.log("unhide");
 
-                $(".label").remove();
-                
-                for (var i = 0; i < mapLayers.length; i++) {
-                    map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
+            $(".label").remove();
+
+            for (var i = 0; i < mapLayers.length; i++) {
+                map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
+
+                if (mapLayers[i].type == 'line') {
+                  map.setPaintProperty(mapLayers[i].layerId, 'fill-color', 'rgba(255,255,255,0)');
+                  map.setPaintProperty(mapLayers[i].layerId, 'fill-opacity',1);
+                } else if (mapLayers[i].type == 'circle') {
+                  map.setPaintProperty(mapLayers[i].layerId, 'circle-opacity',1);
                 }
-
+            }
         }
     });
 
@@ -136,18 +147,25 @@ map.on('load', function () {
 $(document).keypress(function(e) {
     console.log(e.keyCode);
     if(e.keyCode == 32) {
-        console.log("--- change map");
-        // go to next map
-        
-        if (mapMode == 'neighborhood') {
-            window.location.href = "http://anothersideproject.co/knownandstrange/004/polygonDistribution.html";
-        } else if (mapMode == 'polygons') {
-            window.location.href = "http://anothersideproject.co/knownandstrange/004/pointDistribution.html";
-        } else if (mapMode == 'points') {
-            window.location.href = "http://anothersideproject.co/knownandstrange/004/areaCategorization.html";
-        } else if (mapMode == 'areas') {
-            window.location.href = "http://anothersideproject.co/knownandstrange/004/index.html";
-        }
-        
+        changeMap();
     }
 });
+
+$("body").on("swipe", function() {
+	changeMap();
+});
+
+function changeMap() {
+  console.log("--- change map");
+  // go to next map
+
+  if (mapMode == 'neighborhood') {
+      window.location.href = "http://anothersideproject.co/knownandstrange/004/polygonDistribution.html";
+  } else if (mapMode == 'polygons') {
+      window.location.href = "http://anothersideproject.co/knownandstrange/004/pointDistribution.html";
+  } else if (mapMode == 'points') {
+      window.location.href = "http://anothersideproject.co/knownandstrange/004/areaCategorization.html";
+  } else if (mapMode == 'areas') {
+      window.location.href = "http://anothersideproject.co/knownandstrange/004/index.html";
+  }
+}

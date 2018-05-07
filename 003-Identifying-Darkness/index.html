@@ -5,24 +5,22 @@
 <head>
     <title>Identifying Darkness</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
-    
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
+
     <!-- LIBRARIES! -->
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             console.log("document is ready");
+            addTitle(2, "white");
         });
     </script>
 </head>
 
 <body>
-    <div id="desc">
-        <h1>Identifying Darkness</h1>
-        <h2>click and hold to toggle modes</h2> 
-        <h2>press spacebar to change scales</h2>
-    </div>
     <div class="imgwrapper">
         <img src="img/CoopCity-1000.jpeg" class="vis aerial" id="aer1">
         <img src="img/CoopCity-2000.jpeg" class="hid aerial" id="aer2">
@@ -41,7 +39,6 @@
         <img src="img/18-01-12_2054_Blob-Detection_RES5_TH120.png" class="hid blob" id="blob3">
         <img src="img/18-01-12_2109_Blob-Detection_RES5_TH120.png" class="hid blob" id="blob4">
         <img src="img/18-01-12_2110_Edge-Detection_TH60.png" class="hid edge" id="edge4">
-        
     </div>
     <script src='darkness.js'></script>
 </body>

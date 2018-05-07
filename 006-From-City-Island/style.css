@@ -8,37 +8,3 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
-#desc {
-	position: absolute;
-	bottom: 100px;
-  	left: 100px;
-  	z-index: 10;
-}
-
-h1 {
-	font-family: 'Inconsolata', monospace;
-	font-size: 20px;
-	color: #000;
-	font-weight: 400;
-	text-align: right;
-	margin: 5px 0;
-}
-
-h2 {
-	font-family: Lora;
-	font-size: 62px;
-	font-weight: 400;
-	color: #fff;
-	text-align: right;
-	margin: 15px 0;
-}
-
-p {
-	font-family: Lora;
-	font-size: 18px;
-	font-weight: 400;
-	color: #fff;
-	text-align: right;
-	margin: 15px 0 15px 65px;
-}

@@ -5,9 +5,11 @@
 <head>
     <title>From City Island</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
     <script src='config.js'></script>
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
 
     <!-- LIBRARIES! -->
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
@@ -30,12 +32,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
             console.log("document is ready");
+            addTitle(5, "white");
         });
     </script>
 </head>
 
 <body>
-    <div id="desc"><h1 id="place"></h1></div>
     <div id="map">
         <script src='mtarouting.js'></script>
     </div>

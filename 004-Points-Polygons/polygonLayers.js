@@ -1,12 +1,28 @@
 var polygonLayers = [
-    {
-        dataObj: athleticFacilitiesObj,
-        dataName: 'athletic-facilities',
-        layerId: 'athleticFacilities',
-        displaylabel: "Athletic Facilities",
-        color: '#dd2e94',
-        type: 'line'
-    },
+  {
+      dataObj: nychaObj,
+      dataName: 'ny-cha',
+      layerId: 'nycha',
+      displaylabel: "NYCHA Property",
+      color: '#e9901a',
+      type: 'line'
+  },    {
+          dataObj: openSpaceOtherObj,
+          dataName: 'open-space-other',
+          layerId: 'openSpaceOther',
+          displaylabel: "Open Space: Other",
+          color: '#7fa024',
+          type: 'line'
+      },
+      {
+          dataObj: openSpaceParksObj,
+          dataName: 'open-space-parks',
+          layerId: 'openSpaceParks',
+          displaylabel: "Open Space: Parks",
+          color: '#35b557',
+          type: 'line'
+      },
+
     {
         dataObj: boardwalkObj,
         dataName: 'board-walk',
@@ -15,36 +31,22 @@ var polygonLayers = [
         color: '#a9de19',
         type: 'line'
     },
-    {
-        dataObj: nychaObj,
-        dataName: 'ny-cha',
-        layerId: 'nycha',
-        displaylabel: "NYCHA Property",
-        color: '#e9901a',
-        type: 'line'
-    },
-    {
-        dataObj: openSpaceOtherObj,
-        dataName: 'open-space-other',
-        layerId: 'openSpaceOther',
-        displaylabel: "Open Space: Other",
-        color: '#7fa024',
-        type: 'line'
-    },
-    {
-        dataObj: openSpaceParksObj,
-        dataName: 'open-space-parks',
-        layerId: 'openSpaceParks',
-        displaylabel: "Open Space: Parks",
-        color: '#35b557',
-        type: 'line'
-    },
+
+
     {
         dataObj: parkingLotObj,
         dataName: 'parking-lot',
         layerId: 'parkingLot',
         displaylabel: "Parking Lots",
         color: '#aaaaaa',
+        type: 'line'
+    },
+    {
+        dataObj: athleticFacilitiesObj,
+        dataName: 'athletic-facilities',
+        layerId: 'athleticFacilities',
+        displaylabel: "Athletic Facilities",
+        color: '#dd2e94',
         type: 'line'
     },
     {

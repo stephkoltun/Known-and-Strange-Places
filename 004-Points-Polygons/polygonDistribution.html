@@ -5,8 +5,10 @@
 <head>
     <title>Points and Polygons: Polygons</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
 
     <script src='GEOJSON/polygon-10000/NYCOD_athletic-facilities.js'></script>
     <script src='GEOJSON/polygon-10000/NYCOD_boardwalk.js'></script>
@@ -28,19 +30,14 @@
         var zoomLevel = 14; //10,000
         $(document).ready(function() {
             console.log("document is ready");
+            addTitle(3, "black");
         });
     </script>
 </head>
 
 <body>
-    <div id="map">
-        <div id="desc">
-            <h1>Points and Polygons 02</h1>
-            <h2>hover to isolate system</h2> 
-            <h2>press spacebar to change mode</h2>
-        </div>
+    <div id="map"></div>
         <script src='drawMap.js'></script>
-    </div>
 </body>
 
 </html>

@@ -16,32 +16,19 @@ var map = new mapboxgl.Map({
 // coords to set max map area
 // Southwest coordinates and Northeast coordinates
 var bounds = [-74.238132, 40.818576, -73.747180, 40.618473];
-var colors = ["#c2ab33", "#22d316", "#0133dd", "#a24603", "#ddab33", "#c71233", "#dda123", "#a074bd", "#1d2faf", "#413b77", "#52ce2d", "#d3f873", "#49b2c3", "#bff24e", "#a37976", "#248c13", "#c745c9", "#fcba3c", "#ad3348", "#d3b0bb", "#164f35", "#a2afa4", "#9472c9"];
+var colors = ["#39A2AE", "#544f87", "#D81E5B", "#B7B5E4", "#1d2faf", "#413b77", "#52ce2d", "#49b2c3", "#a1b176", "#F79AD3", "#248c13", "#3358f9", "#fcba3c", "#156633", "#EB5E55", "#164f35", "#A0EADE", "#9472c9", "#8E518D"];
 var lastMaskVisible = false;
 var lastMask;
 var maskTimer;
 
 var layersArray = [
     {
-        //boundName: "quadBound",
-        boundId: "quad-boundary",
-        maskObj: quadMask,
-        maskName: "quadMask",
-        maskId: "quad-mask",
-    },
-    {
-        //boundName: "estShoreBound",
-        boundId: "estShore-boundary",
-        maskObj: estShoreMask,
-        maskName: "estShoreMask",
-        maskId: "estShore-mask",
-    },
-    {
         //boundName: "boroBound",
         boundId: "boro-boundary",
         maskObj: boroMask,
         maskName: "boroMask",
         maskId: "boro-mask",
+        name: "Boroughs"
     },
     {
         //boundName: "mapzenLandBound",
@@ -49,6 +36,7 @@ var layersArray = [
         maskObj: mapzenLandMask,
         maskName: "mapzenLandMask",
         maskId: "mapzenLand-mask",
+        name: "Land"
     },
     {
         //boundName: "mapzenCostBound",
@@ -56,6 +44,7 @@ var layersArray = [
         maskObj: mapzenCoastMask,
         maskName: "mapzenCoastMask",
         maskId: "mapzenCoast-mask",
+        name: "Coastline"
     },
     {
         //boundName: "agricBound",
@@ -63,6 +52,7 @@ var layersArray = [
         maskObj: agricMask,
         maskName: "agricMask",
         maskId: "agric-mask",
+        name: "Agriculture"
     },
     {
         //boundName: "municCourtBound",
@@ -70,6 +60,7 @@ var layersArray = [
         maskObj: municCourtMask,
         maskName: "municCourtMask",
         maskId: "municCourt-mask",
+        name: "Municipal Courts"
     },
     {
         //boundName: "neighborBound",
@@ -77,6 +68,7 @@ var layersArray = [
         maskObj: neighborMask,
         maskName: "neighborMask",
         maskId: "neighbor-mask",
+        name: "Neighborhoods"
     },
     {
         //boundName: "parksPropsBound",
@@ -84,20 +76,7 @@ var layersArray = [
         maskObj: parksPropsMask,
         maskName: "parksPropsMask",
         maskId: "parksProps-mask",
-    },
-    {
-        //boundName: "zoningQuarterBound",
-        boundId: "zoningQuarter-boundary",
-        maskObj: zoningQuarterMask,
-        maskName: "zoningQuarterMask",
-        maskId: "zoningQuarter-mask",
-    },
-    {
-        //boundName: "zoningSectionBound",
-        boundId: "zoningSection-boundary",
-        maskObj: zoningSectionMask,
-        maskName: "zoningSectionMask",
-        maskId: "zoningSection-mask",
+        name: "Park Properties"
     },
     {
         //boundName: "censusCountyBound",
@@ -105,6 +84,7 @@ var layersArray = [
         maskObj: censusCountyMask,
         maskName: "censusCountyMask",
         maskId: "censusCounty-mask",
+        name: "Cencus Counties"
     },
     {
         //boundName: "geologyBound",
@@ -112,6 +92,7 @@ var layersArray = [
         maskObj: geologyMask,
         maskName: "geologyMask",
         maskId: "geology-mask",
+        name: "Geology"
     },
     {
         //boundName: "estSedBound",
@@ -119,6 +100,7 @@ var layersArray = [
         maskObj: estSedMask,
         maskName: "estSedMask",
         maskId: "estSed-mask",
+        name: "Estuary Sedimentation"
     },
     {
         //boundName: "riverSedBound",
@@ -126,6 +108,7 @@ var layersArray = [
         maskObj: riverSedMask,
         maskName: "riverSedMask",
         maskId: "riverSed-mask",
+        name: "River Sedimentation"
     },
     {
         //boundName: "censusTractBound",
@@ -133,6 +116,7 @@ var layersArray = [
         maskObj: censusTractMask,
         maskName: "censusTractMask",
         maskId: "censusTract-mask",
+        name: "Cencus Tract"
     },
     {
         //boundName: "coastalBound",
@@ -140,6 +124,7 @@ var layersArray = [
         maskObj: coastalMask,
         maskName: "coastalMask",
         maskId: "coastal-mask",
+        name: "Coastal Edge"
     },
     {
         //boundName: "freshFoodBound",
@@ -147,6 +132,7 @@ var layersArray = [
         maskObj: freshFoodMask,
         maskName: "freshFoodMask",
         maskId: "freshFood-mask",
+        name: "Fresh Food Areas"
     },
     {
         //boundName: "waterfrontParksBound",
@@ -154,6 +140,7 @@ var layersArray = [
         maskObj: waterfrontParksMask,
         maskName: "waterfrontParksMask",
         maskId: "waterfrontParks-mask",
+        name: "Waterfront Parks"
     },
     {
         //boundName: "zipcodeBound",
@@ -161,6 +148,7 @@ var layersArray = [
         maskObj: zipcodeMask,
         maskName: "zipcodeMask",
         maskId: "zipcode-mask",
+        name: "Zipcodes"
     },
     {
         //boundName: "cableBound",
@@ -168,6 +156,7 @@ var layersArray = [
         maskObj: cableMask,
         maskName: "cableMask",
         maskId: "cable-mask",
+        name: "Cable Zones"
     },
     {
         //boundName: "historicBound",
@@ -175,6 +164,7 @@ var layersArray = [
         maskObj: historicMask,
         maskName: "historicMask",
         maskId: "historic-mask",
+        name: "Historic Districts"
     },
     {
         //boundName: "hydrographyBound",
@@ -182,6 +172,7 @@ var layersArray = [
         maskObj: hydrographyMask,
         maskName: "hydrographyMask",
         maskId: "hydrography-mask",
+        name: "Hydrography"
     },
 ];
 
@@ -192,6 +183,14 @@ map.on('load', function () {
         type: 'raster',
         url: 'mapbox://mapbox.satellite'
     });
+
+    map.addLayer({
+      'id':'background',
+      'type':'background',
+      'paint': {
+          'background-color': '#FFF'
+      }
+    })
 
     map.addLayer({
         'id': 'satellite',
@@ -222,8 +221,11 @@ map.on('load', function () {
                 "line-color": colors[i],
                 "line-width": 0.5
             },
+            "metadata": {
+              "displaylabel": thisLayer.name
+            }
         });
-    }  
+    }
 });
 
 
@@ -236,120 +238,143 @@ map.on('click', function(e) {
     var features = map.queryRenderedFeatures(bbox);
 
     if (features.length > 0) {
-    var clickedLayer = features[0].layer.id;
-        if (clickedLayer == "boro-boundary") {
-            console.log("over boro");
-            showMask("boro-mask", "boroMask");
-        } else if (clickedLayer == "estShore-boundary") {
-            console.log("over est shore");
-            showMask("estShore-mask", "estShoreMask");
-        } else if (clickedLayer == "quad-boundary") {
-            console.log("over est shore");
-            showMask("quad-mask", "quadMask");
-        } else if (clickedLayer == "mapzenCoast-boundary") {
-            console.log("over mapzen coast"); 
-            showMask("mapzenCoast-mask", "mapzenCoastMask");
-        }else if (clickedLayer == "mapzenLand-boundary") {
-            console.log("over mapzen land"); 
-            showMask("mapzenLand-mask", "mapzenLandMask");
-        } else if (clickedLayer == "agric-boundary") {
-            console.log("over census agric"); 
-            showMask("agric-mask", "agricMask");
-        } else if (clickedLayer == "municCourt-boundary") {
-            console.log("over munic court"); 
-            showMask("municCourt-mask", "municCourtMask");
-        } else if (clickedLayer == "neighbor-boundary") {
-            console.log("over neighbor"); 
-            showMask("neighbor-mask", "neighborMask");
-        } else if (clickedLayer == "parksProps-boundary") {
-            console.log("over parks props"); 
-            showMask("parksProps-mask", "parksPropsMask");
-        } else if (clickedLayer == "zoningQuarter-boundary") {
-            console.log("over zoningQuarter"); 
-            showMask("zoningQuarter-mask", "zoningQuarterMask");
-        } else if (clickedLayer == "zoningSection-boundary") {
-            console.log("over zoningSection"); 
-            showMask("zoningSection-mask", "zoningSectionMask");
-        } else if (clickedLayer == "censusCounty-boundary") {
-            console.log("over censusCounty"); 
-            showMask("censusCounty-mask", "censusCountyMask");
-        } else if (clickedLayer == "geology-boundary") {
-            console.log("over geology"); 
-            showMask("geology-mask", "geologyMask");
-        } else if (clickedLayer == "estSed-boundary") {
-            console.log("over estSed"); 
-            showMask("estSed-mask", "estSedMask");
-        } else if (clickedLayer == "riverSed-boundary") {
-            console.log("over riverSed"); 
-            showMask("riverSed-mask", "riverSedMask");
-        } else if (clickedLayer == "censusTract-boundary") {
-            console.log("over censusTract"); 
-            showMask("censusTract-mask", "censusTractMask");
-        } else if (clickedLayer == "coastal-boundary") {
-            console.log("over coastal"); 
-            showMask("coastal-mask", "coastalMask");
-        } else if (clickedLayer == "freshFood-boundary") {
-            console.log("over freshFood"); 
-            showMask("freshFood-mask", "freshFoodMask");
-        } else if (clickedLayer == "waterfrontParks-boundary") {
-            console.log("over waterfrontParks"); 
-            showMask("waterfrontParks-mask", "waterfrontParksMask");
-        } else if (clickedLayer == "zipcode-boundary") {
-            console.log("over zipcode"); 
-            showMask("zipcode-mask", "zipcodeMask");
-        } else if (clickedLayer == "cable-boundary") {
-            console.log("over cable"); 
-            showMask("cable-mask", "cableMask");
-        } else if (clickedLayer == "dsny-boundary") {
-            console.log("over dsny"); 
-            showMask("dsny-mask", "dsnyMask");
-        } else if (clickedLayer == "historic-boundary") {
-            console.log("over historic"); 
-            showMask("historic-mask", "historicMask");
-        } else if (clickedLayer == "hydrography-boundary") {
-            console.log("over hydrography"); 
-            showMask("hydrography-mask", "hydrographyMask");
-        }
-    }
+      var clickedLayer = features[0].layer.id;
+
+      var fillColor = map.getPaintProperty(clickedLayer, 'line-color');
+
+      // add text
+      var label = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
+
+      $("body").append(label);
+      $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+
+      if (clickedLayer == "boro-boundary") {
+          console.log("over boro");
+          showMask("boro-mask", "boroMask", fillColor);
+      } else if (clickedLayer == "estShore-boundary") {
+          console.log("over est shore");
+          showMask("estShore-mask", "estShoreMask", fillColor);
+      } else if (clickedLayer == "quad-boundary") {
+          console.log("over est shore");
+          showMask("quad-mask", "quadMask", fillColor);
+      } else if (clickedLayer == "mapzenCoast-boundary") {
+          console.log("over mapzen coast");
+          showMask("mapzenCoast-mask", "mapzenCoastMask", fillColor);
+      }else if (clickedLayer == "mapzenLand-boundary") {
+          console.log("over mapzen land");
+          showMask("mapzenLand-mask", "mapzenLandMask", fillColor);
+      } else if (clickedLayer == "agric-boundary") {
+          console.log("over census agric");
+          showMask("agric-mask", "agricMask", fillColor);
+      } else if (clickedLayer == "municCourt-boundary") {
+          console.log("over munic court");
+          showMask("municCourt-mask", "municCourtMask", fillColor);
+      } else if (clickedLayer == "neighbor-boundary") {
+          console.log("over neighbor");
+          showMask("neighbor-mask", "neighborMask", fillColor);
+      } else if (clickedLayer == "parksProps-boundary") {
+          console.log("over parks props");
+          showMask("parksProps-mask", "parksPropsMask", fillColor);
+      } else if (clickedLayer == "zoningQuarter-boundary") {
+          console.log("over zoningQuarter");
+          showMask("zoningQuarter-mask", "zoningQuarterMask", fillColor);
+      } else if (clickedLayer == "zoningSection-boundary") {
+          console.log("over zoningSection");
+          showMask("zoningSection-mask", "zoningSectionMask", fillColor);
+      } else if (clickedLayer == "censusCounty-boundary") {
+          console.log("over censusCounty");
+          showMask("censusCounty-mask", "censusCountyMask", fillColor);
+      } else if (clickedLayer == "geology-boundary") {
+          console.log("over geology");
+          showMask("geology-mask", "geologyMask", fillColor);
+      } else if (clickedLayer == "estSed-boundary") {
+          console.log("over estSed");
+          showMask("estSed-mask", "estSedMask", fillColor);
+      } else if (clickedLayer == "riverSed-boundary") {
+          console.log("over riverSed");
+          showMask("riverSed-mask", "riverSedMask", fillColor);
+      } else if (clickedLayer == "censusTract-boundary") {
+          console.log("over censusTract");
+          showMask("censusTract-mask", "censusTractMask", fillColor);
+      } else if (clickedLayer == "coastal-boundary") {
+          console.log("over coastal");
+          showMask("coastal-mask", "coastalMask", fillColor);
+      } else if (clickedLayer == "freshFood-boundary") {
+          console.log("over freshFood");
+          showMask("freshFood-mask", "freshFoodMask", fillColor);
+      } else if (clickedLayer == "waterfrontParks-boundary") {
+          console.log("over waterfrontParks");
+          showMask("waterfrontParks-mask", "waterfrontParksMask", fillColor);
+      } else if (clickedLayer == "zipcode-boundary") {
+          console.log("over zipcode");
+          showMask("zipcode-mask", "zipcodeMask", fillColor);
+      } else if (clickedLayer == "cable-boundary") {
+          console.log("over cable");
+          showMask("cable-mask", "cableMask", fillColor);
+      } else if (clickedLayer == "dsny-boundary") {
+          console.log("over dsny");
+          showMask("dsny-mask", "dsnyMask", fillColor);
+      } else if (clickedLayer == "historic-boundary") {
+          console.log("over historic");
+          showMask("historic-mask", "historicMask", fillColor);
+      } else if (clickedLayer == "hydrography-boundary") {
+          console.log("over hydrography");
+          showMask("hydrography-mask", "hydrographyMask", fillColor);
+      }
+  }
 });
 
-function showMask(maskId, maskSource) {
+function showMask(maskId, maskSource, color) {
     if (lastMaskVisible == true) {
         clearTimeout(maskTimer);
         map.removeLayer(lastMask)
-    } 
+    }
 
     map.addLayer({
         "id": maskId,
         "type": "fill",
         "source": maskSource,
         "paint": {
-            "fill-color": "#fff",
+            "fill-color": "#FFF",
             "fill-opacity": 0.9999
         },
     });
-        
+
+    map.setPaintProperty('background','background-color', color);
+
     lastMask = maskId;
     lastMaskVisible = true;
     startTimer();
-    map.setPaintProperty('satellite', 'raster-opacity', 1);
+    //map.setPaintProperty('satellite', 'raster-opacity', 1);
+
+    for (var i = 0; i < layersArray.length; i++) {
+        if (layersArray[i].maskId != maskId) {
+            map.setLayoutProperty(layersArray[i].boundId, 'visibility', 'none');
+        } else {
+            map.setLayoutProperty(layersArray[i].boundId, 'visibility', 'visible');
+        }
+    }
+
 }
 
 function clearMask() {
     console.log("clear mask and satellite");
+
+    $(".label").remove();
+
+    map.setPaintProperty('background','background-color', "#FFF");
+
     map.removeLayer(lastMask);
     lastMaskVisible = false;
     lastMask = null;
-    map.setPaintProperty('satellite', 'raster-opacity', 0);
+    //map.setPaintProperty('satellite', 'raster-opacity', 0);
+
+    for (var i = 0; i < layersArray.length; i++) {
+      map.setLayoutProperty(layersArray[i].boundId, 'visibility', 'visible');
+    }
 }
 
 function startTimer() {
     console.log("startTimer");
-    maskTimer = setTimeout("clearMask()", 3500);
+    maskTimer = setTimeout("clearMask()", 2500);
 }
-
-
-
-
-
-

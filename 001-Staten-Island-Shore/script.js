@@ -1,4 +1,6 @@
 // generate random start point
+var nodes = features.features;
+
 var randomStart = Math.floor(Math.random()*nodes.length);
 console.log("Starting at " + randomStart + " out of " + (nodes.length-1));
 
@@ -7,9 +9,9 @@ var endpart = nodes.slice(0,randomStart-1);
 var pointsAlongShore = firstpart.concat(endpart);
 
 var startPoint = pointsAlongShore[0];
-var bearingStart = bearing(startPoint.y, startPoint.x, pointsAlongShore[1].y, pointsAlongShore[1].x);
+var bearingStart = bearing(startPoint.geometry.coordinates[1], startPoint.geometry.coordinates[0], pointsAlongShore[1].geometry.coordinates[1], pointsAlongShore[1].geometry.coordinates[0]);
 
-var textFill = startPoint.x + ", " + startPoint.y
+var textFill = startPoint.geometry.coordinates[1] + ", " + startPoint.geometry.coordinates[0]
 $("#startPt").text(textFill);
 // initialize map
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
@@ -19,7 +21,7 @@ var map = new mapboxgl.Map({
     // satellite imagery styling
     style: 'mapbox://styles/stephkoltun/cjc97oyqh0jmq2sp7yydxkggr?optimize=true',
     // set the start point of the map - needs to be long-lat (not lat-long)
-    center: [startPoint.x, startPoint.y],    // this should be a random point
+    center: [startPoint.geometry.coordinates[0], startPoint.geometry.coordinates[1]],    // this should be a random point
     // what scale
     zoom: 17,
     interactive: false,
@@ -31,7 +33,7 @@ $("#desc").delay(5000).fadeOut(1000);
 
 
 // parameters for animating
-var animateTime = 6800;
+var animateTime = 7500;
 var animateOptions = {
     duration: animateTime,
     easing: function (t) {
@@ -39,40 +41,39 @@ var animateOptions = {
     },
 };
 
-var i = 1;            
+var i = 1;
 var timer = window.setInterval(function() {
     if (i < pointsAlongShore.length) {
 
         var smoothBearing;
-
         // calculate averaged bearing direction
         if ((i+2) < (pointsAlongShore.length-1)) {
             // prev to current
-            var bearingPrev = bearing(pointsAlongShore[i-1].y, pointsAlongShore[i-1].x, pointsAlongShore[i].y, pointsAlongShore[i].x);
+            var bearingPrev = bearing(pointsAlongShore[i-1].geometry.coordinates[1], pointsAlongShore[i-1].geometry.coordinates[0], pointsAlongShore[i].geometry.coordinates[1], pointsAlongShore[i].geometry.coordinates[0]);
 
             // current to next
-            var bearingNow = bearing(pointsAlongShore[i].y, pointsAlongShore[i].x, pointsAlongShore[i+1].y, pointsAlongShore[i+1].x);
+            var bearingNow = bearing(pointsAlongShore[i].geometry.coordinates[1], pointsAlongShore[i].geometry.coordinates[0], pointsAlongShore[i+1].geometry.coordinates[1], pointsAlongShore[i+1].geometry.coordinates[0]);
 
             // next to next-next
-            var bearingNext = bearing(pointsAlongShore[i+1].y, pointsAlongShore[i+1].x, pointsAlongShore[i+2].y, pointsAlongShore[i+2].x);
+            var bearingNext = bearing(pointsAlongShore[i+1].geometry.coordinates[1], pointsAlongShore[i+1].geometry.coordinates[0], pointsAlongShore[i+2].geometry.coordinates[1], pointsAlongShore[i+2].geometry.coordinates[0]);
 
             smoothBearing = (bearingPrev+bearingNow+bearingNext)/3;
         } else if ((i+1) < (pointsAlongShore.length-1)) {
-            var bearingPrev = bearing(pointsAlongShore[i-1].y, pointsAlongShore[i-1].x, pointsAlongShore[i].y, pointsAlongShore[i].x);
+            var bearingPrev = bearing(pointsAlongShore[i-1].geometry.coordinates[1], pointsAlongShore[i-1].geometry.coordinates[0], pointsAlongShore[i].geometry.coordinates[1], pointsAlongShore[i].geometry.coordinates[0]);
 
             // current to next
-            var bearingNow = bearing(pointsAlongShore[i].y, pointsAlongShore[i].x, pointsAlongShore[i+1].y, pointsAlongShore[i+1].x);
+            var bearingNow = bearing(pointsAlongShore[i].geometry.coordinates[1], pointsAlongShore[i].geometry.coordinates[0], pointsAlongShore[i+1].geometry.coordinates[1], pointsAlongShore[i+1].geometry.coordinates[0]);
 
             smoothBearing = (bearingPrev+bearingNow)/2;
         } else {
-            smoothBearing = bearing(pointsAlongShore[i].y, pointsAlongShore[i].x, pointsAlongShore[i+1].y, pointsAlongShore[i+1].x);
+            smoothBearing = bearing(pointsAlongShore[i].geometry.coordinates[1], pointsAlongShore[i].geometry.coordinates[0], pointsAlongShore[i+1].geometry.coordinates[1], pointsAlongShore[i+1].geometry.coordinates[0]);
         }
-        
+
         animateOptions.bearing = smoothBearing;
 
         // pan to text point
         var nextPoint = pointsAlongShore[i];
-        var nextPointCoords = [nextPoint.x, nextPoint.y];
+        var nextPointCoords = [nextPoint.geometry.coordinates[0], nextPoint.geometry.coordinates[1]];
         map.panTo(nextPointCoords,animateOptions);
         if (i % 10 == 0) {
             console.log(i + " pan to " + nextPointCoords);
@@ -80,7 +81,7 @@ var timer = window.setInterval(function() {
 
         // loop back to beginning of coordinates
         if (i < pointsAlongShore.length-1) {
-            i++; 
+            i++;
         } else {
             i = 0;
         }

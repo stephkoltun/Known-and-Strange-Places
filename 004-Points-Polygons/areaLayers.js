@@ -1,5 +1,29 @@
 var areaLayers = [
 	{
+			dataObj: freshFoodObj,
+			dataName: 'fresh-food',
+			layerId: 'freshFood',
+			displaylabel: "Fresh Food Store Zones",
+			color: '#e58230',
+			type: 'line'
+	},
+	{
+			dataObj: foreverWildObj,
+			dataName: 'forever-wild',
+			layerId: 'foreverWild',
+			displaylabel: "Forever Wild Areas",
+			color: '#236028',
+			type: 'line'
+	},
+	{
+			dataObj: functionParklandObj,
+			dataName: 'function-parkland',
+			layerId: 'functionParkland',
+			displaylabel: "Functional Parkland",
+			color: '#5ed07b',
+			type: 'line'
+	},
+	{
         dataObj: beachesObj,
         dataName: 'beach-es',
         layerId: 'beaches',
@@ -15,22 +39,7 @@ var areaLayers = [
         color: '#bc1b53',
         type: 'line'
     },
-    {
-        dataObj: foreverWildObj,
-        dataName: 'forever-wild',
-        layerId: 'foreverWild',
-        displaylabel: "Forever Wild Areas",
-        color: '#236028',
-        type: 'line'
-    },
-    {
-        dataObj: functionParklandObj,
-        dataName: 'function-parkland',
-        layerId: 'functionParkland',
-        displaylabel: "Functional Parkland",
-        color: '#5ed07b',
-        type: 'line'
-    },
+
     {
         dataObj: historicDistrictObj,
         dataName: 'historic-district',
@@ -39,14 +48,7 @@ var areaLayers = [
         color: '#647ad1',
         type: 'line'
     },
-    {
-        dataObj: freshFoodObj,
-        dataName: 'fresh-food',
-        layerId: 'freshFood',
-        displaylabel: "Fresh Food Store Zones",
-        color: '#e58230',
-        type: 'line'
-    },
+
     {
         dataObj: waterfrontParkObj,
         dataName: 'waterfront-park',
