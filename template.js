@@ -63,4 +63,9 @@ var allMaps = [
     'title': 'Measuring Light',
     'description': 'Click the buttons to change between sampling point representations.'
   },
+  {
+    'num': '011',
+    'title': 'Dominant Forms: Area',
+    'description': 'Buildings are grouped by footprint size. Hover to isolate each group.'
+  },
 ]

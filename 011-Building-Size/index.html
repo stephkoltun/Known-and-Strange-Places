@@ -5,8 +5,11 @@
 <head>
     <title>Dominant Forms: Areas</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
+
     <script src='config.js'></script>
 
     <!-- LIBRARIES! -->
@@ -14,28 +17,18 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
 
-    <!-- GEOJSON -->
-    <script src='GEOJSON/building 100000.js'></script>
-    <script src='GEOJSON/building 50000-100000.js'></script>
-    <script src='GEOJSON/building 25000-50000.js'></script>
-    <script src='GEOJSON/building 10000-25000.js'></script>
-    <script src='GEOJSON/building 5000-10000.js'></script>
-    <script src='GEOJSON/building 2000-5000.js'></script>
-<!--     <script src='GEOJSON/building 500-2000.js'></script> -->
-    <script src='GEOJSON/building 500.js'></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             console.log("document is ready");
+            addTitle(10, "black");
         });
     </script>
 </head>
 
 <body>
-    <div id="desc"><h1 id="place"></h1></div>
-    <div id="map">
-       <script src='buildingSize.js'></script>
-    </div>
+    <div id="map"></div>
+    <script src='buildingSize.js'></script>
 </body>
 
 </html>
