@@ -15,9 +15,11 @@ var colors = [
 var kitchen = {
 	'class': '.kitchen',
 	'room': 'kitchen',
+	'xOffset': 0,
+	'yOffset': 1,
 	'data': [
 		{
-			'time': '07:15', 
+			'time': '07:15',
 			'measure': [
 				{
 					'pos': 1,
@@ -118,7 +120,7 @@ var kitchen = {
 			],
 		},
 		{
-			'time': '08:52', 
+			'time': '08:52',
 			'measure': [
 				{
 					'pos': 1,
@@ -219,7 +221,7 @@ var kitchen = {
 			],
 		},
 		{
-			'time': '10:29', 
+			'time': '10:29',
 			'measure': [
 				{
 					'pos': 1,
@@ -320,7 +322,7 @@ var kitchen = {
 			],
 		},
 		{
-			'time': '12:06', 
+			'time': '12:06',
 			'measure': [
 				{
 					'pos': 1,
@@ -421,7 +423,7 @@ var kitchen = {
 			],
 		},
 		{
-			'time': '13:43', 
+			'time': '13:43',
 			'measure': [
 				{
 					'pos': 1,
@@ -522,7 +524,7 @@ var kitchen = {
 			],
 		},
 		{
-			'time': '15:20', 
+			'time': '15:20',
 			'measure': [
 				{
 					'pos': 1,
@@ -623,7 +625,7 @@ var kitchen = {
 			],
 		},
 		{
-			'time': '16:57', 
+			'time': '16:57',
 			'measure': [
 				{
 					'pos': 1,
@@ -730,6 +732,8 @@ var kitchen = {
 var dining = {
 	'class': '.dining',
 	'room': 'dining',
+	'xOffset': 0,
+	'yOffset': 0,
 	'data': [
 		{
 			'time': '07:15',
@@ -1444,6 +1448,8 @@ var dining = {
 var foyer = {
 	'class': '.foyer',
 	'room': 'foyer',
+	'xOffset': 1,
+	'yOffset': 0,
 	'data': [
 		{
 			'time': '07:15',
@@ -2158,6 +2164,8 @@ var foyer = {
 var bedroom = {
 	'class': '.bedroom',
 	'room': 'bedroom',
+	'xOffset': 2,
+	'yOffset': 0,
 	'data': [
 		{
 			'time': '07:15',
@@ -2872,6 +2880,8 @@ var bedroom = {
 var closet = {
 	'class': '.closet',
 	'room': 'closet',
+	'xOffset': 2,
+	'yOffset': 1,
 	'data': [
 		{
 			'time': '07:15',
@@ -3582,12 +3592,3 @@ var closet = {
 		},
 	]
 }
-
-
-
-
-
-
-
-
-

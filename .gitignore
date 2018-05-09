@@ -35,3 +35,7 @@ xxx-Live-Detection-Node
 064-Body-Swappers/opt4/ssd_mobilenet_v1_coco_2017_11_17.tar.gz
 064-Body-Swappers/opt4/object_detection
 064-Body-Swappers/opt4/ssd_mobilenet_v1_coco_2017_11_17
+
+*.wav
+
+009-New-York-I-Love-You/audio/subway.wav

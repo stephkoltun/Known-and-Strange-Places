@@ -43,7 +43,6 @@ var allMaps = [
     'title': 'From City Island',
     'description': 'What public transit lines are directly available from any point in the city? Click to select a new point. Drag to reveal the aerial imagery.'
   },
-<<<<<<< HEAD
   {
     'num': '007',
     'title': 'Finding Green',
@@ -61,9 +60,7 @@ var allMaps = [
   },
   {
     'num': '010',
-    'title': '',
-    'description': ''
+    'title': 'Measuring Light',
+    'description': 'Click the buttons to change between sampling point representations.'
   },
-=======
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
 ]

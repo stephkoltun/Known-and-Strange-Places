@@ -72,64 +72,6 @@ var map = new mapboxgl.Map({
     doubleClickZoom: false,
     pitchWithRotate: false
 });
-<<<<<<< HEAD
-=======
-
-map.scrollZoom.disable();
-map.doubleClickZoom.disable();
-
-var transitLayers = [
-    {
-        dataObj: subwayRoutesObj,
-        dataName: 'subway-lines',
-        layerId: 'subwayLines',
-        color: '#0979f3',
-        type: 'line'
-    },
-    {
-        dataObj: subwayStopsObj,
-        dataName: 'subway-stops',
-        layerId: 'subwayStops',
-        color: '#0979f3',
-        type: 'circle'
-    },
-    {
-        dataObj: busRoutesObj,
-        dataName: 'bus-lines',
-        layerId: 'busLines',
-        color: '#0e1166',
-        type: 'line'
-    },
-    {
-        dataObj: busStopObj,
-        dataName: 'bus-stops',
-        layerId: 'busStops',
-        color: '#11ff66',
-        type: 'line'
-    },
-    {
-        dataObj: expressRouteObj,
-        dataName: 'express-lines',
-        layerId: 'expressLines',
-        color: '#0e1166',
-        type: 'line'
-    },
-    {
-        dataObj: expressStopObj,
-        dataName: 'express-stops',
-        layerId: 'expressStops',
-        color: '#11ff66',
-        type: 'line'
-    },
-    {
-        dataObj: neighborhoodObj,
-        dataName: 'neighborhood-areas',
-        layerId: 'neighborhoodAreas',
-        color: '#11ff66',
-        type: 'line'
-    },
-];
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
 
 var showRoutes = true;
 var showStops = false;
@@ -152,17 +94,8 @@ map.on('load', function () {
         }
     });
 
-<<<<<<< HEAD
     var neighborhood = findNeighborhood(centerPt);
     $('.caption').text(neighborhood);
-=======
-    //startTimer();
-
-    // calculate and add walk buffer
-    // walkRadiusPoly = createWalkRadius();
-    // drawStartPoint();
-    // drawAndCalculateRoutes(); 
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
 
 });
 
@@ -172,7 +105,7 @@ function resetLocation(e) {
 
     console.log("remove layers");
     clearAerial();
-    
+
     if (map.getLayer("expressBusRoutes") != undefined) {
         map.removeLayer("expressBusRoutes");
         map.removeSource("expressBusRoutes");
@@ -182,7 +115,7 @@ function resetLocation(e) {
         map.removeLayer("localBusRoutes");
         map.removeSource("localBusRoutes");
     }
-    
+
     if (map.getLayer("subwayRoutes") != undefined) {
         map.removeLayer("subwayRoutes");
         map.removeSource("subwayRoutes");
@@ -195,16 +128,11 @@ function resetLocation(e) {
     walkRadiusPoly = createWalkRadius();
 
     drawStartPoint();
-    drawAndCalculateRoutes(); 
+    drawAndCalculateRoutes();
 
     var neighborhood = findNeighborhood(centerPt);
-<<<<<<< HEAD
     $('.caption').text(neighborhood);
 
-=======
-    console.log(neighborhood);
-    $("#place").text(neighborhood.properties.ntaname + " " + centerPt[1] + ", " + centerPt[0]);
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
 }
 
 map.on('click', function(e) {
@@ -212,7 +140,6 @@ map.on('click', function(e) {
   resetLocation(e);
 });
 
-<<<<<<< HEAD
 map.on('mousedown', function(e){
     showAerial();
 })
@@ -235,12 +162,6 @@ $("#routes").click(function() {
 $("#stops").click(function() {
   $("#stops").toggleClass("hidden visible");
   showStops = !showStops;
-=======
-map.on('drag', function(e){
-    showAerial();
-})
-
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
 
   resetLayer("localBusStops");
   resetLayer("expressBusStops");
@@ -270,7 +191,6 @@ function findNeighborhood(centerPt) {
                 return neighborhoodBounds[n].properties.ntaname;
             }
         }
-<<<<<<< HEAD
     }
     // if the point isn't part of a neighborhood
     return "";
@@ -323,27 +243,6 @@ function drawAndCalculateRoutes() {
       resetLayer("subwayStops");
       resetLayer("subwayRoutes");
     }
-=======
-    } 
-}
-
-function drawAndCalculateRoutes() {
-    var accessibleSubways = checkSubways();
-    console.log("--- nearby subway stops");
-    console.log(accessibleSubways);
-    showAccessibleSubways(accessibleSubways);
-
-
-    var accesibleBusStops = checkBusStops("local");
-    console.log("--- nearby bus stops");
-    console.log(accesibleBusStops);
-    MTABusRoutes(accesibleBusStops, "local");
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
-
-    var accesibleExpressStops = checkBusStops("express");
-    console.log("--- nearby express stops");
-    console.log(accesibleExpressStops);
-    MTABusRoutes(accesibleExpressStops, "express");
 }
 
 var walkRadiusPoly;
@@ -356,12 +255,9 @@ function createWalkRadius() {
 }
 
 function drawStartPoint() {
-<<<<<<< HEAD
 
   resetLayer("startPoint");
 
-=======
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
     map.addSource('startPoint', {
         "type": "geojson",
         "data": {
@@ -400,31 +296,28 @@ function MTABusRoutes(_stops, _type) {
                         if (!allRouteNames.includes(routes[r].shortName)) {
                             allRouteNames.push(routes[r].shortName);
                         }
-                    } 
+                    }
                 } else {
                     console.log(response_json);
                 }
-            }); 
+            });
         promiseArray.push(promise);
-    } 
+    }
 
     Promise.all(promiseArray).then(function() {
         console.log("--- nearby " + _type + " routes");
         console.log(allRoutes);
         drawMatchingBusRoutes(allRoutes, allRouteNames, _type);
-    }) 
+    })
 }
 
 function drawMatchingBusRoutes(_routes, _names, _type) {
     // find matching features
-<<<<<<< HEAD
 
     let compareName = _type + 'BusRoutes';
 
     resetLayer(compareName);
 
-=======
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
     var allBusLines = busRoutesObj.features;
 
     var busFeatures = [];
@@ -453,10 +346,10 @@ function drawMatchingBusRoutes(_routes, _names, _type) {
             "data": geojson
         },
         'paint': {
-            "line-color": ['get', 'color'],
-            "line-width": 1.4,
-            "line-opacity": 1,
-            
+            "line-color": '#777',
+            "line-width": 1,
+            "line-opacity": 0.3,
+
         },
         'layout': {
             "line-cap": "round"
@@ -469,7 +362,7 @@ function MTAPromise(_stopId) {
         var url = 'http://bustime.mta.info/api/where/stop/MTA_' + _stopId + '.json?key=' + mtabuskey ;
 
         $.ajax({
-            'url': url, 
+            'url': url,
             'dataType': 'jsonp',
             success: function(data) {
                 resolve(data);
@@ -484,17 +377,17 @@ function checkBusStops(_type) {
     var busStops;
 
     if (_type == 'local') {
-       busStops = busStopObj.features; 
+       busStops = busStopObj.features;
    } else if (_type == 'express') {
         busStops = expressStopObj.features;
    }
 
     var accessibleStops = [];   // array of point features
 
-    for (var i = 0; i < busStops.length; i++) 
+    for (var i = 0; i < busStops.length; i++)
     {
         var pt = turf.point(busStops[i].geometry.coordinates);
-        if (turf.booleanPointInPolygon(pt, walkRadiusPoly)) 
+        if (turf.booleanPointInPolygon(pt, walkRadiusPoly))
         {
             // add the stop
             accessibleStops.push(busStops[i]);
@@ -504,7 +397,7 @@ function checkBusStops(_type) {
     return accessibleStops;
 }
 
-<<<<<<< HEAD
+
 function showAccessibleBusStops(_stops, name) {
   console.log(_stops);
 
@@ -567,34 +460,35 @@ function showAccessibleSubways(_lines) {
 
   resetLayer("subwayRoutes");
 
-    let geojson = {
-=======
-function showAccessibleSubways(_accessible) {
-    var lines = _accessible.lineFeatures;
+  let geojson = {
+      "type": "FeatureCollection",
+      "features": _lines
+  };
 
-    var geojson = {
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
-        "type": "FeatureCollection",
-        "features": lines
-    };
+  let colorPrefix = [
+    'match',
+    ['get', 'name']
+  ]
 
-    map.addLayer({
-        "id": 'subwayRoutes',
-        "type": "line",
-        "source": {
-            "type": "geojson",
-            "data": geojson
-        },
-        'paint': {
-            "line-color": "#000",
-            "line-width": 1.4,
-            "line-opacity": 1,
-            
-        },
-        'layout': {
-            "line-cap": "round"
-        }
-    });
+  let colorPicker = colorPrefix.concat(subwayColors);
+
+  map.addLayer({
+      "id": 'subwayRoutes',
+      "type": "line",
+      "source": {
+          "type": "geojson",
+          "data": geojson
+      },
+      'paint': {
+          'line-color': colorPicker,
+          "line-width": 1.6,
+          "line-opacity": 1,
+
+      },
+      'layout': {
+          "line-cap": "round"
+      }
+  });
 }
 
 function checkSubways() {
@@ -606,10 +500,10 @@ function checkSubways() {
     var accessibleLines = [];   // array of strings with the line name
     var accessibleLinesFeatures = [];   // array of line features
 
-    for (var i = 0; i < subwayStops.length; i++) 
+    for (var i = 0; i < subwayStops.length; i++)
     {
         var pt = turf.point(subwayStops[i].geometry.coordinates);
-        if (turf.booleanPointInPolygon(pt, walkRadiusPoly)) 
+        if (turf.booleanPointInPolygon(pt, walkRadiusPoly))
         {
             // add the stop
             accessibleStops.push(subwayStops[i]);
@@ -641,7 +535,7 @@ function checkSubways() {
                     accessibleLines.push(trainLinesAtStop[k]);
                 }
             }
-            
+
         };
     }
     var accessible = {
@@ -658,16 +552,11 @@ var aerialVisible = false;
 var aerialTimer;
 
 function showAerial() {
-    if (aerialVisible == true) {
-        clearTimeout(aerialTimer);
-    } 
-     
-    aerialVisible = true;
-    startTimer();
+
     map.setPaintProperty('satellite', 'raster-opacity', 1);
+
     if (map.getLayer("subwayRoutes") != undefined) {
        map.setPaintProperty('subwayRoutes', 'line-opacity', 0);
-<<<<<<< HEAD
     }
     if (map.getLayer('subwayStops') != undefined) {
        map.setPaintProperty('subwayStops', 'circle-opacity', 0);
@@ -683,33 +572,88 @@ function showAerial() {
     }
     if (map.getLayer('localBusStops') != undefined) {
         map.setPaintProperty('localBusStops', 'circle-opacity', 0);
-=======
-    }
-    if (map.getLayer("expressBusRoutes") != undefined) {
-        map.setPaintProperty('expressBusRoutes', 'line-opacity', 0);
-    }
-    if (map.getLayer("localBusRoutes") != undefined) {
-        map.setPaintProperty('localBusRoutes', 'line-opacity', 0);
->>>>>>> parent of b9e4dff... fixed 006, 007, and 009
     }
 }
 
 function clearAerial() {
-    console.log("clear aerial");
-    aerialVisible = false;
+
     map.setPaintProperty('satellite', 'raster-opacity', 0);
+
     if (map.getLayer("subwayRoutes") != undefined) {
        map.setPaintProperty('subwayRoutes', 'line-opacity', 1);
+    }
+    if (map.getLayer('subwayStops') != undefined) {
+       map.setPaintProperty('subwayStops', 'circle-opacity', 1);
     }
     if (map.getLayer("expressBusRoutes") != undefined) {
         map.setPaintProperty('expressBusRoutes', 'line-opacity', 1);
     }
+    if (map.getLayer('expressBusStops') != undefined) {
+        map.setPaintProperty('expressBusStops', 'circle-opacity', 1);
+    }
     if (map.getLayer("localBusRoutes") != undefined) {
         map.setPaintProperty('localBusRoutes', 'line-opacity', 1);
     }
+    if (map.getLayer('localBusStops') != undefined) {
+        map.setPaintProperty('localBusStops', 'circle-opacity', 1);
+    }
 }
 
-function startTimer() {
-    aerialTimer = setTimeout("clearAerial()", 800);
-}
-
+var subwayColors = [
+    "1-2-3", "#EE352E",
+    "1 2 3", "#EE352E",
+    "2-3", "#EE352E",
+    "2 3", "#EE352E",
+    "1", "#EE352E",
+    "2", "#EE352E",
+    "3", "#EE352E",
+    "A-C-E", "#0039A6",
+    "A C E", "#0039A6",
+    "A-C", "#0039A6",
+    "A C", "#0039A6",
+    "A", "#0039A6",
+    "C", "#0039A6",
+    "E", "#0039A6",
+    "B-D-F-M", "#FF6319",
+    "B D F M", "#FF6319",
+    "B-D", "#FF6319",
+    "B D", "#FF6319",
+    "F-M", "#FF6319",
+    "F M", "#FF6319",
+    "B", "#FF6319",
+    "D", "#FF6319",
+    "F", "#FF6319",
+    "M", "#FF6319",
+    "G", "#6CBE45",
+    "J-Z", "#996633",
+    "J Z", "#996633",
+    "J", "#996633",
+    "Z", "#996633",
+    "L", "#A7A9AC",
+    "N-Q-R-W", "#FCCC0A",
+    "N Q R W", "#FCCC0A",
+    "N-Q-R", "#FCCC0A",
+    "N Q R", "#FCCC0A",
+    "N-Q", "#FCCC0A",
+    "N Q", "#FCCC0A",
+    "N-R", "#FCCC0A",
+    "N R", "#FCCC0A",
+    "R-W", "#FCCC0A",
+    "R W", "#FCCC0A",
+    "Q-R", "#FCCC0A",
+    "Q R", "#FCCC0A",
+    "N", "#FCCC0A",
+    "Q", "#FCCC0A",
+    "R", "#FCCC0A",
+    "F R", "#FCCC0A",
+    "S", "#808183",
+    "4-5-6", "#00933C",
+    "4 5 6", "#00933C",
+    "4-5", "#00933C",
+    "4 5", "#00933C",
+    "6", "#00933C",
+    "5", "#00933C",
+    "4", "#00933C",
+    "7", "#B933AD",
+    /* other */ '#777'
+]

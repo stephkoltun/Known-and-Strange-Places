@@ -46,3 +46,18 @@ p.label {
 	position: absolute;
 	z-index: 200;
 }
+
+p.caption {
+	font-family: 'Work Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: #000;
+
+	position: absolute;
+	left: 8%;
+	bottom: 8%;
+	padding: 10px;
+	margin: 5px 0px;
+	background-color: #fff;
+	z-index: 200;
+}
