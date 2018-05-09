@@ -8,3 +8,33 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+#toggles {
+	position: absolute;
+	bottom: 8%;
+	right: 8%;
+	z-index: 100;
+}
+
+button:focus {
+	outline: none;
+	border: 2px solid #3326a8;
+}
+
+button.visible, button.hidden {
+	padding: 10px;
+	margin: 5px 10px;
+	display: inline;
+	border: 2px solid #5342f4;
+	border-radius: 20px;
+}
+
+button.visible {
+	background-color: #5342f4;
+	color: #fff;
+}
+
+button.hidden {
+	background-color: rgba(255,255,255,.7);
+	color: #5342f4;
+}

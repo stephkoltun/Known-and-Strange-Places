@@ -3,6 +3,8 @@
 *.prproj
 *.qgs
 *.geojson
+*.mp3
+*.wav
 */GEOJSON
 */tiles
 */node_modules
@@ -21,6 +23,7 @@ xxx-Satellite-Clustering/generateBlockImages
 055-It-Keeps-Thinking-Its-A-Truck/img
 */frames
 *.pyc
+009-New-York-I-Love-You/audio
 063-Live-Body-Context/object_detection
 063-Live-Body-Context/__pycache__
 063-Live-Body-Context/ssd_mobilenet_v1_coco_2017_11_17

@@ -43,4 +43,27 @@ var allMaps = [
     'title': 'From City Island',
     'description': 'What public transit lines are directly available from any point in the city? Click to select a new point. Drag to reveal the aerial imagery.'
   },
+<<<<<<< HEAD
+  {
+    'num': '007',
+    'title': 'Finding Green',
+    'description': 'An aerial image of Randall&rsquo;s Island is divided into subdivisions and the pixels within each are sorted by their hue value. Move the cursor to reveal and hide the originating image.'
+  },
+  {
+    'num': '008',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '009',
+    'title': 'New York I Love You',
+    'description': 'Hover over a track to hear different field recordings of the LCD Soundsystem song, &ldquo;New York I Love You, But You&rsquo;re Bringing Me Down&rdquo;.'
+  },
+  {
+    'num': '010',
+    'title': '',
+    'description': ''
+  },
+=======
+>>>>>>> parent of b9e4dff... fixed 006, 007, and 009
 ]
