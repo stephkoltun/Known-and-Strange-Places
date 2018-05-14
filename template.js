@@ -73,4 +73,19 @@ var allMaps = [
     'title': 'Looking Up',
     'description': 'Hover to reveal the GPS accuracy at each point where a photo was taken.'
   },
+  {
+    'num': '013',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '014',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '015',
+    'title': 'Looking Down',
+    'description': 'Hover to reveal an image of the sky corresponding to point on the ground.'
+  },
 ]

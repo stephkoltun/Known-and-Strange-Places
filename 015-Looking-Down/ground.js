@@ -1,3 +1,27 @@
+var imgSize = $(window).height()/6;
+var topOffset = imgSize/2 * -1;
+var leftOffset = imgSize * -1;
+
+setSizes();
+
+$( window ).resize(setSizes);
+
+function setSizes() {
+  imgSize = $(window).height()/6;
+  topOffset = imgSize/2 * -1;
+  leftOffset = imgSize * -1;
+
+  $('img').css("width", imgSize + "px");
+  $('img').css("height", imgSize + "px");
+
+  $("div#images").css("width", imgSize*6 + "px");
+
+  $('#label').css("width", imgSize + "px");
+
+  $("#row1").css("margin-left", imgSize*3 + "px");
+  $("#row2, #row3").css("margin-left", imgSize*2 + "px");
+  $("#row4, #row5").css("margin-left", imgSize + "px");
+}
 
 $('img').hover(function(e) {
 

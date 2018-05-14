@@ -2,11 +2,9 @@ var imgSize = $(window).height()/6;
 var topOffset = imgSize/2 * -1;
 var leftOffset = imgSize * -1;
 
-
 setSizes();
 
-$( window ).resize(setSizes())
-
+$( window ).resize(setSizes);
 
 function setSizes() {
   imgSize = $(window).height()/6;
@@ -24,11 +22,6 @@ function setSizes() {
   $("#row2, #row3").css("margin-left", imgSize*2 + "px");
   $("#row4, #row5").css("margin-left", imgSize + "px");
 }
-
-// $('#row1').append("<div id='label'><p>x/y: 4m</p><p>z: 7m</p></div>");
-// $('#label').css('top', topOffset-16 + 'px');
-// $('#label').css('left', leftOffset + 'px');
-
 
 $('img').hover(function(e) {
 

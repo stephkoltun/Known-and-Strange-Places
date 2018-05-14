@@ -3,24 +3,10 @@ body {
 	padding: 0;
 }
 img {
-	width: 200px;
-	height: 200px;
 	object-fit: cover;
-/*	position: absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%,-50%);*/
-}
-
-h1#label {
-	position: relative;
-	z-index: 100;
-	width: 200px;
-	text-align: center;
 }
 
 div#images {
-	width: 1200px;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0%);
@@ -30,44 +16,7 @@ div#images {
 	font-size: 0;
 	line-height: 0;
 }
-#row1 {
-	margin-left: 600px;
-}
-#row2, #row3 {
-	margin-left: 400px;
-}
-#row4, #row5 {
-	margin-left: 200px;
-}
 
 img.hover {
 	opacity: 0;
 }
-
-
-/*#desc {
-	position: absolute;
-	width: 100%;
-	top: 50%;
-  	transform: translate(0, -50%);
-  	z-index: 10;
-}*/
-
-h1 {
-	font-family: 'Inconsolata', monospace;
-	font-size: 48px;
-	color: #000;
-	font-weight: 700;
-	text-align: center;
-	margin: 0;
-}
-
-/*h2 {
-	font-family: 'Inconsolata', monospace;
-	font-size: 24px;
-	font-weight: 400;
-	color: #fff;
-	text-align: center;
-	margin: 5px 0;
-}
-*/
