@@ -68,4 +68,9 @@ var allMaps = [
     'title': 'Dominant Forms: Area',
     'description': 'Buildings are grouped by footprint size. Hover to isolate each group.'
   },
+  {
+    'num': '012',
+    'title': 'Looking Up',
+    'description': 'Hover to reveal the GPS accuracy at each point where a photo was taken.'
+  },
 ]
