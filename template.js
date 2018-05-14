@@ -80,8 +80,8 @@ var allMaps = [
   },
   {
     'num': '014',
-    'title': '',
-    'description': ''
+    'title': 'Subway Stream',
+    'description': 'Watch advertisements from subway stations whiz by like passing trains.'
   },
   {
     'num': '015',
