@@ -20,6 +20,7 @@
 	font-size: 20px;
 	font-weight: 400;
 	margin: 5px 0;
+	text-align: left;
 }
 
 #desc h2 {
@@ -27,6 +28,7 @@
 	font-size: 62px;
 	font-weight: 400;
 	margin: 15px 0;
+	text-align: left;
 }
 
 #desc p {
@@ -34,6 +36,7 @@
 	font-size: 18px;
 	font-weight: 400;
 	margin: 15px 0;
+	text-align: left;
 }
 
 p.label {

@@ -5,8 +5,10 @@
 <head>
     <title>A Walk, Three Ways</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
 
     <!-- LIBRARIES! -->
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
@@ -21,15 +23,17 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            console.log("document is ready");
+            addTitle(12, "black");
         });
     </script>
 </head>
 
 <body>
+  <div id="wrapper">
     <div id="graph"></div>
     <div id="aerial"></div>
     <div id="map"></div>
+  </div>
 
     <script src='threeways.js'></script>
 </body>

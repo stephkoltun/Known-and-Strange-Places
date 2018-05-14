@@ -75,8 +75,8 @@ var allMaps = [
   },
   {
     'num': '013',
-    'title': '',
-    'description': ''
+    'title': 'A Walk Three Ways',
+    'description': 'Scrub along the altitude graph, pan within the aerial, or scrub along the path to update all views.'
   },
   {
     'num': '014',
