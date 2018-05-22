@@ -1,4 +1,4 @@
-function addTitle(index, color) {
+function addTitle(index, color, background=false) {
 
   var num = allMaps[index].num;
   var title = allMaps[index].title;
@@ -31,7 +31,7 @@ var allMaps = [
   {
     'num': '004',
     'title': 'Points and Polygons',
-    'description': 'Click to isolate a system. Press spacebar to change modes.'
+    'description': 'Click to isolate a system. Swipe or press spacebar to change modes.'
   },
   {
     'num': '005',
