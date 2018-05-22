@@ -21,7 +21,7 @@ var map = new mapboxgl.Map({
     //style: 'mapbox://styles/mapbox/satellite-v9',
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     center: centerPt,
-    zoom: 13.5,
+    zoom: 13.7,
 });
 map.scrollZoom.disable();
 map.doubleClickZoom.disable();
@@ -31,16 +31,20 @@ var transitLayers = [
         dataObj: routesObj,
         dataName: 'lines',
         layerId: 'subwayLines',
-        color: '#929292',
+        color: '#acacac',
         type: 'line',
+        width: 0.5,
         opac: 1
     },
     {
         dataObj: bufferObj,
         dataName: 'buffers',
         layerId: 'bufferEntrances',
-        color: "rgb(25,180,220)",
+        color: '#000',
+        //color: "rgb(25,180,220)",
         type: 'line',
+        width: 1,
+        // type: 'fill',
         opac: 1
     },
     // {
@@ -105,7 +109,7 @@ map.on('load', function () {
                 "source": thisLayer.dataName,
                 'paint': {
                     "line-color": thisLayer.color,
-                    "line-width": 1,
+                    "line-width": thisLayer.width,
                     'line-opacity': thisLayer.opac,
                 },
                 'layout': {
@@ -144,11 +148,12 @@ map.on('click', function(e) {
     if (features.length > 0) {
         // make mask with feature
         var mask = turf.polygon(features[0].geometry.coordinates);
+        var centroid = turf.centroid(mask);
         showMask(mask);
 
         map.easeTo({
-            center: [e.lngLat.lng, e.lngLat.lat],
-            zoom: 20,
+            center: centroid.geometry.coordinates,
+            zoom: 20.5,
             duration: 1200,
             easing(t) {
                 return t;

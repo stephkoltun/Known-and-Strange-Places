@@ -5,8 +5,10 @@
 <head>
     <title>Sampling Prospect Park</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
 
     <script src="GEOJSON/NYCOD_elevPts_culled-intersect.js"></script>
     <script src="GEOJSON/TargetPts.js"></script>
@@ -22,13 +24,30 @@
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            console.log("document is ready");
+            addTitle(15, "black", true);
         });
     </script>
 </head>
 
 <body>
-    <div id="map">
+    <div id="map"></div>
+    <div id="legend">
+      <div class="item">
+        <img src="img/square-11.png" />
+        <p>Target Points</p>
+      </div>
+      <div class="item">
+        <img src="img/cross-grey-11.png" />
+        <p>NYC Elevation Sample Points</p>
+      </div>
+      <div class="item">
+        <img src="img/triangle-11.png" />
+        <p>Recorded GPS Points</p>
+      </div>
+      <div class="item">
+        <img src="img/circle-11.png" />
+        <p>Walked GPS Points</p>
+      </div>
     </div>
     <script src='sampling.js'></script>
 </body>

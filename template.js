@@ -90,4 +90,9 @@ var allMaps = [
     'title': 'Looking Down',
     'description': 'Hover to reveal an image of the sky corresponding to point on the ground.'
   },
+  {
+    'num': '016',
+    'title': 'Sampling Prospect Park',
+    'description': 'Hover to highlight points at a similar elevation. Click to isolate each sampling system.'
+  },
 ]
