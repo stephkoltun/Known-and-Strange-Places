@@ -2,9 +2,11 @@ function addTitle(index, color, background=false) {
 
   var num = allMaps[index].num;
   var title = allMaps[index].title;
-  var description = allMaps[index].description
+  var description = allMaps[index].description;
 
-  var titleBlock = "<div id='desc' class='" + color + "'><h1>" + num + "</h1><h2>" + title + "</h2><p>" + description + "</p></div>";
+  var classes = background ? (color + " bkgnd") : color
+
+  var titleBlock = "<div id='desc' class='" + classes + "'><h1>" + num + "</h1><h2>" + title + "</h2><p>" + description + "</p></div>";
 
   $('body').append(titleBlock);
   // fade out text
@@ -50,8 +52,8 @@ var allMaps = [
   },
   {
     'num': '008',
-    'title': '',
-    'description': ''
+    'title': 'Subway At Grade',
+    'description': 'Pan around the NY subway system. Click to aerial comparisons of each station along a line.'
   },
   {
     'num': '009',

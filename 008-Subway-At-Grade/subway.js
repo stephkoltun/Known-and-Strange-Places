@@ -9,7 +9,6 @@ var startPoints = [
         'coord': [-73.980235, 40.688508],
         'name': "LIU-Brooklyn"
     },
-
 ];
 
 var randomStart = Math.floor(Math.random() * Math.floor(startPoints.length));
@@ -21,11 +20,9 @@ var map = new mapboxgl.Map({
     // satellite imagery styling
     //style: 'mapbox://styles/mapbox/satellite-v9',
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
-    // set the start point of the map - needs to be long-lat (not lat-long)
-    center: centerPt,    // this should be a random point
-    zoom: 14,   // 19
+    center: centerPt,
+    zoom: 13.5,
 });
-
 map.scrollZoom.disable();
 map.doubleClickZoom.disable();
 
@@ -35,6 +32,14 @@ var transitLayers = [
         dataName: 'lines',
         layerId: 'subwayLines',
         color: '#929292',
+        type: 'line',
+        opac: 1
+    },
+    {
+        dataObj: bufferObj,
+        dataName: 'buffers',
+        layerId: 'bufferEntrances',
+        color: "rgb(25,180,220)",
         type: 'line',
         opac: 1
     },
@@ -53,15 +58,7 @@ var transitLayers = [
     //     type: 'line',
     //     opac: 0
     // },
-    {
-        dataObj: bufferObj,
-        dataName: 'buffers',
-        layerId: 'bufferEntrances',
-        color: "rgb(25,180,220)",
-        type: 'line',
-        opac: 1
 
-    },
     // {
     //     dataObj: stationsObj,
     //     dataName: 'stations',
@@ -94,7 +91,7 @@ map.on('load', function () {
 
     for (var i = 0; i < transitLayers.length; i++) {
         var thisLayer = transitLayers[i];
-        console.log(thisLayer);
+        //console.log(thisLayer);
         map.addSource(thisLayer.dataName, {
                 "type": "geojson",
                 "data": thisLayer.dataObj,
@@ -131,10 +128,11 @@ map.on('load', function () {
             })
         }
 
-        
+
     };
 
-
+    // Use this if want to export new buffer shapes
+    //createBuffer(0.01, true)
 
 });
 
@@ -149,14 +147,14 @@ map.on('click', function(e) {
         showMask(mask);
 
         map.easeTo({
-            center: [e.lngLat.lng, e.lngLat.lat], 
-            zoom: 19,
-            duration: 1200, 
+            center: [e.lngLat.lng, e.lngLat.lat],
+            zoom: 20,
+            duration: 1200,
             easing(t) {
                 return t;
             }
         })
-        
+
     }
 })
 
@@ -175,7 +173,7 @@ function showMask(mask) {
         clearTimeout(maskTimer);
         map.removeLayer('zmask');
         map.removeSource('mask');
-    } 
+    }
 
     map.addSource('mask', {
             "type": "geojson",
@@ -191,23 +189,21 @@ function showMask(mask) {
           'fill-opacity': 0.999
         }
     }, 'subwayLines');
-        
+
     masked = true;
     startTimer();
     map.setPaintProperty('satellite', 'raster-opacity', 1);
-    map.setPaintProperty('subwayVents', 'line-opacity', 1);
 }
 
 function clearMask() {
     console.log("clear mask and satellite");
     map.setPaintProperty('satellite', 'raster-opacity', 0);
-    map.setPaintProperty('subwayVents', 'line-opacity', 0);
     map.removeLayer('zmask');
     map.removeSource('mask');
     map.easeTo({
-            center: map.getCenter(), 
+            center: map.getCenter(),
             zoom: 14,
-            duration: 1200, 
+            duration: 1200,
             easing(t) {
                 return t;
             }
@@ -219,5 +215,3 @@ function startTimer() {
     console.log("startTimer");
     maskTimer = setTimeout("clearMask()", 4500);
 }
-
-
