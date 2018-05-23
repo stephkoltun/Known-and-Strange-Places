@@ -95,4 +95,49 @@ var allMaps = [
     'title': 'Sampling Prospect Park',
     'description': 'Hover to highlight points at a similar elevation. Click to isolate each sampling system.'
   },
+  {
+    'num': '017',
+    'title': 'Dominant Heights',
+    'description': 'Hover on a contour line to isolate the corresponding aerial imagery.'
+  },
+  {
+    'num': '018',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '019',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '020',
+    'title': 'Crossing 72nd Street',
+    'description': 'Once loaded, click at any point on the path to jump to that point in time.'
+  },
+  {
+    'num': '021',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '022',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '023',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '024',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '025',
+    'title': '',
+    'description': ''
+  },
 ]

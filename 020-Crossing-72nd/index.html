@@ -5,8 +5,10 @@
 <head>
     <title>Crossing 72nd</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
 
     <!-- LIBRARIES! -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
@@ -28,7 +30,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            console.log("document is ready");
+            addTitle(19, "black", true);
         });
     </script>
 </head>
@@ -46,6 +48,7 @@
     <div id="elevation">
     </div>
     <h1 id="label3">Tracked Altitude</h1>
+    <div id="p5_loading" class="loadingclass"></div>
     <script src='terrain.js'></script>
 </body>
 

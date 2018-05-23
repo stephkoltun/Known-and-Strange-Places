@@ -8,18 +8,17 @@ var useStyle ='mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc';    // all
 var map = new mapboxgl.Map({
     container: 'map',
     style: useStyle,
-    //center: [-73.927284, 40.820219], 
-    center: [-73.927078,40.860777],
-    zoom: 16
+    //center: [-73.927284, 40.820219],
+    center: [-73.824150843246443, 40.759726946136112],
+    zoom: 14.5
 });
 
-var bounds = [-74.022470, 40.934100, -73.836217, 40.801300];
 // disable map zoom
 //map.scrollZoom.disable();
 map.doubleClickZoom.disable();
 
 map.on('load', function () {
-    console.log("map is loaded"); 
+    console.log("map is loaded");
 
     map.addSource('satellite', {
         type: 'raster',
@@ -34,34 +33,42 @@ map.on('load', function () {
         'paint': {
             'raster-opacity': 0
         }
-    }); 
+    });
 
     map.addSource('contours', {
         "type": "geojson",
         //"data": contourObj,
-        "data": 'polygons-elev.geojson'
-    });  
+        //"data": 'polygons-elev.geojson'
+        "data": 'DEM_Merged_Discrete_Polygonized.geojson'
+    });
 
     map.addLayer({
         "id": 'contours',
-        "type": "line",
+        "type": "fill",
         "source": 'contours',
         //"source-layer": "original",
         'paint': {
-            'line-width': .5,
-            'line-color': "#c6c6c6"
+            //'line-width': 0.5,
+            'fill-outline-color': "#c6c6c6",
+            'fill-color': "#fff"
             // 'circle-radius': thisLayer.size,
             // 'circle-color': thisLayer.color
         }
     });
 });
 
-
+function sourceCallback() {
+    // assuming 'map' is defined globally, or you can use 'this'
+    if (map.getSource('contours') && map.isSourceLoaded('contours')) {
+        console.log('source loaded!');
+    }
+}
+map.on('sourcedata', sourceCallback);
 
 
 var currentlyHidden = false;
 
-map.on('mousemove', function(e) {
+map.on('click', function(e) {
     // set bbox as 5px reactangle area around clicked point
     var bbox = [[e.point.x - 3, e.point.y - 3], [e.point.x + 3, e.point.y + 3]];
     var features = map.queryRenderedFeatures(bbox);
@@ -87,26 +94,18 @@ map.on('mousemove', function(e) {
 
         map.setFilter('contours', filter);    // elevation
 
-        // var windowbox = [[0, 0], [500, 500]];
-        // // use rendered features to get all the matching 
-        // var matchHeight = map.queryRenderedFeatures(windowbox, {
-        //     layers: ['contours'],
-        //     filter: filter,
-        // });
-        // console.log(matchHeight);
 
-        var mask = turf.polygon(features[0].geometry.coordinates);
+        var mask = turf.multiPolygon(features[0].geometry.coordinates);
         console.log(mask);
         showMask(mask);
 
-        
+
         var templabel = "<p class='label'>" + lowerElev + '-' + upperElev + "m</p>";
 
         $("body").append(templabel);
         $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
         currentlyHidden = true;
-
     }
 
     if (currentlyHidden) {
@@ -115,7 +114,7 @@ map.on('mousemove', function(e) {
             currentlyHidden = false;
             console.log("clear mask and satellite");
             map.removeLayer('zmask');
-            map.removeSource('mask'); 
+            map.removeSource('mask');
             map.setPaintProperty('satellite', 'raster-opacity', 0);
 
             map.setFilter('contours', null);
@@ -126,20 +125,26 @@ map.on('mousemove', function(e) {
                 currentlyHidden = false;
                 console.log("clear mask and satellite");
                 map.removeLayer('zmask');
-                map.removeSource('mask'); 
+                map.removeSource('mask');
                 map.setPaintProperty('satellite', 'raster-opacity', 0);
 
                 map.setFilter('contours', null);
 
                 $(".label").remove();
-            } 
+            }
         }
     }
 });
 
 
-function polyMask(mask, bounds) {
-  var bboxPoly = turf.bboxPolygon(bounds);
+function polyMask(mask) {
+  console.log("poly mask");
+
+  var line = turf.lineString([[-73.780720, 40.791121], [-73.866637, 40.728513]]);
+  console.log(line);
+  var bbox = turf.bbox(line);
+  var bboxPoly = turf.bboxPolygon(bbox);
+
   var diff = turf.difference(bboxPoly, mask);
   console.log(diff);
   return diff;
@@ -150,14 +155,17 @@ function showMask(mask) {
 
     if (map.getLayer('zmask') != undefined) {
         map.removeLayer('zmask');
-        map.removeSource('mask'); 
+        map.removeSource('mask');
         map.setPaintProperty('satellite', 'raster-opacity', 0);
         map.setFilter('contours', null);
     }
 
+    var maskData = polyMask(mask);
+    console.log(maskData);
+
     map.addSource('mask', {
         "type": "geojson",
-        "data": polyMask(mask, bounds)
+        "data": maskData
       });
 
     map.addLayer({
@@ -169,9 +177,7 @@ function showMask(mask) {
           'fill-opacity': 0.999
         }
     },'contours');
-        
+
     currentlyHidden = true;
     map.setPaintProperty('satellite', 'raster-opacity', 1);
 }
-
-

@@ -151,6 +151,9 @@ map.on('click', function(e) {
         var centroid = turf.centroid(mask);
         showMask(mask);
 
+        map.setLayoutProperty('bufferEntrances', 'visibility', 'none');
+        map.setLayoutProperty('subwayLines', 'visibility', 'none');
+
         map.easeTo({
             center: centroid.geometry.coordinates,
             zoom: 20.5,
@@ -203,6 +206,9 @@ function showMask(mask) {
 function clearMask() {
     console.log("clear mask and satellite");
     map.setPaintProperty('satellite', 'raster-opacity', 0);
+    map.setLayoutProperty('bufferEntrances', 'visibility', 'visible');
+    map.setLayoutProperty('subwayLines', 'visibility', 'visible');
+
     map.removeLayer('zmask');
     map.removeSource('mask');
     map.easeTo({
