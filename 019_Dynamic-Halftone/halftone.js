@@ -76,6 +76,9 @@ var irYOffset = -3;
 var demXOffset = -4;
 var demYOffset = 4;
 
+$('#parameters').on('click', function() {
+  $('.slidercontainer').toggleClass('collapsed', 'expanded');
+})
 
 subsizeSlider.oninput = function() {
     //console.log("prev size: " + subSize);

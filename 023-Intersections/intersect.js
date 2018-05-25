@@ -9,6 +9,11 @@ $(document).ready(function () {
     zoomControl:false
   }).setView(centerPt, 15.5);
 
+  map.dragging.disable();
+  map.touchZoom.disable();
+  map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable();
+
   var streetLayer = L.geoJSON(streets, {
     style: {
       "color": "#b1b1b1",
@@ -19,7 +24,7 @@ $(document).ready(function () {
 
   var intersectionsLayers = L.geoJSON(inters, {
     style: {
-      "color": "#23C0AA",
+      "color": "#000",
       "weight": 1,
       "opacity": 1,
     }

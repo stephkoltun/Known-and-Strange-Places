@@ -28,12 +28,9 @@ var map = new mapboxgl.Map({
     bearing: bearingStart
 });
 
-// fade out text
-$("#desc").delay(5000).fadeOut(1000);
-
 
 // parameters for animating
-var animateTime = 1200;
+var animateTime = 1600;
 var animateOptions = {
     duration: animateTime,
     easing: function (t) {

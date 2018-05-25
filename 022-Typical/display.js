@@ -3,7 +3,7 @@ var winheight = $(window).height();
 var winwidth = $(window).width();
 var margin = {top: 100, left: 100, bottom: 100, right: 100};
 var width = winwidth - margin.left - margin.right;
-var height = 168330 - margin.top - margin.bottom;
+var height = 178330 - margin.top - margin.bottom;
 
 
 var path;
@@ -71,9 +71,8 @@ function createSVG() {
   });
 };
 
-setTimeout(function() {
-  $("#desc").delay(2000).fadeOut(2000);
 
+var expand = setInterval(function() {
   d3.selectAll(".block")
   .transition()
   .duration(2000)
@@ -92,25 +91,37 @@ setTimeout(function() {
     return "translate(" + x0 + "," + y0 + ") rotate(-29 " + centroidX + " " + centroidY +")"
   });
 
-},5000);
+  var pos = 0;
+  var increment = 1;
 
-// var scrollable = d3.select("#scrollable");
-//
-// d3.select("#down").on('click', function() {
-//     var scrollheight = scrollable.property("scrollHeight");
-//
-//     d3.select("#scrollable").transition().duration(3000)
-//       .tween("uniquetweenname", scrollTopTween(scrollheight));
-//     });
-//
-// d3.select("#up").on('click', function() {
-//     d3.select("#scrollable").transition().duration(1000)
-//     .tween("uniquetweenname", scrollTopTween(0));
-//     });
-//
-// function scrollTopTween(scrollTop) {
-// return function() {
-//   var i = d3.interpolateNumber(this.scrollTop, scrollTop);
-//   return function(t) { this.scrollTop = i(t); };
-// };
-// }
+  d3.transition()
+  .delay(800)
+  .duration(document.body.getBoundingClientRect().height)
+  .tween("scroll", scrollTween(document.body.getBoundingClientRect().height - window.innerHeight));
+
+  function scrollTween(offset) {
+    return function() {
+      // var i = d3.interpolateNumber(window.pageYOffset || document.documentElement.scrollTop, offset);
+      // return function(t) { scrollTo(0, i(t)); };
+      return function(t) {
+        pos += increment;
+        if (pos < 0) {
+          pos = 0;
+        } else if (pos > $(window).height) {
+          pos = $(window).height;
+        }
+
+        scrollTo(0, pos);
+      };
+    };
+  }
+
+  $(document).mousemove(function(e) {
+    var mapMouse = d3.scaleLinear()
+      .domain([0, $(window).height()]) // input
+      .range([-10, 10]);  // output
+    increment = mapMouse(e.clientY);
+  })
+
+  clearInterval(expand);
+}, 7000);

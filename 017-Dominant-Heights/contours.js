@@ -10,7 +10,11 @@ var map = new mapboxgl.Map({
     style: useStyle,
     //center: [-73.927284, 40.820219],
     center: [-73.824150843246443, 40.759726946136112],
-    zoom: 14.5
+    zoom: 14.5,
+    maxBounds:  [
+      [-73.860420, 40.729782], // Northeast coordinates
+      [-73.794416, 40.781763] // Southwest coordinates
+    ]
 });
 
 // disable map zoom
@@ -92,20 +96,24 @@ map.on('click', function(e) {
             [">=", "DN", lowerElev],
         ];
 
-        map.setFilter('contours', filter);    // elevation
-
 
         var mask = turf.multiPolygon(features[0].geometry.coordinates);
         console.log(mask);
-        showMask(mask);
+        var maskCreated = showMask(mask);
 
+        if (maskCreated) {
+          map.setFilter('contours', filter);    // elevation
+          var templabel = "<p class='label'>" + lowerElev + '-' + upperElev + "m</p>";
 
-        var templabel = "<p class='label'>" + lowerElev + '-' + upperElev + "m</p>";
+          $("body").append(templabel);
+          $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
-        $("body").append(templabel);
-        $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+          currentlyHidden = true;
+        } else {
+          // do nothing
+          currentlyHidden = false;
+        }
 
-        currentlyHidden = true;
     }
 
     if (currentlyHidden) {
@@ -140,14 +148,19 @@ map.on('click', function(e) {
 function polyMask(mask) {
   console.log("poly mask");
 
-  var line = turf.lineString([[-73.780720, 40.791121], [-73.866637, 40.728513]]);
+  var line = turf.lineString([[-73.794416, 40.781763], [-73.860420, 40.729782]]);
   console.log(line);
   var bbox = turf.bbox(line);
   var bboxPoly = turf.bboxPolygon(bbox);
 
-  var diff = turf.difference(bboxPoly, mask);
-  console.log(diff);
-  return diff;
+  try {
+    var diff = turf.difference(bboxPoly, mask);
+    console.log(diff);
+    return diff;
+  }
+  catch (err) {
+    return null
+  }
 }
 
 function showMask(mask) {
@@ -163,21 +176,27 @@ function showMask(mask) {
     var maskData = polyMask(mask);
     console.log(maskData);
 
-    map.addSource('mask', {
-        "type": "geojson",
-        "data": maskData
-      });
+    if (maskData != null) {
+      map.addSource('mask', {
+          "type": "geojson",
+          "data": maskData
+        });
 
-    map.addLayer({
-        "id": "zmask",
-        "source": "mask",
-        "type": "fill",
-        "paint": {
-          "fill-color": "#fff",
-          'fill-opacity': 0.999
-        }
-    },'contours');
+      map.addLayer({
+          "id": "zmask",
+          "source": "mask",
+          "type": "fill",
+          "paint": {
+            "fill-color": "#fff",
+            'fill-opacity': 0.999
+          }
+      },'contours');
 
-    currentlyHidden = true;
-    map.setPaintProperty('satellite', 'raster-opacity', 1);
+      currentlyHidden = true;
+      map.setPaintProperty('satellite', 'raster-opacity', 1);
+      return true
+    } else {
+      return false
+    }
+
 }

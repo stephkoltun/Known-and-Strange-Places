@@ -11,21 +11,44 @@ body {
 
 #allSliders {
   position: absolute;
-  top: 50%;
-  left: 5%;
+  top: 100px;
+  left: 100px;
   z-index: 100;
-  transform: translate(0%, -50%);
+  background-color: #fff;
+  border: 3px solid #000;
+}
+
+#allSliders h3 {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  padding: 15px;
+  margin: 0;
+  width: 150px;
+  background-color: #000;
+  color: #fff;
+}
+
+.expanded {
+  display: block;
+}
+
+.collapsed {
+  display: none;
 }
 
 .slidercontainer {
   margin: 15px;
   width: 150px;
+
 }
 
 label {
-  font-family: 'Inconsolata', monospace;
+  font-family: 'Work Sans', sans-serif;
   font-size: 10px;
-  font-weight: 400;
+  line-height: 20px;
+  font-weight: 600;
 }
 
 canvas {
@@ -37,5 +60,3 @@ canvas {
   height: 600px;
   transform: translate(-50%, -50%);
 }
-
-

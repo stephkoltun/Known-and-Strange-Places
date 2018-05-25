@@ -1,3 +1,6 @@
+let zoompercent = Math.floor($(window).width()/3600 * 100);
+
+$('#wrapper').css({"zoom": zoompercent + "%", "margin-left": "0.8%"});
 var baseImage;
 var sortedPixels = [];
 
@@ -66,7 +69,10 @@ function setup() {
 
 var firedTime = 0;
 var waitTime = 500;
-function mouseWheel(e) {
+
+document.getElementById("wrapper").addEventListener("wheel", wheeled);
+
+function wheeled(e) {
   var now = Date.now();
   var timePassed = now - firedTime;
   if (e.deltaY > 4 && (timePassed > waitTime)) {

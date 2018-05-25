@@ -98,7 +98,7 @@ var allMaps = [
   {
     'num': '017',
     'title': 'Dominant Heights',
-    'description': 'Hover on a contour line to isolate the corresponding aerial imagery.'
+    'description': 'Click on a contour line to isolate the corresponding aerial imagery.'
   },
   {
     'num': '018',
@@ -122,22 +122,22 @@ var allMaps = [
   },
   {
     'num': '022',
-    'title': '',
-    'description': ''
+    'title': 'Typical: All The Blocks in Manhattan',
+    'description': 'Watch a slow scroll of all the blocks in Manhattan sorted by area.'
   },
   {
     'num': '023',
-    'title': '',
-    'description': ''
+    'title': 'Intersections',
+    'description': 'Hover on an intersection to see the connecting routes.'
   },
   {
     'num': '024',
-    'title': '',
-    'description': ''
+    'title': 'Zoom Zoom Zoom',
+    'description': 'Scroll to change zoom levels.'
   },
   {
     'num': '025',
-    'title': '',
-    'description': ''
+    'title': 'Glendale Slide',
+    'description': 'Wander along the construction of city and "nature" &mdash; reload to start again elsewhere.'
   },
 ]
