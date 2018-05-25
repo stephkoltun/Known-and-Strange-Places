@@ -5,10 +5,10 @@
 <head>
     <title>Looking Around</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
 
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
     <!-- LIBRARIES! -->
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -18,20 +18,12 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            console.log("document is ready");
+            addTitle(20, "black", true);
         });
     </script>
 </head>
 
 <body>
-    <div id="desc">
-        <h1>Looking Around (021)</h1>
-        <h2>press spacebar to change mode: grid or cluster</h2>
-        <br>
-        <h2>click an image to see a series:</h2>
-        <h2>all in the same direction or all from one intersection</h2>
-        <h2>press enter to return to view</h2>
-    </div>
     <div id="grid"></div>
     <div id='rapidImg'>
       <img id='visImg' src=''/>

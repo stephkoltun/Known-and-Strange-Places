@@ -7,8 +7,6 @@ var height = winheight - margin.top - margin.bottom;
 
 imageDisplay();
 
-$("#desc").delay(3000).fadeOut(1000);
-
 var xIntersectionScale;
 var yGridScale;
 var yClusterScale;

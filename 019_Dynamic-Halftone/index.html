@@ -6,7 +6,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+  <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+  <script src='../template.js'></script>
 
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
@@ -16,13 +18,19 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
   <script src="html2canvas.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+      addTitle(18, "black", true);
+  });
+  </script>
 </head>
 
 <body>
   <div id="allSliders">
     <div class="slidercontainer">
       <label for="subsizeSlider">Subsize</label><br>
-      <input type="range" min="6" max="50" value="6" class="slider" id="subsizeSlider" step="6">
+      <input type="range" min="4" max="20" value="4" class="slider" id="subsizeSlider" step="4">
     </div>
     <div class="slidercontainer">
       <label for="aerXSlider">Brightness X</label><br>
@@ -63,7 +71,7 @@
   <div id="demmap">
   </div>
 
-  
+
   <script src="halftone.js"></script>
 </body>
 </html>

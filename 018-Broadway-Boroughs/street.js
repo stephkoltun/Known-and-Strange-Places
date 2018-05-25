@@ -1,57 +1,71 @@
-assembleImage();
+assembleImage("left");
+assembleImage("right");
 
-function assembleImage() {
-  var left = nodes.features[Math.floor(Math.random() * Math.floor(nodes.features.length))];
-  var right = nodes.features[Math.floor(Math.random() * Math.floor(nodes.features.length))];
+$('#streetLeft').click(assembleImage);
+$('#streetRight').click(assembleImage);
 
-  console.log(left);
-  console.log(right);
+var lastTime = Date.now();
+var maxTime = 2500;
 
-  var randomLeft = {
-    lat: left.geometry.coordinates[0],
-    lon: left.geometry.coordinates[1],
-    heading: left.properties.angle,
+$('body').click(function() {
+  lastTime = Date.now();
+})
+
+setInterval(function() {
+  if ((Date.now() - lastTime) > maxTime) {
+    lastTime = Date.now()
+    assembleImage("left");
+    assembleImage("right");
   };
+}, 500);
 
-  if (left.properties.borocode == 1) {
-    randomLeft.boro = "Manhattan";
-  } else if (left.properties.borocode == 2) {
-    randomLeft.boro = "Bronx";
-  } else if (left.properties.borocode == 3) {
-    randomLeft.boro = "Brooklyn";
-  } else if (left.properties.borocode == 4) {
-    randomLeft.boro = "Queens";
-  } else if (left.properties.borocode == 5) {
-    randomLeft.boro = "Staten Island";
+
+function assembleImage(side) {
+  let boros = ["Manhattan", "Bronx", "Brooklyn", "Queens", "Staten Island"];
+  var element;
+  if (side == "left") {
+    element = "#streetLeft";
+  } else if (side == "right") {
+    element = "#streetRight";
+  } else {
+    element = "#" + side.currentTarget.id;
   }
 
-  var randomRight = {
-    lat: right.geometry.coordinates[0],
-    lon: right.geometry.coordinates[1],
-    heading: right.properties.angle,
-  };
-  if (right.properties.borocode == 1) {
-    randomRight.boro = "Manhattan";
-  } else if (right.properties.borocode == 2) {
-    randomRight.boro = "Bronx";
-  } else if (right.properties.borocode == 3) {
-    randomRight.boro = "Brooklyn";
-  } else if (right.properties.borocode == 4) {
-    randomRight.boro = "Queens";
-  } else if (right.properties.borocode == 5) {
-    randomRight.boro = "Staten Island";
+  let random = Math.floor(Math.random() * Math.floor(nodes.features.length))
+  let feature = nodes.features[random];
+
+  let prevFeature;
+  let nextFeature;
+  if (random == 0) {
+    prevFeature = nodes.features[1];
+    nextFeature = nodes.features[2];
+  } else if (random == nodes.features.length - 1) {
+    prevFeature = nodes.features[random - 1];
+    nextFeature = nodes.features[random - 2];
+  } else {
+    prevFeature = nodes.features[random - 1];
+    nextFeature = nodes.features[random + 1];
   }
 
-  requestImg('#streetLeft', randomLeft);
-  requestImg('#streetRight', randomRight);
+  let averageBearing = (prevFeature.properties.angle * 0.5 + nextFeature.properties.angle * 0.5 + feature.properties.angle) / 2;
+
+  let featureData = {
+    lat: feature.geometry.coordinates[0],
+    lon: feature.geometry.coordinates[1],
+    heading: feature.properties.angle,
+    boro: boros[feature.properties.borocode-1]
+  }
+
+  requestImg(element, featureData);
 }
 
 function requestImg(classname, point) {
   var imgUrl = "https://maps.googleapis.com/maps/api/streetview?&key=" + key + "&size=640x320&location=" + point.lon + "," + point.lat + "&fov=90&heading=" + point.heading;
 
   convertFunction(imgUrl, function(base64Img){
-      console.log(point.boro);
-      var img = "<img src='"+base64Img+"'><h1>" + point.boro + "</h1>";
+      // console.log(point.boro);
+      // var img = "<img src='"+base64Img+"'><h1>" + point.boro + "</h1>";
+      var img = "<img src='"+base64Img+"'>";
       $(classname).html(img);
   });
 

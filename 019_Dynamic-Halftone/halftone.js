@@ -55,7 +55,7 @@ $(document).ready(function () {
             $("#irmap").css("opacity", 0);
             $("#demmap").css("opacity", 0);
 
-            generateHalftone();
+            generateHalftone("all");
         });
       });
     });
@@ -82,41 +82,124 @@ subsizeSlider.oninput = function() {
     subSize = parseInt(this.value);
     //console.log("new size: " + subSize);
     nSubs = Math.ceil(imgWidth/subSize);
-    generateHalftone();
 }
+
+$('#subsizeSlider').mouseup(function() {
+  generateHalftone("all");
+})
+
+$('#aerXSlider, #aerYSlider, #irXSlider, #irYSlider, #demXSlider, #demYSlider ').mouseup(function() {
+  generateHalftone();
+})
 
 aerXSlider.oninput = function() {
     aerXOffset = parseInt(this.value);
-    generateHalftone();
 }
 
 aerYSlider.oninput = function() {
     aerYOffset = parseInt(this.value);
-    generateHalftone();
 }
 
 irXSlider.oninput = function() {
     irXOffset = parseInt(this.value);
-    generateHalftone();
 }
 
 irYSlider.oninput = function() {
     irYOffset = parseInt(this.value);
-    generateHalftone();
 }
 
 demXSlider.oninput = function() {
     demXOffset = parseInt(this.value);
-    generateHalftone();
 }
 
 demYSlider.oninput = function() {
     demYOffset = parseInt(this.value);
-    generateHalftone();
 }
 
+function captureSubdivs() {
+  return new Promise(function(resolve, reject) {
+    // make sure the arrays are empty;
+    var data = {
+      aerImageData: [],
+      irImageData: [],
+      demImageData: []
+    }
 
-function generateHalftone(prevCan) {
+    for (var m = 0; m < imgWidth; m+=subSize) {
+        for (var n = 0; n < imgWidth; n+=subSize) {
+
+        var aerImage = prevAERContext.getImageData(m, n, subSize, subSize);
+        var aerData = aerImage.data;
+        data.aerImageData.push(aerData);
+
+        var irImage = prevIRContext.getImageData(m, n, subSize, subSize);
+        var irData = irImage.data;
+        data.irImageData.push(irData);
+
+        var demImage = prevDEMContext.getImageData(m, n, subSize, subSize);
+        var demData = demImage.data;
+        data.demImageData.push(demData);
+      }
+    }
+
+    resolve(data);
+  })
+}
+
+var lastSubdivData;
+
+function drawAer(pixels, context) {
+  var hslData = pixels.hslArray;
+  var maxBrightness = pixels.maxBrightness;
+  var minBrightness = pixels.minBrightness;
+  var avgBrightness = pixels.totalBrightness/hslData.length;
+
+  var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);   // brighter = bigger
+
+  var x = pixels.xCenter + aerXOffset;
+  var y = pixels.yCenter + aerYOffset;
+
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI, false);
+  context.fillStyle = "rgba(0, 0, 255, .5)";
+  context.fill();
+}
+
+function drawIR(pixels, context) {
+  var avgRed = pixels.avgRed;
+  var radius = mapVal(avgRed, 0.0, 255.0, 0.0, subSize/2.5);
+
+  var x = pixels.xCenter + irXOffset;
+  var y = pixels.yCenter + irYOffset;
+
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI, false);
+  // halftoneCxt.rect(x,y,radius*2,radius*2);
+  context.fillStyle = "rgba(0, 255, 0, .5)";
+  context.fill();
+}
+
+function drawDEM(pixels, context) {
+  var hslData = pixels.hslArray;
+  //console.log(hslData);
+  var maxBrightness = pixels.maxBrightness;
+  var minBrightness = pixels.minBrightness;
+  var avgBrightness = pixels.totalBrightness/hslData.length;
+
+  var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);
+
+  var x = pixels.xCenter + demXOffset;
+  var y = pixels.yCenter + demYOffset;
+
+  //halftoneCxt.beginPath();
+  //halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI, false);
+  context.fillStyle = "rgba(255, 0, 0, .5)";
+  context.fill();
+}
+
+function generateHalftone(mode) {
     console.log("generate halftone");
     var halftone2D = document.getElementById("halftone");
     var halftoneCxt = halftone2D.getContext("2d");
@@ -127,83 +210,62 @@ function generateHalftone(prevCan) {
     halftoneCxt.fillStyle = "rgb(255, 255, 255)";
     halftoneCxt.fill();
 
-    for (var m = 0; m < imgWidth; m+=subSize) {
-        for (var n = 0; n < imgWidth; n+=subSize) {
+    if (mode == "all") {
+      captureSubdivs()
+        .then(function(subdivData) {
 
-            // get the AER subdiv
-            var aerImage = prevAERContext.getImageData(m, n, subSize, subSize);
-            var aerData = aerImage.data;
+          lastSubdivData = subdivData;
 
-            var irImage = prevIRContext.getImageData(m, n, subSize, subSize);
-            var irData = irImage.data;
+          for (var m = 0; m < imgWidth; m+=subSize) {
+              for (var n = 0; n < imgWidth; n+=subSize) {
 
-            var demImage = prevDEMContext.getImageData(m, n, subSize, subSize);
-            var demData = demImage.data;
+                  var index = n/subSize + (m/subSize)*(imgWidth/subSize);
+                  var aerData = subdivData.aerImageData[index];
+                  var irData = subdivData.irImageData[index];
+                  var demData = subdivData.demImageData[index];
 
-            assemblePixels(aerData, m, n, "aer")
+                  assemblePixels(aerData, m, n, "aer")
+                    .then(function(subdivPixels) {
+                      drawAer(subdivPixels, halftoneCxt);
+                    })
+
+                  assemblePixels(irData, m, n, "ir")
+                    .then(function(subdivPixels) {
+                      drawIR(subdivPixels, halftoneCxt);
+                    })
+
+                  assemblePixels(demData, m, n, "dem")
+                    .then(function(subdivPixels) {
+                      drawDEM(subdivPixels, halftoneCxt);
+                    })
+              }
+          }
+        })
+    } else {
+      for (var m = 0; m < imgWidth; m+=subSize) {
+          for (var n = 0; n < imgWidth; n+=subSize) {
+
+              var index = n/subSize + (m/subSize)*(imgWidth/subSize);
+              var aerData = lastSubdivData.aerImageData[index];
+              var irData = lastSubdivData.irImageData[index];
+              var demData = lastSubdivData.demImageData[index];
+
+              assemblePixels(aerData, m, n, "aer")
                 .then(function(subdivPixels) {
-                    //console.log(subdivPixels);
-
-                    var hslData = subdivPixels.hslArray;
-                    var maxBrightness = subdivPixels.maxBrightness;
-                    var minBrightness = subdivPixels.minBrightness;
-                    var avgBrightness = subdivPixels.totalBrightness/hslData.length;
-
-                    var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);   // brighter = bigger
-
-                    var x = subdivPixels.xCenter + aerXOffset;
-                    var y = subdivPixels.yCenter + aerYOffset;
-
-                    halftoneCxt.beginPath();
-                    halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
-                    halftoneCxt.fillStyle = "rgba(0, 0, 255, .5)";
-                    halftoneCxt.fill();
-
-                    // this is the center reference
-                    // halftoneCxt.beginPath();
-                    // halftoneCxt.arc(subdivPixels.xCenter, subdivPixels.yCenter, 1, 0, 2 * Math.PI, false);
-                    // halftoneCxt.fillStyle = 'black';
-                    // halftoneCxt.fill();
+                  drawAer(subdivPixels, halftoneCxt);
                 })
 
-            assemblePixels(irData, m, n, "ir")
+              assemblePixels(irData, m, n, "ir")
                 .then(function(subdivPixels) {
-                    //console.log(subdivPixels);
-                    var avgRed = subdivPixels.avgRed;
-                    var radius = mapVal(avgRed, 0.0, 255.0, 0.0, subSize/2.5);
-
-                    var x = subdivPixels.xCenter + irXOffset;
-                    var y = subdivPixels.yCenter + irYOffset;
-
-                    halftoneCxt.beginPath();
-                    halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
-                    // halftoneCxt.rect(x,y,radius*2,radius*2);
-                    halftoneCxt.fillStyle = "rgba(0, 255, 0, .5)";
-                    halftoneCxt.fill();
+                  drawIR(subdivPixels, halftoneCxt);
                 })
 
-            assemblePixels(demData, m, n, "dem")
+              assemblePixels(demData, m, n, "dem")
                 .then(function(subdivPixels) {
-                    //console.log(subdivPixels);
-                    var hslData = subdivPixels.hslArray;
-                    //console.log(hslData);
-                    var maxBrightness = subdivPixels.maxBrightness;
-                    var minBrightness = subdivPixels.minBrightness;
-                    var avgBrightness = subdivPixels.totalBrightness/hslData.length;
-
-                    var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);
-
-                    var x = subdivPixels.xCenter + demXOffset;
-                    var y = subdivPixels.yCenter + demYOffset;
-
-                    //halftoneCxt.beginPath();
-                    //halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
-                    halftoneCxt.beginPath();
-                    halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
-                    halftoneCxt.fillStyle = "rgba(255, 0, 0, .5)";
-                    halftoneCxt.fill();
+                  drawDEM(subdivPixels, halftoneCxt);
                 })
-        }
+          }
+      }
     }
 }
 

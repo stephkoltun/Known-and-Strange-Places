@@ -6,7 +6,7 @@ function addTitle(index, color, background=false) {
 
   var classes = background ? (color + " bkgnd") : color
 
-  var titleBlock = "<div id='desc' class='" + classes + "'><h1>" + num + "</h1><h2>" + title + "</h2><p>" + description + "</p></div>";
+  var titleBlock = "<div id='desc' class='" + classes + "'><h2>" + title + "</h2><p>" + description + "</p></div>";
 
   $('body').append(titleBlock);
   // fade out text
@@ -102,13 +102,13 @@ var allMaps = [
   },
   {
     'num': '018',
-    'title': '',
-    'description': ''
+    'title': 'Every Borough Has A Broadway',
+    'description': 'Click an image to see a new Broadway, or wait to them advance automatically.'
   },
   {
     'num': '019',
-    'title': '',
-    'description': ''
+    'title': 'Dynamic Halftone',
+    'description': 'Adjust the parameters to change the halftone visualization.'
   },
   {
     'num': '020',
@@ -117,8 +117,8 @@ var allMaps = [
   },
   {
     'num': '021',
-    'title': '',
-    'description': ''
+    'title': 'Looking Around',
+    'description': 'Press spacebar to change mode: grid or cluster. Click an image to see a series: all in the same direction or all from one intersection. Press enter to return to view.'
   },
   {
     'num': '022',
