@@ -152,8 +152,8 @@ var allMaps = [
   },
   {
     'num': '028',
-    'title': '',
-    'description': ''
+    'title': 'This Is What I See &emdash; But Not Really',
+    'description': 'Walk to see the streetview image update to where you are.'
   },
   {
     'num': '029',
@@ -169,5 +169,144 @@ var allMaps = [
     'num': '031',
     'title': '',
     'description': ''
+  },
+  {
+    'num': '032',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '033',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '034',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '035',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '036',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '037',
+    'title': '',
+    'description': ''
+  },{
+    'num': '038',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '039',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '040',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '041',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '042',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '043',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '044',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '045',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '046',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '047',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '048',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '049',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '050',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '051',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '052',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '053',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '054',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '055',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '056',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '057',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '058',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '059',
+    'title': 'All The Blocks in the Bronx',
+    'description': 'A visualization of block shape similarity in the New York City borough. Use the buttonss to adjust layout, color coding and hyperparamters.'
   },
 ]

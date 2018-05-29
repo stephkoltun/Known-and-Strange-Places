@@ -4,45 +4,53 @@ body {
 	padding: 0;
 }
 
-
 #controls {
+	box-sizing: border-box;
 	position: absolute;
-	width: 250px;
-	top: 50px;
-	right: 50px;
-	background-color: '#ffffff';
+	bottom: 0;
+	right: 0;
 	z-index: 10;
+	margin: 50px auto;
 }
 
-h1 {
-	font-family: 'Karla', monospace;
+#controls .group {
+	float: left;
+	margin: 0 50px;
+}
+
+#controls h1 {
+	font-family: 'Work Sans', monospace;
 	font-size: 18px;
 	color: #000;
 	font-weight: 700;
-	margin: 10px 0 5px 0;
+	margin: 20px 0 5px 0;
+	display: inline;
 }
 
-h2 {
-	font-family: 'Karla', monospace;
+#controls h2 {
+	font-family: 'Work Sans', monospace;
 	font-size: 16px;
 	color: #000;
-	font-weight: 700;
+	font-weight: 600;
+	margin: 0;
+	display: inline;
 }
 
 button {
 	min-width: 32px;
-	font-family: 'Karla', monospace;
+	font-family: 'Work Sans', monospace;
 	font-size: 16px;
 	padding: 5px 5px;
 	margin: 5px 5px 10px 5px;
 	color: #d4d4d4;
 	background-color: #fff;
-	border: none;
+	border: 2px solid #000;
 }
 
 .selected {
 	background-color: #000;
 	color: #fff;
+	border: 2px solid #000;
 }
 
 button:hover {

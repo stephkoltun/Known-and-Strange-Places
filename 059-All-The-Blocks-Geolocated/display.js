@@ -71,22 +71,27 @@ $("#geography").on("click", function() {
   $("#perplexityFive").removeClass("selected");
   $("#perplexityEight").removeClass("selected");
   $("#perplexityThirty").removeClass("selected");
+
+  $("#perplexgroup").hide();
 });
 $("#cluster").on("click", function() {
   $("#geography").removeClass("selected");
   $("#cluster").addClass("selected");
   locateByCluster();
+  $("#perplexgroup").show();
 });
 
 $("#neighborhood").on("click", function() {
   $("#neighborhood").addClass("selected");
   $("#similarity").removeClass("selected");
   colorByNeighborhood();
+  $("#clustergroup").hide();
 });
 $("#similarity").on("click", function() {
   $("#neighborhood").removeClass("selected");
   $("#similarity").addClass("selected");
   colorBySimilarity();
+  $("#clustergroup").show();
 });
 
 $("#perplexityFive").on("click", function() {
