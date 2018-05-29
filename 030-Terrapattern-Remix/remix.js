@@ -14,42 +14,54 @@ var datasets = [
   housingFour.features,
 ]
 
-var randomStart = Math.floor(Math.random() * Math.floor(datasets.length));
+var currentTop = "remix"; // or alt
 
+var randomStart = Math.floor(Math.random() * Math.floor(datasets.length));
 
 var curDatasetIndex = randomStart;
 var data = datasets[curDatasetIndex];
 var remixIndex = 1;
+var altIndex = 2;
 
-var context = new mapboxgl.Map({
+let context = new mapboxgl.Map({
     container: 'context',
-    style: 'mapbox://styles/mapbox/satellite-v9',  // satellite imagery styling
-    center: data[0].geometry.coordinates,    // this should be a random point
-    zoom: 16,   // 10 - what scale
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: data[0].geometry.coordinates,
+    zoom: 16,
 });
 
-var remix = new mapboxgl.Map({
+let remix = new mapboxgl.Map({
     container: 'remix',
-    style: 'mapbox://styles/mapbox/satellite-v9',  // satellite imagery styling
-    // set the start point of the map - needs to be long-lat (not lat-long)
-    center: data[remixIndex].geometry.coordinates,    // this should be a random point
-    zoom: 16,   // 10 - what scale
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: data[remixIndex].geometry.coordinates,
+    zoom: 16,
+});
+
+let altremix = new mapboxgl.Map({
+    container: 'altremix',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: data[altIndex].geometry.coordinates,
+    zoom: 16,
 });
 
 context.scrollZoom.disable();
 context.doubleClickZoom.disable();
 remix.scrollZoom.disable();
 remix.doubleClickZoom.disable();
+altremix.scrollZoom.disable();
+altremix.doubleClickZoom.disable();
 
 setInterval(switchRemix,1500);
 
 function switchRemix() {
 
-  if (remixIndex < data.length-1) {
-    remixIndex++;
+  if (remixIndex < data.length-2) {
+    currentTop == "remix" ? remixIndex += 2 : altIndex +=2;
   } else {
     remixIndex = 1;
+    altIndex = 2;
     console.log("change dataset");
+
     if (curDatasetIndex < datasets.length-1) {
       curDatasetIndex++;
     } else {
@@ -57,8 +69,19 @@ function switchRemix() {
     }
   }
 
-  var jumpOptions = {
-    center: data[remixIndex].geometry.coordinates,
+  switch (currentTop) {
+    case "remix":
+      $("#remix").css("z-index", "-10");
+      $("#altremix").css("z-index", "10");
+      remix.jumpTo({center: data[remixIndex].geometry.coordinates});
+      currentTop = "alt";
+      break;
+    case "alt":
+      $("#remix").css("z-index", "10");
+      $("#altremix").css("z-index", "-10");
+      altremix.jumpTo({center: data[altIndex].geometry.coordinates});
+      currentTop = "remix";
+      break;
   }
-  remix.jumpTo(jumpOptions);
+
 }

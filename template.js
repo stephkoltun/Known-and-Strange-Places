@@ -162,8 +162,8 @@ var allMaps = [
   },
   {
     'num': '030',
-    'title': '',
-    'description': ''
+    'title': 'Terrapattern Remix',
+    'description': 'Watch visually similar places cycle through the originating location. Refresh to start elsewhere.'
   },
   {
     'num': '031',
