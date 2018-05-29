@@ -140,4 +140,34 @@ var allMaps = [
     'title': 'Glendale Slide',
     'description': 'Wander along the construction of city and "nature" &mdash; reload to start again elsewhere.'
   },
+  {
+    'num': '026',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '027',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '028',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '029',
+    'title': 'Parallel and Perpendicular',
+    'description': 'Click to isolate all streets oriented in the same direction.'
+  },
+  {
+    'num': '030',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '031',
+    'title': '',
+    'description': ''
+  },
 ]

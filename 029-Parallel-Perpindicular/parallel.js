@@ -86,7 +86,7 @@ map.on('load', function () {
           currentlyHidden = false;
           map.setFilter('streets', null);
 
-          $(".label").remove();
+          // $(".label").remove();
       } else {
         var bbox = [[e.point.x - 3, e.point.y - 3], [e.point.x + 3, e.point.y + 3]];
         var features = map.queryRenderedFeatures(bbox);
@@ -107,10 +107,10 @@ map.on('load', function () {
 
             map.setFilter('streets', filter);
 
-            var templabel = "<p class='label'>" + lowerBearing + '-' + upperBearing + " degrees</p>";
-
-            $("body").append(templabel);
-            $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+            // var templabel = "<p class='label'>" + lowerBearing + '-' + upperBearing + " degrees</p>";
+            //
+            // $("body").append(templabel);
+            // $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
             currentlyHidden = true;
         }

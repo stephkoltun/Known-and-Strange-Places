@@ -31,13 +31,20 @@
         var zoomLevel = 12; //40,000
         $(document).ready(function() {
             console.log("document is ready");
+            addTitle(3, "black", true);
         });
     </script>
 </head>
 
 <body>
-    <div id="map"></div>
-        <script src='drawMap.js'></script>
+  <div id="toggles">
+    <a href="http://anothersideproject.co/knownandstrange/004/index.html" id="neighborhoods" class="inactive">Neighborhoods</a>
+    <a href="http://anothersideproject.co/knownandstrange/004/pointDistribution.html" id="points" class="inactive">Points</a>
+    <a href="http://anothersideproject.co/knownandstrange/004/polygonDistribution.html" id="polygons" class="inactive">Polygons</a>
+    <a href="http://anothersideproject.co/knownandstrange/004/areaCategorization.html" id="areas" class="active">Areas</a>
+  </div>
+  <div id="map"></div>
+  <script src='drawMap.js'></script>
 </body>
 
 </html>
