@@ -6,9 +6,12 @@ var extentSize = tileSize*tileNum;
 var displaySize = tileSize/4;
 var multiplier = 4;
 var visibleSubSize = displaySize/(Math.pow(2,multiplier));
+var checkSmallSize;
 console.log(visibleSubSize);
 
 var rgbImage;
+var gridImage;
+
 
 function preload(){
   baseImage = loadImage('img/Harlem_2400_2500x2500_DEM.png');
@@ -23,8 +26,8 @@ function setup() {
 
   //updateOffset();
   //calculateVisibleTiles();
-  //drawBaseImage();
   drawSubdivision(xOffset, yOffset, displaySize, displaySize);
+  drawBaseImage();
 }
 
 function draw() {
@@ -36,9 +39,60 @@ $("#subsizeSlider").on('mouseup', function() {
   visibleSubSize = displaySize/(Math.pow(2,multiplier));
   clearCanvas();
   //drawBaseImage();
-  drawSubdivision(xOffset, yOffset, displaySize, displaySize);
 })
 
+function mouseReleased() {
+  if (!dragging) {
+    var result = subs.filter(filterBySize);
+    console.log(result);
+    result.length > 0 ? visibleSubSize = result[0].width : visibleSubSize = checkSmallSize;
+
+    clearCanvas();
+    subs = [];
+    drawSubdivision(xOffset, yOffset, displaySize, displaySize, mouseX, mouseY);
+
+  } else if (dragging) {
+    //clearCanvas();
+    drawBaseImage();
+    //drawSubdivision(xOffset, yOffset, displaySize, displaySize);
+    dragging = false;
+  }
+
+  function filterBySize(subdiv) {
+    if (mouseX-1 >= subdiv.minX && mouseX-1 <= subdiv.maxX) {
+
+      if (mouseY-1 >= subdiv.minY && mouseY-1 <= subdiv.maxY) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+  }
+
+  return false
+}
+
+var dragging = false;
+function mouseDragged() {
+    if (mouseY > 200) {
+      dragging = true;
+      var shiftX = mouseX - pmouseX;
+      var shiftY = mouseY - pmouseY;
+
+      var newXOffset = xOffset - shiftX;
+      var newYOffset = yOffset - shiftY;
+
+      if ((newXOffset >= 0) && (newXOffset <= (extentSize-displaySize)) && (newYOffset >= 0) && (newYOffset <= (extentSize-displaySize))) {
+
+      xOffset = newXOffset;
+      yOffset = newYOffset;
+
+      drawBaseImage();
+    }
+  }
+}
 
 
 var minSubSize = 8;
@@ -47,6 +101,8 @@ var deltaThreshold = 20;
 
 var xOffset = 150;
 var yOffset = 150;
+
+var subs = [];
 
 function drawBaseImage() {
   var subset = rgbImage.get(xOffset, yOffset, displaySize, displaySize);
@@ -59,7 +115,6 @@ function clearCanvas() {
 }
 
 function drawSubdivision(_posX, _posY, _width, _height) {
-  //console.log(_width);
 
   var drawX = _posX - xOffset;
   var drawY = _posY - yOffset;
@@ -73,6 +128,7 @@ function drawSubdivision(_posX, _posY, _width, _height) {
   var averageBrightness;
   var maxBright = 0;
   var minBright = 1000;
+
   for (var i = 0; i < subdiv.pixels.length; i+=(4*frequency)) {
 
     var r = subdiv.pixels[i];
@@ -96,9 +152,7 @@ function drawSubdivision(_posX, _posY, _width, _height) {
   averageBrightness = totalBright/(subdiv.pixels.length/4/frequency);
 
   if (delta <= deltaThreshold && _width > minSubSize) {
-  //if (averageBrightness > brightnessThreshold && _width > minSubSize) {
     // this subdivision is of its final size
-
     fill(255,0,0);
     noStroke();
     textAlign(CENTER,CENTER);
@@ -115,6 +169,16 @@ function drawSubdivision(_posX, _posY, _width, _height) {
     strokeWeight(0.5);
     rect(drawX, drawY, _width, _height);
 
+    var subProperties = {
+      "minX": _posX-xOffset,
+      "minY": _posY-yOffset,
+      "maxX": _posX + _width -xOffset,
+      "maxY": _posY + _height -yOffset,
+      "width": _width,
+      "height": _height
+    };
+    subs.push(subProperties);
+
   } else if ( _width/2 > minSubSize) {
     //console.log("min: " + brightnessArray[0] + ", max: " + brightnessArray[brightnessArray.length-1] + ", delta: " + delta);
     var newWidth = _width/2;
@@ -124,7 +188,6 @@ function drawSubdivision(_posX, _posY, _width, _height) {
     drawSubdivision((_posX + newWidth), _posY, newWidth, newHeight);
     drawSubdivision((_posX + newWidth), (_posY + newHeight), newWidth, newHeight);
   } else {
-    //console.log("smallest");
     // fill(255,0,0);
     // noStroke();
     noFill();
@@ -132,43 +195,11 @@ function drawSubdivision(_posX, _posY, _width, _height) {
     var drawX = _posX - xOffset;
     var drawY = _posY - yOffset;
     rect(drawX, drawY, _width, _height);
+    checkSmallSize = _width;
   }
 }
 
-function showOnly(size) {
 
-}
-
-
-var dragging = false;
-function mouseDragged() {
-    if (mouseY > 200) {
-      dragging = true;
-      var shiftX = mouseX - pmouseX;
-      var shiftY = mouseY - pmouseY;
-
-      var newXOffset = xOffset - shiftX;
-      var newYOffset = yOffset - shiftY;
-
-      if ((newXOffset >= 0) && (newXOffset <= (extentSize-displaySize)) && (newYOffset >= 0) && (newYOffset <= (extentSize-displaySize))) {
-
-      xOffset = newXOffset;
-      yOffset = newYOffset;
-
-      drawBaseImage();
-    }
-  }
-}
-
-function mouseReleased() {
-  if (dragging) {
-    clearCanvas();
-    //drawBaseImage();
-    drawSubdivision(xOffset, yOffset, displaySize, displaySize);
-    dragging = false;
-  }
-
-}
 
 function rgbToHsl(r, g, b){
     r /= 255, g /= 255, b /= 255;

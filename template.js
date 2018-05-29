@@ -147,8 +147,8 @@ var allMaps = [
   },
   {
     'num': '027',
-    'title': '',
-    'description': ''
+    'title': 'Flat Incline',
+    'description': 'Click anywhere on the aerial to reveal topographic subdivisions. Drag to pan.'
   },
   {
     'num': '028',
