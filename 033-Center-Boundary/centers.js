@@ -30,8 +30,11 @@ map.scrollZoom.disable();
 map.doubleClickZoom.disable();
 
 map.on('load', function() {
+  map.setPaintProperty('background', 'background-color', "#fff");
   map.setPaintProperty('footprints', 'fill-opacity', 0);
-  map.setPaintProperty('footprints', 'fill-color', "rgb(37,248,224)");
+  map.setPaintProperty('centroids', 'circle-opacity', 1);
+  map.setPaintProperty('footprints', 'fill-color', "#fff");
+  map.setPaintProperty('centroids', 'circle-color', "#000");
 })
 
 var currentlyShown = false;
@@ -44,14 +47,14 @@ map.on('mousemove', function(e) {
     if (!currentlyShown && features.length > 0) {
       map.setPaintProperty('footprints', 'fill-opacity', 1);
       map.setPaintProperty('centroids', 'circle-opacity', 0);
-      map.setPaintProperty('background', 'background-color', "rgb(138,10,189)");
+      map.setPaintProperty('background', 'background-color', "#000");
       currentlyShown = true;
     }
 
     if (currentlyShown && features.length == 0) {
       map.setPaintProperty('footprints', 'fill-opacity', 0);
       map.setPaintProperty('centroids', 'circle-opacity', 1);
-      map.setPaintProperty('background', 'background-color', "rgb(37,248,224)");
+      map.setPaintProperty('background', 'background-color', "#fff");
       currentlyShown = false;
     }
 

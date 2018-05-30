@@ -172,13 +172,13 @@ var allMaps = [
   },
   {
     'num': '032',
-    'title': '',
-    'description': ''
+    'title': 'Foreground Middleground Background',
+    'description': 'Move the mouse horizontally to see different clippings of the aerial image.'
   },
   {
     'num': '033',
-    'title': '',
-    'description': ''
+    'title': 'Center Boundaries',
+    'description': 'Hover to toggle between formal and centroid representations.'
   },
   {
     'num': '034',

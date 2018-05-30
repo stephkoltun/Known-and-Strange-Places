@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Center Boundaries (033)</title>
+  <title>Center Boundaries</title>
   <meta charset="utf-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+  <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+  <script src='../template.js'></script>
 
   <link rel="stylesheet" href="style.css" />
 
@@ -15,8 +15,14 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
-  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
   <script src="config.js"></script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+          console.log("document is ready");
+          addTitle(32, "black", true);
+      });
+  </script>
 
 </head>
 
