@@ -187,13 +187,13 @@ var allMaps = [
   },
   {
     'num': '035',
-    'title': '',
-    'description': ''
+    'title': 'Routine Difference',
+    'description': 'Watch a video describing change in Times Square over the course of eight hours on Monday, February 5th.'
   },
   {
     'num': '036',
-    'title': '',
-    'description': ''
+    'title': 'Back and Forth',
+    'description': 'Advance through aerial images linked by their visual similarity, asking: do similar places have similar contexts?'
   },
   {
     'num': '037',
@@ -201,13 +201,13 @@ var allMaps = [
     'description': ''
   },{
     'num': '038',
-    'title': '',
-    'description': ''
+    'title': 'Frankenstein',
+    'description': 'A diptych shows an aerial image and that same image re-made from visually similar tiles.'
   },
   {
     'num': '039',
-    'title': '',
-    'description': ''
+    'title': 'Subway Shimmy',
+    'description': 'Slowly ride the A train from start to end—reload to start again elsewhere.'
   },
   {
     'num': '040',

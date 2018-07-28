@@ -11,8 +11,6 @@ var pointsAlongShore = firstpart.concat(endpart);
 var startPoint = pointsAlongShore[0];
 var bearingStart = bearing(startPoint.geometry.coordinates[1], startPoint.geometry.coordinates[0], pointsAlongShore[1].geometry.coordinates[1], pointsAlongShore[1].geometry.coordinates[0]);
 
-var textFill = startPoint.geometry.coordinates[1] + ", " + startPoint.geometry.coordinates[0]
-$("#startPt").text(textFill);
 // initialize map
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxKKHNngVAoXqtFzA';
 
@@ -23,17 +21,14 @@ var map = new mapboxgl.Map({
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: [startPoint.geometry.coordinates[0], startPoint.geometry.coordinates[1]],    // this should be a random point
     // what scale
-    zoom: 17,
+    zoom: 17.3,
     interactive: false,
     bearing: bearingStart
 });
 
-// fade out text
-$("#desc").delay(5000).fadeOut(1000);
-
 
 // parameters for animating
-var animateTime = 5000;
+var animateTime = 8000;
 var animateOptions = {
     duration: animateTime,
     easing: function (t) {

@@ -25,13 +25,6 @@ body {
 	transform: translate(0,-50%);
 }
 
-.tile {
-	z-index: 0;
-	margin: 0;
-	float: left;
-	display: inline;
-}
-
 .mapboxgl-control-container {
 	display: none;
 }
