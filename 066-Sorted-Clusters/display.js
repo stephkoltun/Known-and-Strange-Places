@@ -74,32 +74,32 @@ d3.json('labels50.geojson', function(error, features) {
   plotRow(features, "gmm", svgGMM, 1);
   plotRow(features, "agglom", svgAgglom, 1);
 
-  svgGMM.append("text")
-  .text("Gaussian Mixture Model")
-  .attr("x", 50)
-  .attr("y", 200)
-  .attr("font-family", "Karla")
-  .attr("font-size", "13px")
-  .attr("font-weight", 700)
-  .attr("fill", "#000");
-
-  svgKmeans.append("text")
-  .text("kMeans")
-  .attr("x", 50)
-  .attr("y", 200)
-  .attr("font-family", "Karla")
-  .attr("font-size", "13px")
-  .attr("font-weight", 700)
-  .attr("fill", "#000");
-
-  svgAgglom.append("text")
-  .text("Agglomerative Clustering")
-  .attr("x", 50)
-  .attr("y", 200)
-  .attr("font-family", "Karla")
-  .attr("font-size", "13px")
-  .attr("font-weight", 700)
-  .attr("fill", "#000");
+  // svgGMM.append("text")
+  // .text("Gaussian Mixture Model")
+  // .attr("x", 50)
+  // .attr("y", 200)
+  // .attr("font-family", "Karla")
+  // .attr("font-size", "13px")
+  // .attr("font-weight", 700)
+  // .attr("fill", "#000");
+  //
+  // svgKmeans.append("text")
+  // .text("kMeans")
+  // .attr("x", 50)
+  // .attr("y", 200)
+  // .attr("font-family", "Karla")
+  // .attr("font-size", "13px")
+  // .attr("font-weight", 700)
+  // .attr("fill", "#000");
+  //
+  // svgAgglom.append("text")
+  // .text("Agglomerative Clustering")
+  // .attr("x", 50)
+  // .attr("y", 200)
+  // .attr("font-family", "Karla")
+  // .attr("font-size", "13px")
+  // .attr("font-weight", 700)
+  // .attr("fill", "#000");
 
 });
 

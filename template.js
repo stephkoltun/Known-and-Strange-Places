@@ -309,4 +309,39 @@ var allMaps = [
     'title': 'All The Blocks in the Bronx',
     'description': 'A visualization of block shape similarity in the New York City borough. Use the buttonss to adjust layout, color coding and hyperparamters.'
   },
+  {
+    'num': '060',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '061',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '062',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '063',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '064',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '065',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '066',
+    'title': 'Comparing Sorted Clusters',
+    'description': 'How do clusters different when compared across different methods?'
+  },
 ]
