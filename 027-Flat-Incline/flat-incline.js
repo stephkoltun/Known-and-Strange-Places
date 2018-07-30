@@ -34,13 +34,6 @@ function draw() {
 
 }
 
-$("#subsizeSlider").on('mouseup', function() {
-  multiplier = parseInt(subsizeSlider.value);
-  visibleSubSize = displaySize/(Math.pow(2,multiplier));
-  clearCanvas();
-  //drawBaseImage();
-})
-
 function mouseReleased() {
   if (!dragging) {
     var result = subs.filter(filterBySize);
@@ -106,7 +99,7 @@ var subs = [];
 
 function drawBaseImage() {
   var subset = rgbImage.get(xOffset, yOffset, displaySize, displaySize);
-  image(subset,0,0);
+  image(subset,0,0;
 }
 
 function clearCanvas() {

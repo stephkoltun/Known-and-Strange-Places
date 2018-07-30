@@ -3,13 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Pattern Remix (036)</title>
+    <title>Back and Forth (036)</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='style.css' type='text/css'>
 
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
+
     <script src='config.js'></script>
     <script src='GEOJSON/terrapattern_New_York_40.5813943_-74.0735684.json'></script>
     <script src='GEOJSON/terrapattern_New_York_40.6069968_-74.1600674.json'></script>
@@ -21,7 +23,6 @@
 
 
     <!-- LIBRARIES! -->
-
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
     <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script> -->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
@@ -29,13 +30,17 @@
     <script type="text/javascript">
         $(document).ready(function() {
             console.log("document is ready");
+            addTitle(35, "black", true);
         });
     </script>
 </head>
 
 <body>
     <div id="context"></div>
+    <div id="contextAlt"></div>
     <div id="remix"></div>
+    <div id="remixAlt"></div>
+
     <script src='backforth.js'></script>
 </body>
 

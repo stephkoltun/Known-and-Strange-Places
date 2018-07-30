@@ -117,9 +117,10 @@ var expand = setInterval(function() {
   }
 
   $(document).mousemove(function(e) {
+    var maxSpeed = 40;
     var mapMouse = d3.scaleLinear()
       .domain([0, $(window).height()]) // input
-      .range([-10, 10]);  // output
+      .range([(-1*maxSpeed), maxSpeed]);  // output
     increment = mapMouse(e.clientY);
   })
 
