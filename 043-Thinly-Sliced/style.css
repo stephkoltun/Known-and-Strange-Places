@@ -5,12 +5,58 @@ body {
 }
 
 #wrapper {
-	/* margin: 0;
+	margin: 0;
 	padding: 0;
 	font-size: 0;
 	line-height: 0;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%,-50%); */
+	transform: translate(-50%,-50%);
+}
+
+#toggles {
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	transform: translate(-50%,0);
+}
+
+#toggles p {
+	display: inline;
+	float: left;
+	font-size: 14px;
+	padding: 10px;
+	margin: 20px 0px;
+}
+
+#toggles button {
+	display: inline;
+	float: left;
+	font-size: 14px;
+	padding: 10px;
+	margin: 20px 20px 20px 10px;
+	font-family: Work Sans, sans-serif;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+}
+
+#hor.active {
+	background-color: rgb(180,180,0);
+	color: #fff;
+}
+
+#vert.active {
+	background-color: rgb(0,200,200);
+	color: #fff;
+}
+
+#toggles button.inactive {
+	border: 2px solid #aaa;
+	color: #aaa;
+}
+
+button:focus {
+	outline: none;
 }

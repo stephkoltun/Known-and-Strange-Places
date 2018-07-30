@@ -211,8 +211,8 @@ var allMaps = [
   },
   {
     'num': '040',
-    'title': '',
-    'description': ''
+    'title': "Watch Where You're Going",
+    'description': 'A line traces a walked path. Press and hold to reveal the aerial context.'
   },
   {
     'num': '041',
@@ -226,8 +226,8 @@ var allMaps = [
   },
   {
     'num': '043',
-    'title': '',
-    'description': ''
+    'title': 'Thinly Sliced',
+    'description': "Move the cursor to cut and visualize sections using the image's depth data."
   },
   {
     'num': '044',
@@ -256,8 +256,8 @@ var allMaps = [
   },
   {
     'num': '049',
-    'title': '',
-    'description': ''
+    'title': 'Draw by Instructions',
+    'description': 'Follow a series of steps to write hello in different ways.'
   },
   {
     'num': '050',

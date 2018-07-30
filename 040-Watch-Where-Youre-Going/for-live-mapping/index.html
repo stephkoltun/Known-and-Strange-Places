@@ -10,26 +10,25 @@
 
     <!-- LIBRARIES! -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
     <script src="p5.js"></script>
-    <script src="HelloWorld.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             console.log("document is ready");
+
+            navigator.geolocation.getCurrentPosition(configure,gotError)
+
         });
     </script>
 </head>
 
 <body>
-  <div id="mapArea">
-  </div>
+  <!-- <div id="desc">
+    <h1>Watch Where You're Going (040)</h1>
+    <h2>Walk around to draw based on your location</h2>
+  </div> -->
 
-  <div id="drawArea">
-  </div>
-
-  <script src='drawFake.js'></script>
+  <script src='drawWalk.js'></script>
 </body>
 
 </html>

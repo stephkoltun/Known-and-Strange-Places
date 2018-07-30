@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Thinnly Sliced (043)</title>
+    <title>Thinly Sliced (043)</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel='stylesheet' href='../templateStyle.css' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Work+Sans:300,400,600,700" rel="stylesheet">
+    <script src='../template.js'></script>
+
     <link rel='stylesheet' href='style.css' type='text/css'>
     <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="p5.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("document is ready");
+            addTitle(42, "black", true);
+        });
+    </script>
   </head>
   <body>
 
     <div id="wrapper">
     </div>
+
+    <div id="toggles">
+      <p>
+        Show: 
+      </p>
+      <button id="hor" class="active">Horizontal Slice</button>
+      <button id="vert" class="active">Vertical Slice</button>
+    </div>
+
 
     <script src='sliced.js'></script>
 

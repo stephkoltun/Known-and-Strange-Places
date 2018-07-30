@@ -37,8 +37,8 @@ console.log(geoArray);
 var drawPosition = 1;
 
 function setup() {
-  displayWidth = $(window).width();
-  displayHeight = $(window).height();
+  displayWidth = 2000;
+  displayHeight = 1200;
   var cnv = createCanvas(displayWidth,displayHeight);
   cnv.parent("drawArea");
   configure();
@@ -49,7 +49,7 @@ var mapObj = new mapboxgl.Map({
    container: 'mapArea',
    style: 'mapbox://styles/mapbox/satellite-v9',
    center:[geoArray[140].properties.lon,geoArray[140].properties.lat],
-   zoom: 16,
+   zoom: 15.6,
    interactive: false,
  });
 
