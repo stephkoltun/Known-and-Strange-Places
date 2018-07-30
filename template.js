@@ -231,18 +231,18 @@ var allMaps = [
   },
   {
     'num': '044',
-    'title': '',
-    'description': ''
+    'title': 'Deep Body',
+    'description': 'Watch a video in which only changes in depth relative to the camera are visible.'
   },
   {
     'num': '045',
-    'title': '',
-    'description': ''
+    'title': 'Behind The Curtain',
+    'description': 'Watch a video in which people interact with an invisible curtain.'
   },
   {
     'num': '046',
-    'title': '',
-    'description': ''
+    'title': 'Nine Spaces',
+    'description': 'Watch a video in which a single space is seemingly also nine discrete spaces.'
   },
   {
     'num': '047',

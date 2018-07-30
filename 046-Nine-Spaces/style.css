@@ -3,12 +3,9 @@ body {
 	padding: 0;
 }
 
-video {
-	width: 60vw;
-	height: 60vh;
-	overflow: hidden;
+iframe {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%,-50%);
+	transform: translate(-50%, -50%);
 }
