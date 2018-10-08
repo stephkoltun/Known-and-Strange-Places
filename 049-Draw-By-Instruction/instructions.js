@@ -197,9 +197,9 @@ function addLine() {
     setTimeout(function() {
       console.log("start");
       $("#instructions").empty();
-      $("#title").text(lists[curList].title);
-      // $(".active").removeClass("active");
-      // $($("#nav li")[curList]).addClass("active");
+      // $("#title").text(lists[curList].title);
+      $(".active").removeClass("active");
+      $($("#nav li")[curList]).addClass("active");
       addLinesInterval = setInterval(addLine, timing);
     }, 2800);
 
