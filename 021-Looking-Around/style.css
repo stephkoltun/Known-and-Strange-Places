@@ -4,23 +4,23 @@ body {
 	padding: 0;
 }
 div#grid{
-	/* width:200vw;
-	overflow: scroll; */
+	width:100vw;
+	overflow: scroll;
 }
 
 h1#label {
 	font-family: 'Work Sans', sans-serif;
+	margin: 0;
 	text-transform: uppercase;
 	font-size: 60px;
 	color: #fff;
+
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%,-50%);
-	z-index: 105;
-}
+	transform: translate(-50%,-51%);
 
-span#sublabel {
+	z-index: 105;
 }
 
 .cluster {

@@ -1,13 +1,15 @@
 
 var winheight = $(window).height();
 var winwidth = $(window).width();
-var margin = {top: 100, left: 100, bottom: 100, right: 100};
+var margin = {top: 160, left: 100, bottom: 160, right: 100};
 var width = winwidth*3 - margin.left - margin.right;
+var clusterWidth = winwidth*7.3 - margin.left - margin.right;
 var height = winheight - margin.top - margin.bottom;
 
 imageDisplay();
 
 var xIntersectionScale;
+var xClusterScale;
 var yGridScale;
 var yClusterScale;
 var svg;
@@ -22,6 +24,10 @@ function imageDisplay() {
   .range([0, width])
   .domain([0, intersections.length]);
 
+  xClusterScale = d3.scaleLinear()
+  .range([0, clusterWidth])
+  .domain([0, intersections.length]);
+
   yGridScale = d3.scaleLinear()
   .range([0, height])
   .domain([0, 3]);
@@ -33,8 +39,8 @@ function imageDisplay() {
   // add the graph canvas to the body of the webpage
   svg = d3.select("#grid").append("svg")
   .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g");
+  .attr("height", height + margin.top + margin.bottom);
+  svg.append("g");
 
   var inters = svg.selectAll("g.intersection")
   .data(intersections)
@@ -78,7 +84,7 @@ function imageDisplay() {
 
   var point = direction.append("svg:image")
   .attr("xlink:href",  function(d) {
-    return d.path;
+    return "img/600px/" + d.path;
   })
   .attr("class", "gridPoint")
   .attr("width", imgSize)

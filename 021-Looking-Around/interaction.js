@@ -1,11 +1,15 @@
-var imgSize = 90;
-var clusterOffset = 90;
+var imgSize = 120;
+var clusterOffset = 130;
 
 $(document).keypress(function(e) {
   if(e.keyCode == 32 && rapidPlaying == false) {
     console.log("--- toggle mode");
     if (mode == 'grid') {
       // transition to clusters
+
+      svg.attr("width", clusterWidth + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom);
+
       d3.selectAll(".column")
       .transition()
       .duration(1000)
@@ -28,9 +32,22 @@ $(document).keypress(function(e) {
         }
         return "translate(" + xPos + "," + (yPos+yOffset) + ")";
       })
+
+      d3.selectAll(".intersection")
+      .transition()
+      .duration(1000)
+      .attr("transform", function(d,i) {
+        var xPos = xClusterScale(i) + clusterWidth/intersections.length/2; // so that its centered in its column;
+        return "translate(" + (margin.left+xPos) + "," + margin.top + ")";
+      })
       mode = 'cluster';
+
     } else if (mode == 'cluster') {
       // transition to grid
+
+      svg.attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom);
+
       d3.selectAll(".column")
       .transition()
       .duration(1000)
@@ -47,6 +64,14 @@ $(document).keypress(function(e) {
           yPos = yGridScale(3);
         }
         return "translate(" + xPos + "," + yPos + ")";
+      })
+
+      d3.selectAll(".intersection")
+      .transition()
+      .duration(1000)
+      .attr("transform", function(d,i) {
+        var xPos = xIntersectionScale(i) + width/intersections.length/2; // so that its centered in its column;
+        return "translate(" + (margin.left+xPos) + "," + margin.top + ")";
       })
 
       mode = 'grid';
@@ -101,7 +126,7 @@ function rapidFire(direction, intersect, origPath, clusterIndex, dirlabel, stree
 
     // start with the clicked image
     var imgIndex = startIndex;
-    $("#visImg").attr("src", collectedImages[imgIndex].path);
+    $("#visImg").attr("src", ("img/2880px/" + collectedImages[imgIndex].path));
     if (mode == "grid") {
       $("#label").html(dirlabel + "<br>" + collectedImages[imgIndex].street);
       //$("#sublabel").text(collectedImages[imgIndex].street);
@@ -129,7 +154,7 @@ function rapidFire(direction, intersect, origPath, clusterIndex, dirlabel, stree
       } else {
         imgIndex = 0;
       }
-      var newPath = collectedImages[imgIndex].path;
+      var newPath = "img/2880px/" + collectedImages[imgIndex].path;
       $("#visImg").attr("src", newPath);
       if (mode == "grid") {
         $("#label").html(dirlabel + "<br>" + collectedImages[imgIndex].street);
