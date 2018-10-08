@@ -246,8 +246,8 @@ var allMaps = [
   },
   {
     'num': '047',
-    'title': '',
-    'description': ''
+    'title': 'Body-Context',
+    'description': 'Watch a video in which a single space is seemingly also nine discrete spaces.'
   },
   {
     'num': '048',
