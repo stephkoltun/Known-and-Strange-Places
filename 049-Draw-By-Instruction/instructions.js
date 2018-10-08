@@ -74,27 +74,7 @@ var lists = [
       "Move it left by a shoulder width.",
       "Move it in a full circle, moving clockwise."
     ]
-  }, {
-    'title': 'Hand',
-    'data': [
-      "Start with your arm outstretched in front of you, at waist height. Keep it stretched in front of you for the entire instructions.",
-      "Move your hand up to your head height and then back down to shoulder height.",
-      "Move it left by a shoulder width.",
-      "Move it down to waist height.",
-      "Move it left by a shoulder width.",
-      "Move it up to above your head.",
-      "Move it left and then right by a shoulder width.",
-      "Move it back down to shoulder height.",
-      "Move it left and then right by a shoulder width.",
-      "Move it back down to waist height.",
-      "Move it left by a shoulder width.",
-      "Move it up above your head, and then back down to waist height.",
-      "Move it left by shoulder width.",
-      "Move it up above your head, and then back down to waist height.",
-      "Move it left by a shoulder width.",
-      "Move it in a full circle, moving clockwise."
-    ]
-  }, {
+  },{
     'title': 'GPS Coordinates',
     'data': [
       "40.772540, -73.976181",
@@ -217,31 +197,33 @@ function addLine() {
     setTimeout(function() {
       console.log("start");
       $("#instructions").empty();
-      $(".active").removeClass("active");
-      $($("#nav li")[curList]).addClass("active");
+      $("#title").text(lists[curList].title);
+      // $(".active").removeClass("active");
+      // $($("#nav li")[curList]).addClass("active");
       addLinesInterval = setInterval(addLine, timing);
     }, 2800);
 
   }
 }
 
-$('#nav li').click(function() {
-  if (waiting) {
-    clearTimeout(starter);
-  }
-
-  clearInterval(addLinesInterval);
-
-  $(".active").removeClass("active");
-  $(this).addClass("active");
-  var index = parseInt($(this).data("index"));
-  curList = index;
-  curItem = 0;
-
-  $("#instructions").empty();
-
-  // add the first item
-  addLine();
-  // start the interval again
-  addLinesInterval = setInterval(addLine, timing);
-})
+// Menu interaction - REMOVED
+// $('#nav li').click(function() {
+//   if (waiting) {
+//     clearTimeout(starter);
+//   }
+//
+//   clearInterval(addLinesInterval);
+//
+//   $(".active").removeClass("active");
+//   $(this).addClass("active");
+//   var index = parseInt($(this).data("index"));
+//   curList = index;
+//   curItem = 0;
+//
+//   $("#instructions").empty();
+//
+//   // add the first item
+//   addLine();
+//   // start the interval again
+//   addLinesInterval = setInterval(addLine, timing);
+// })
