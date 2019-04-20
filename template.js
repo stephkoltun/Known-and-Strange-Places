@@ -167,8 +167,8 @@ var allMaps = [
   },
   {
     'num': '031',
-    'title': '',
-    'description': ''
+    'title': 'Tile Walk',
+    'description': 'Walk within a shuffled aerial image of your location, confusing where you are and where you want to go.'
   },
   {
     'num': '032',
