@@ -359,7 +359,7 @@ function drawMatchingBusRoutes(_routes, _names, _type) {
 
 function MTAPromise(_stopId) {
     return new Promise(function(resolve, reject) {
-        var url = 'http://bustime.mta.info/api/where/stop/MTA_' + _stopId + '.json?key=' + mtabuskey ;
+        var url = 'https://bustime.mta.info/api/where/stop/MTA_' + _stopId + '.json?key=' + mtabuskey ;
 
         $.ajax({
             'url': url,
