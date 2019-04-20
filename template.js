@@ -182,8 +182,8 @@ var allMaps = [
   },
   {
     'num': '034',
-    'title': '',
-    'description': ''
+    'title': 'Routine Grid',
+    'description': 'Slowly scroll through still captures taken from a Times Square live feed. Columns correspond to days, while each image in a row was captured at the same time on the particular day.'
   },
   {
     'num': '035',
