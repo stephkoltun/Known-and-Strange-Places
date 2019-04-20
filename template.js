@@ -142,8 +142,8 @@ var allMaps = [
   },
   {
     'num': '026',
-    'title': '',
-    'description': ''
+    'title': 'Pan Pan Pan',
+    'description': 'A study of panning and aerial tiling systems.'
   },
   {
     'num': '027',

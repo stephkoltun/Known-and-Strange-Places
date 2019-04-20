@@ -11,14 +11,12 @@ function preload(){
 }
 
 function setup() {
-  console.log("loaded");
   var cnv = createCanvas(displaySize*3, displaySize*2);
   cnv.parent("wrapper");  // set parent of canvas
   //background(240);
 
   updateOffset();
   calculateVisibleTiles();
-  console.log(tiles);
 
   updateAllViews();
 }
@@ -30,35 +28,40 @@ function draw() {
 
 function updateAllViews() {
   //drawTileBounds();
+  // x: 1, y: 1
   drawVisibleTiles();
 
+  // x: 3, y: 2
   push();
   translate(displaySize*2, displaySize);
   drawCrop();
   pop();
 
+  // x: 3, y: 1
   push();
   translate(displaySize*2, 0);
   drawKey();
   pop();
 
+  // x: 2, y: 1
   push();
   translate(displaySize, 0);
   drawVisibleTiles();
   drawVisibleGrid();
   pop();
 
+  // x: 2, y: 2
   push();
   translate(displaySize, displaySize);
   writeTileIndex();
   pop();
 
+  // x: 1, y: 2
   push();
   translate(0, displaySize);
   writeGlobalIndex();
   pop();
 
-  console.log(tiles);
 }
 
 function writeGlobalIndex() {
@@ -136,27 +139,27 @@ function writeTileIndex() {
 
       var indexVal;
       if ((x > tileSize) && (y > tileSize)) {
-        tileLabel = "03";
+        //tileLabel = "03";
         fill("rgb(245,47,87)");
       } else if ((x < tileSize) && (y > tileSize)) {
-        tileLabel = "02";
-        fill("#6EEB83");
+        //tileLabel = "02";
+        fill("#22b553");
       } else if ((x > tileSize) && (y < tileSize)) {
-        tileLabel = "01";
-        fill("#56CBF9");
+        //tileLabel = "01";
+        fill("#4286f4");
       } else if ((x < tileSize) && (y < tileSize)) {
-        tileLabel = "00";
+        //tileLabel = "00";
         fill("#F3752B");
       }
 
       indexVal = xPos + yPos*tileSize;
 
-      textSize(14);
-      text(tileLabel, textX+6, textY+8);
+      // textSize(14);
+      // text(tileLabel, textX+6, textY+8);
       textSize(9);
-      text(indexVal, textX+6, textY+18);
-      text(("x: " + xPos), textX+6, textY+28);
-      text(("y: " + yPos), textX+6, textY+38);
+      text(indexVal, textX+6, textY+8);
+      text(("x: " + xPos), textX+6, textY+18);
+      text(("y: " + yPos), textX+6, textY+28);
     }
   }
 }
@@ -181,19 +184,19 @@ function drawVisibleGrid() {
   }
 
   // label tiles
-  for (var i = 0; i < tiles.length; i++) {
-    fill(255);
-    noStroke();
-    textFont('Fjalla One');
-    textAlign(CENTER,CENTER);
-    textSize(100);
-    if (tiles[i].visible) {
-      var tileLabel = "0" + tiles[i].id;
-      var textX = tiles[i].drawX + tiles[i].visWidth/2;
-      var textY = tiles[i].drawY + tiles[i].visHeight/2;
-      text(tileLabel, textX, textY);
-    }
-  }
+  // for (var i = 0; i < tiles.length; i++) {
+  //   fill(255);
+  //   noStroke();
+  //   textFont('Fjalla One');
+  //   textAlign(CENTER,CENTER);
+  //   textSize(100);
+  //   if (tiles[i].visible) {
+  //     var tileLabel = "0" + tiles[i].id;
+  //     var textX = tiles[i].drawX + tiles[i].visWidth/2;
+  //     var textY = tiles[i].drawY + tiles[i].visHeight/2;
+  //     text(tileLabel, textX, textY);
+  //   }
+  // }
 }
 
 function drawTileBounds() {
@@ -261,9 +264,10 @@ function calculateVisibleTiles() {
 
 function drawKey() {
   image(baseImage, 0, 0, displaySize, displaySize);
-  noFill();
-  stroke(255);
-  strokeWeight(6);
+  fill(255)
+  noStroke()
+  // stroke(255);
+  // strokeWeight(6);
   var keySize = map(displaySize, 0, extentSize, 0, displaySize);
   var xPos = map(xOffset*(-1), 0, extentSize, 0, displaySize);
   var yPos = map(yOffset*(-1), 0, extentSize, 0, displaySize);
@@ -285,7 +289,7 @@ function drawCrop() {
 function drawVisibleTiles() {
 
   for (var i = 0; i < tiles.length; i++) {
-    if (tiles[i].visible) {
+    if (tiles[i].visible && tiles[i].visWidth >= 1 && tiles[i].visHeight >= 1) {
       var subset = tiles[i].loadedImg.get(tiles[i].visX1,tiles[i].visY1,tiles[i].visWidth, tiles[i].visHeight);
       image(subset, tiles[i].drawX, tiles[i].drawY);
     }

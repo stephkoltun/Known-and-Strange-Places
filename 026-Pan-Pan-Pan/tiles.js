@@ -1,6 +1,6 @@
 var baseImage;
 var displaySize;
-var tileSize = 1250;
+var tileSize = 1250; // default
 var tileNum = 2;
 var extentSize = tileSize*tileNum;
 
