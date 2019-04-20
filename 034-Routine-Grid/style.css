@@ -5,11 +5,14 @@ body {
   height: 100%;
 }
 
+.column {
+  min-height: calc(18vw * 274);
+}
+
 .lazy {
   float: left;
   box-sizing: border-box;
   width: 20%;
-  height: 18vw;
   height: auto;
   padding: 1%;
 }

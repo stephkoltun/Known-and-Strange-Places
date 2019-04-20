@@ -12,8 +12,6 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
     <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/cellsByRow.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -1403,29 +1401,16 @@
     <script type="text/javascript" charset="utf-8">
 
       $(window).ready(function() {
+        let prevScroll = 0
 
-        var container = $('.column')
-        var grid = container.isotope({
-          layoutMode: 'cellsByRow',
-          itemSelector: '.lazy',
-          percentPosition: true,
-          cellsByRow: {
-            columnWidth: '.lazy',
-            rowHeight: '.lazy'
-          },
-        });
-
-        var totalLoadedImages = 0;
-
-        grid.imagesLoaded( function() {
-          grid.isotope('layout');
-
+        var container = $('.column').imagesLoaded()
+        .always(function(i) {
           setInterval(function() {
-              var curScrollPos = $(window).scrollTop();
-              $(window).scrollTop(curScrollPos + 1);
+              let newScroll = prevScroll + 1;
+              window.scrollTo(0,newScroll);
+              prevScroll = newScroll;
           }, 50);
-        });
-
+        })
       })
 
     </script>
