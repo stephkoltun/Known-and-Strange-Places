@@ -1,9 +1,39 @@
+var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+if (!isMobile) alert("This works best on mobile devices")
+
+
+// configure grid sizes
+var wWidth = window.innerWidth;
+var wHeight = window.innerHeight;
+var minDim = wWidth < wHeight ? wWidth : wHeight;
+var minSubSize = 300;
+
+if (minDim/minSubSize < 3) minSubSize = Math.floor(minDim/3);
+let numOfSubsWidth = Math.floor(wWidth / minSubSize);
+let numOfSubsHeight = Math.floor(wHeight / minSubSize);
+
+// resize canvas elements
+$('#map').width(numOfSubsWidth * minSubSize);
+$('#map').height(numOfSubsHeight * minSubSize);
+var canvas2D = document.getElementById("shuffle");
+var ctx2D = canvas2D.getContext("2d");
+ctx2D.canvas.width = numOfSubsWidth * minSubSize;
+ctx2D.canvas.height = numOfSubsHeight * minSubSize;
+
+
+var imgWidth = numOfSubsWidth * minSubSize;
+var imgHeight = numOfSubsHeight * minSubSize;
+var subSize = minSubSize;
+var totalSubs = numOfSubsWidth * numOfSubsHeight
+
+//generate normal order
+var normalOrder = createOrder(numOfSubsWidth, numOfSubsHeight);
+var newOrder = shuffleArray(normalOrder);
 
 // initialize map
 mapboxgl.accessToken = key;
 // start tracking
 navigator.geolocation.watchPosition(movePosition, gotError, geoOptions);
-
 var map = new mapboxgl.Map({
     container: 'map',
     // satellite imagery styling
@@ -29,16 +59,6 @@ function movePosition(position) {
   map.panTo(curPoint);
 }
 
-var nSubs = 3;
-var imgWidth = 900;
-var subSize = imgWidth/nSubs;
-var totalSubs = nSubs*nSubs;
-
-//generate normal order
-var normalOrder = createOrder(nSubs);
-var newOrder = normalOrder;
-
-
 map.on('load', function () {
     console.log("map is loaded");
 
@@ -49,26 +69,6 @@ map.on('load', function () {
 });
 
 
-// function getLocation() {
-//   console.log("get new location")
-//   if (navigator.geolocation)  // check if geolocation is supported
-//   {
-//     //navigator.geolocation.watchPosition(gotLocation, gotError, geoOptions);
-//     navigator.geolocation.getCurrentPosition(movePosition)
-//   } else {
-//     console.log("uh oh no geo")
-//   }
-// }
-
-
-
-// function gotLocation(position) {
-//   //alert("new position");
-//   console.log(position);
-//   //alert("lat: " + position.coords.latitude + " lon: " + position.coords.longitude);
-//   requestImg(position.coords);
-//   //$("body").append("<p>" + position.coords.latitude + " " + position.coords.longitude + "</p>")
-// }
 
 function gotError(position) {
   console.log(position)
@@ -86,11 +86,11 @@ function swapPixels() {
     // draw the webGL canvas as an image to the 2D canvas
     ctx2D.drawImage(canvas, 0, 0);
 
-    for (var i = 0; i < newOrder.length-1; i = i+2) {
+    for (var i = 0; i < newOrder.length-1; i = i+1) {
 
         // set the first
-        var targetSub = newOrder[i];
-        var replaceSub = newOrder[i+1];
+        var targetSub = normalOrder[i];
+        var replaceSub = newOrder[i];
 
         var targetX = targetSub.x*subSize;
         var targetY = targetSub.y*subSize;
@@ -127,10 +127,10 @@ function swapPixels() {
     }
 }
 
-function createOrder(subs) {
+function createOrder(wSubs,hSubs) {
     var xyPairs = [];
-    for (var x = 0; x < subs; x++) {
-        for (var y = 0; y < subs; y++) {
+    for (var x = 0; x < wSubs; x++) {
+        for (var y = 0; y < hSubs; y++) {
             var pair = {
                 'x': x,
                 'y': y
@@ -138,31 +138,32 @@ function createOrder(subs) {
             xyPairs.push(pair);
         }
     }
+    console.log(xyPairs)
     return xyPairs;
 }
 
-// function shuffleArray (originalArray) {
-//
-//     var array = [].concat(originalArray);
-//     var currentIndex = array.length, temporaryValue, randomIndex;
-//
-//     // While there remain elements to shuffle...
-//     while (0 !== currentIndex) {
-//     // Pick a remaining element...
-//         randomIndex = Math.floor(Math.random() * currentIndex);
-//         currentIndex -= 1;
-//
-//         // And swap it with the current element.
-//         temporaryValue = array[currentIndex];
-//         array[currentIndex] = array[randomIndex];
-//         array[randomIndex] = temporaryValue;
-//     }
-//
-//     var permantCenter = {
-//         'x': 1,
-//         'y': 1
-//     };
-//     array.splice(4, 0, permantCenter);
-//
-//     return array;
-// }
+function shuffleArray (originalArray) {
+
+    var array = [].concat(originalArray);
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+    // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    // var permantCenter = {
+    //     'x': 1,
+    //     'y': 1
+    // };
+    // array.splice(4, 0, permantCenter);
+
+    return array;
+}
