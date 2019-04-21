@@ -197,8 +197,8 @@ var allMaps = [
   },
   {
     'num': '037',
-    'title': '',
-    'description': ''
+    'title': 'Fore-blob, Middle-blob, Back-blob',
+    'description': 'The traditional figure-ground relationship is reinterpreted by treating vegetation as the “figure”. From a near-infrared aerial image, vegetation is identified from red hues and isolated with a crude blob-detection algorithm.'
   },{
     'num': '038',
     'title': 'Frankenstein',
@@ -216,13 +216,13 @@ var allMaps = [
   },
   {
     'num': '041',
-    'title': '',
-    'description': ''
+    'title': 'Tilt Map Draw',
+    'description': 'By tilting the phone, a user draws a line between the blocks of New York City.'
   },
   {
     'num': '042',
-    'title': '',
-    'description': ''
+    'title': 'Hand Drawn',
+    'description': 'The hand acts as the writing instrument, drawing in mid-air when detected and identified by a Kinect.'
   },
   {
     'num': '043',
@@ -251,8 +251,8 @@ var allMaps = [
   },
   {
     'num': '048',
-    'title': '',
-    'description': ''
+    'title': 'Depth Drawing ',
+    'description': 'The body as a drawing instrument in which dimensions are transposed, where moving in the XZ dimension creates a corresponding drawing in the XY dimension.'
   },
   {
     'num': '049',
@@ -261,8 +261,8 @@ var allMaps = [
   },
   {
     'num': '050',
-    'title': '',
-    'description': ''
+    'title': 'Hello Hello Hello',
+    'description': 'The difference in writing Hello based on different instruction sets: walking city blocks, moving a hand through space, tilting a phone, and a software algorithm.'
   },
   {
     'num': '051',
