@@ -23,25 +23,30 @@ var data = datasets[curDatasetIndex];
 var remixIndex = 1;
 var altIndex = 2;
 
+var zoomLvl = 19.8;
+
+// TERRAPATTERN ORIGINAL: zm 19, sq 256x256
+// adjusted to 19.8, sq 450x450
+
 let context = new mapboxgl.Map({
     container: 'context',
     style: 'mapbox://styles/mapbox/satellite-v9',
     center: data[0].geometry.coordinates,
-    zoom: 16,
+    zoom: zoomLvl,
 });
 
 let remix = new mapboxgl.Map({
     container: 'remix',
     style: 'mapbox://styles/mapbox/satellite-v9',
     center: data[remixIndex].geometry.coordinates,
-    zoom: 16,
+    zoom: zoomLvl,
 });
 
 let altremix = new mapboxgl.Map({
     container: 'altremix',
     style: 'mapbox://styles/mapbox/satellite-v9',
     center: data[altIndex].geometry.coordinates,
-    zoom: 16,
+    zoom: zoomLvl,
 });
 
 context.scrollZoom.disable();

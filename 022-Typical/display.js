@@ -49,9 +49,9 @@ function createSVG() {
       .attr("d",path)
       .attr("class","block")
       .style("fill", "none")
-      .style("stroke", "#0066FF")
+      .style("stroke", "#000")
       .style("stroke-width", "2")
-      .style("opacity", 0.05)
+      .style("opacity", 1)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr("transform",function(d,i) {
         var bounds = (path.bounds(d));
@@ -76,7 +76,7 @@ var expand = setInterval(function() {
   d3.selectAll(".block")
   .transition()
   .duration(2000)
-  .style("opacity", 1)
+  .style("fill", "#000")
   .attr("transform",function(d,i) {
     var bounds = (path.bounds(d));
     var blockWidth = bounds[1][0] - bounds[0][0];
@@ -93,6 +93,13 @@ var expand = setInterval(function() {
 
   var pos = 0;
   var increment = 1;
+
+  var randomStart = Math.random() * document.body.getBoundingClientRect().height;
+
+  d3.transition()
+  .duration(200)
+  .tween("scroll",scrollTo(0,randomStart))
+  pos = randomStart
 
   d3.transition()
   .delay(800)

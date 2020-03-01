@@ -1,4 +1,4 @@
-var imgSize = $(window).height()/6;
+var imgSize = Math.round(($(window).height() - $(window).height()/12*2)/6);
 var topOffset = imgSize/2 * -1;
 var leftOffset = imgSize * -1;
 
@@ -7,7 +7,7 @@ setSizes();
 $( window ).resize(setSizes);
 
 function setSizes() {
-  imgSize = $(window).height()/6;
+  imgSize = Math.round(($(window).height() - $(window).height()/12*2)/6);
   topOffset = imgSize/2 * -1;
   leftOffset = imgSize * -1;
 

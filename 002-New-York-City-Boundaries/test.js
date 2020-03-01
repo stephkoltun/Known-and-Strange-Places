@@ -7,7 +7,7 @@ var map = new mapboxgl.Map({
     // satellite imagery styling
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     // set the start point of the map - needs to be long-lat (not lat-long)
-    center: [-73.9926559, 40.7159975],    // this should be a random point
+    center: [-73.973773,40.712354],    // this should be a random point
     zoom: 11,   // 10 - what scale
     maxBounds: bounds,
     interactive: false,
@@ -16,10 +16,12 @@ var map = new mapboxgl.Map({
 // coords to set max map area
 // Southwest coordinates and Northeast coordinates
 var bounds = [-74.238132, 40.818576, -73.747180, 40.618473];
-var colors = ["#39A2AE", "#544f87", "#D81E5B", "#B7B5E4", "#1d2faf", "#413b77", "#52ce2d", "#49b2c3", "#a1b176", "#F79AD3", "#248c13", "#3358f9", "#fcba3c", "#156633", "#EB5E55", "#164f35", "#A0EADE", "#9472c9", "#8E518D"];
+// var colors = ["#c1272d","#009245","#006837"]
 var lastMaskVisible = false;
 var lastMask;
 var maskTimer;
+
+var showText = true;
 
 var layersArray = [
     {
@@ -28,7 +30,8 @@ var layersArray = [
         maskObj: boroMask,
         maskName: "boroMask",
         maskId: "boro-mask",
-        name: "Boroughs"
+        name: "Boroughs",
+        color: "#2e3192"
     },
     {
         //boundName: "mapzenLandBound",
@@ -36,7 +39,8 @@ var layersArray = [
         maskObj: mapzenLandMask,
         maskName: "mapzenLandMask",
         maskId: "mapzenLand-mask",
-        name: "Land"
+        name: "Land",
+        color: "#39b54a"
     },
     {
         //boundName: "mapzenCostBound",
@@ -44,7 +48,8 @@ var layersArray = [
         maskObj: mapzenCoastMask,
         maskName: "mapzenCoastMask",
         maskId: "mapzenCoast-mask",
-        name: "Coastline"
+        name: "Coastline",
+        color: "#29abe2"
     },
     {
         //boundName: "agricBound",
@@ -52,7 +57,8 @@ var layersArray = [
         maskObj: agricMask,
         maskName: "agricMask",
         maskId: "agric-mask",
-        name: "Agriculture"
+        name: "Agriculture",
+        color: "#9e005d"
     },
     {
         //boundName: "municCourtBound",
@@ -60,7 +66,8 @@ var layersArray = [
         maskObj: municCourtMask,
         maskName: "municCourtMask",
         maskId: "municCourt-mask",
-        name: "Municipal Courts"
+        name: "Municipal Courts",
+        color: "#ed1c24"
     },
     {
         //boundName: "neighborBound",
@@ -68,15 +75,8 @@ var layersArray = [
         maskObj: neighborMask,
         maskName: "neighborMask",
         maskId: "neighbor-mask",
-        name: "Neighborhoods"
-    },
-    {
-        //boundName: "parksPropsBound",
-        boundId: "parksProps-boundary",
-        maskObj: parksPropsMask,
-        maskName: "parksPropsMask",
-        maskId: "parksProps-mask",
-        name: "Park Properties"
+        name: "Neighborhoods",
+        color: "#662d91"
     },
     {
         //boundName: "censusCountyBound",
@@ -84,7 +84,8 @@ var layersArray = [
         maskObj: censusCountyMask,
         maskName: "censusCountyMask",
         maskId: "censusCounty-mask",
-        name: "Cencus Counties"
+        name: "Cencus Counties",
+        color: "#93278f"
     },
     {
         //boundName: "geologyBound",
@@ -92,7 +93,8 @@ var layersArray = [
         maskObj: geologyMask,
         maskName: "geologyMask",
         maskId: "geology-mask",
-        name: "Geology"
+        name: "Geology",
+        color: "#1b1464"
     },
     {
         //boundName: "estSedBound",
@@ -100,7 +102,8 @@ var layersArray = [
         maskObj: estSedMask,
         maskName: "estSedMask",
         maskId: "estSed-mask",
-        name: "Estuary Sedimentation"
+        name: "Estuary Sedimentation",
+        color: "#d4145a"
     },
     {
         //boundName: "riverSedBound",
@@ -108,7 +111,17 @@ var layersArray = [
         maskObj: riverSedMask,
         maskName: "riverSedMask",
         maskId: "riverSed-mask",
-        name: "River Sedimentation"
+        name: "River Sedimentation",
+        color: "#fbb03b"
+    },
+    {
+        //boundName: "parksPropsBound",
+        boundId: "parksProps-boundary",
+        maskObj: parksPropsMask,
+        maskName: "parksPropsMask",
+        maskId: "parksProps-mask",
+        name: "Park Properties",
+        color: "#22b573"
     },
     {
         //boundName: "censusTractBound",
@@ -116,7 +129,8 @@ var layersArray = [
         maskObj: censusTractMask,
         maskName: "censusTractMask",
         maskId: "censusTract-mask",
-        name: "Cencus Tract"
+        name: "Cencus Tract",
+        color: "#f15a24"
     },
     {
         //boundName: "coastalBound",
@@ -124,7 +138,8 @@ var layersArray = [
         maskObj: coastalMask,
         maskName: "coastalMask",
         maskId: "coastal-mask",
-        name: "Coastal Edge"
+        name: "Coastal Edge",
+        color:"#00a99d"
     },
     {
         //boundName: "freshFoodBound",
@@ -132,7 +147,8 @@ var layersArray = [
         maskObj: freshFoodMask,
         maskName: "freshFoodMask",
         maskId: "freshFood-mask",
-        name: "Fresh Food Areas"
+        name: "Fresh Food Areas",
+        color: "#8cc63f"
     },
     {
         //boundName: "waterfrontParksBound",
@@ -140,7 +156,8 @@ var layersArray = [
         maskObj: waterfrontParksMask,
         maskName: "waterfrontParksMask",
         maskId: "waterfrontParks-mask",
-        name: "Waterfront Parks"
+        name: "Waterfront Parks",
+        color: "#0071bc"
     },
     {
         //boundName: "zipcodeBound",
@@ -148,7 +165,8 @@ var layersArray = [
         maskObj: zipcodeMask,
         maskName: "zipcodeMask",
         maskId: "zipcode-mask",
-        name: "Zipcodes"
+        name: "Zipcodes",
+        color: "#ed1e79"
     },
     {
         //boundName: "cableBound",
@@ -156,7 +174,8 @@ var layersArray = [
         maskObj: cableMask,
         maskName: "cableMask",
         maskId: "cable-mask",
-        name: "Cable Zones"
+        name: "Cable Zones",
+        color: "#d9e021"
     },
     {
         //boundName: "historicBound",
@@ -164,7 +183,8 @@ var layersArray = [
         maskObj: historicMask,
         maskName: "historicMask",
         maskId: "historic-mask",
-        name: "Historic Districts"
+        name: "Historic Districts",
+        color: "#f7931e"
     },
     {
         //boundName: "hydrographyBound",
@@ -172,9 +192,16 @@ var layersArray = [
         maskObj: hydrographyMask,
         maskName: "hydrographyMask",
         maskId: "hydrography-mask",
-        name: "Hydrography"
+        name: "Hydrography",
+        color: "#d9e021"
     },
 ];
+
+$(document).keydown(function(e) {
+  if ( e.which == 84 ) {
+   showText = !showText;
+  }
+})
 
 map.on('load', function () {
     console.log("map is loaded");
@@ -218,7 +245,7 @@ map.on('load', function () {
             "type": "line",
             "source": thisLayer.maskName,
             "paint": {
-                "line-color": colors[i],
+                "line-color": thisLayer.color ? thisLayer.color : '#FFF',
                 "line-width": 0.5
             },
             "metadata": {
@@ -242,11 +269,14 @@ map.on('click', function(e) {
 
       var fillColor = map.getPaintProperty(clickedLayer, 'line-color');
 
-      // add text
-      var label = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
+      if (showText) {
+        // add text
+        var label = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
 
-      $("body").append(label);
-      $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+        $("body").append(label);
+        $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+      }
+
 
       if (clickedLayer == "boro-boundary") {
           console.log("over boro");

@@ -8,7 +8,7 @@ var map = new mapboxgl.Map({
   container: 'map',
   style: useStyle,
   center: [-73.968647, 40.663430],    // Prospect Park
-  zoom: 15,
+  zoom: 14.9,
   interactive: false
 });
 
@@ -41,7 +41,7 @@ map.on('load', function () {
       dataObj: walkedPath,
       dataName: 'walked-path',
       layerId: 'walked-path',
-      color: '#f4c862',
+      color: '#8dc63f',
       type: 'circle',
       size: 1.8
     },
@@ -180,10 +180,13 @@ map.on('load', function () {
       map.setFilter('nyc-elev', elevFilter);      // elevation
       map.setFilter('walked-path', pathFilter);  // elev
 
-      var templabel = "<p class='label'>" + Math.round(lowerElev) + '-' + Math.round(upperElev) + "m</p>";
+      // var templabel = "<p class='label'>" + Math.round(lowerElev) + '-' + Math.round(upperElev) + "m</p>";
+      var text = Math.round(lowerElev) + ' - ' + Math.round(upperElev) + ' meters';
 
-      $("body").append(templabel);
-      $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+      $("#height").text(text);
+
+      // $("body").append(templabel);
+      // $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
 
       currentlyHidden = true;
 
@@ -197,7 +200,7 @@ map.on('load', function () {
       map.setFilter('target-poi', null);
       map.setFilter('nyc-elev', null);
 
-      $(".label").remove();
+      $("#height").text('')
     }
   });
 });

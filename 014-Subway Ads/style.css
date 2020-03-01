@@ -4,18 +4,23 @@ body {
 }
 
 div#seventh, div#prince, div#broadway {
-	height: 60vh;
+	height: 33.3333vh;
 	overflow: scroll;
 	white-space: nowrap;
 	line-height: 0;
 	font-size: 0;
 }
 
+div#seventh::-webkit-scrollbar, div#prince::-webkit-scrollbar, div#broadway::-webkit-scrollbar  {
+    display: none;
+}
+
+
 img {
 	height:100%;
 }
 
-#sevLabel, #princeLabel, #broadwayLabel {
+/* #sevLabel, #princeLabel, #broadwayLabel {
 	position: absolute;
 	left: 50px;
 	z-index: 20;
@@ -29,7 +34,7 @@ img {
 }
 #broadwayLabel {
 	top: 120vh;
-}
+} */
 
 h3 {
 	font-family: 'Work Sans', sans-serif;

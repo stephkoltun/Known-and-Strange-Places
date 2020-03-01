@@ -94,14 +94,14 @@ map.on('load', function () {
         }
     });
 
-    var neighborhood = findNeighborhood(centerPt);
-    $('.caption').text(neighborhood);
+    // var neighborhood = findNeighborhood(centerPt);
+    // $('.caption').text(neighborhood);
 
 });
 
 function resetLocation(e) {
     var newCoords = [e.lngLat.lng, e.lngLat.lat]
-    map.panTo(newCoords);
+    // map.panTo(newCoords);
 
     console.log("remove layers");
     clearAerial();

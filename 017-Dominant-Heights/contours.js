@@ -21,6 +21,13 @@ var map = new mapboxgl.Map({
 //map.scrollZoom.disable();
 map.doubleClickZoom.disable();
 
+var showText = true;
+$(document).keydown(function(e) {
+  if ( e.which == 84 ) {
+   showText = !showText;
+  }
+})
+
 map.on('load', function () {
     console.log("map is loaded");
 
@@ -103,10 +110,13 @@ map.on('click', function(e) {
 
         if (maskCreated) {
           map.setFilter('contours', filter);    // elevation
-          var templabel = "<p class='label'>" + lowerElev + '-' + upperElev + "m</p>";
 
-          $("body").append(templabel);
-          $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+          if (showText) {
+            var templabel = "<p class='label'>" + lowerElev + '-' + upperElev + "m</p>";
+
+            $("body").append(templabel);
+            $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+          }
 
           currentlyHidden = true;
         } else {
