@@ -1,10 +1,11 @@
 body {
 	margin: 0 0 0 0;
 	padding: 0;
+	overflow: hidden;
 }
 
 p.label {
-	font-family: 'Work Sans', sans-serif;
+	font-family: 'helvetica', sans-serif !important;
 	font-size: 30px;
 	color: #000;
 	font-weight: 700;
@@ -16,14 +17,20 @@ p.label {
 
 #klabel {
 	top: calc(33% - 50px);
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 #glabel {
 	top: calc(66% - 50px);
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 #alabel {
 	bottom: 50px;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 
@@ -36,4 +43,8 @@ p.label {
 	overflow: hidden;
   overflow-x: scroll;
 	line-height: 0;
+}
+
+#kmeans::-webkit-scrollbar, #gmm::-webkit-scrollbar, #agglom::-webkit-scrollbar  {
+    display: none;
 }

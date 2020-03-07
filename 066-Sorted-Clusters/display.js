@@ -194,7 +194,7 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
   })
   .transition()
   .duration(150)
-  .style("fill", "#5599ff");
+  .style("fill", "#29abe2");
 
   var block = d3.selectAll(pathSelector)
   .filter(function(s) {
@@ -202,7 +202,7 @@ function resortByClusters(_cluster, selectedId, selectedCluster, row) {
   })
   .transition()
   .duration(150)
-  .style("fill", "#0044ff");
+  .style("fill", "#2e3192");
 
   var pos = newPosition.toString();
   setTimeout(function() {
