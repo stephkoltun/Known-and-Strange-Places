@@ -3,35 +3,14 @@ var displayHeight;
 
 var minX, maxX, minY, maxY;
 
-var distance = 700; // metres
+var distance = 900; // metres
 
-var colorPairs = [
-  {
-    line:"#28788E",
-    background: "#E7493D"
-  },
-  {
-    line:"#20A476",
-    background: "#BFCE54"
-  },
-  {
-    line:"#F05B53",
-    background: "#8B508F"
-  },
-  {
-    line:"#234994",
-    background: "#B5BDC8"
-  },
-  {
-    line:"#F63523",
-    background: "#3385B7"
-  },
-]
+var colors = ["#c1272d","#ed1c24","#f15a24","#f7931e","#fbb03b","#fcee21","#d9e021","#8cc63f","#39b54a","#009245","#006837","#22b573","#00a99d","#29abe2","#0071bc","#2e3192","#1b1464","#662d91","#93278f","#9e005d","#d4145a","#ed1e79"]
 var randomNum;
 var thisColor;
 var saveColor;
 
-var curDataset = 0;
+var curDataset = 2;
 var geoArray = hello[curDataset].features;
 console.log(geoArray);
 var drawPosition = 1;
@@ -48,8 +27,8 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhrb2x0dW4iLCJhIjoiVXJJT19CQSJ9.kA3ZPQxK
 var mapObj = new mapboxgl.Map({
    container: 'mapArea',
    style: 'mapbox://styles/mapbox/satellite-v9',
-   center:[geoArray[140].properties.lon,geoArray[140].properties.lat],
-   zoom: 15.6,
+   center:[geoArray[142].properties.lon,geoArray[142].properties.lat],
+   zoom: 15.3,
    interactive: false,
  });
 
@@ -61,7 +40,7 @@ function mousePressed() {
 
 function mouseReleased() {
   $("#drawArea").css("background-color", thisColor.background);
-  thisColor.line = saveColor;
+  thisColor.line = "#FFF";
 }
 
 function draw() {
@@ -102,9 +81,11 @@ function draw() {
 
 function configure() {
   // set colors
-  randomNum = Math.floor(Math.random()*colorPairs.length);
-  thisColor = colorPairs[randomNum];
-  saveColor = colorPairs[randomNum].line;
+  randomNum = Math.floor(Math.random()*colors.length);
+  thisColor = {};
+  thisColor.background = colors[randomNum];
+  thisColor.line = '#fff'
+  saveColor = '#fff';
   $("#drawArea").css("background-color", thisColor.background);
 
   var position = hello[curDataset].features[140];
