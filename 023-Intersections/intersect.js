@@ -17,7 +17,7 @@ $(document).ready(function () {
   var streetLayer = L.geoJSON(streets, {
     style: {
       "color": "#b1b1b1",
-      "weight": 3,
+      "weight": 2,
       "opacity": 0,
     }
   }).addTo(map);
@@ -25,7 +25,7 @@ $(document).ready(function () {
   var intersectionsLayers = L.geoJSON(inters, {
     style: {
       "color": "#000",
-      "weight": 1,
+      "weight": 0.5,
       "opacity": 1,
     }
   }).addTo(map);

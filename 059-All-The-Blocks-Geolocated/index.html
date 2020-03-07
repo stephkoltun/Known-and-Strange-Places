@@ -11,7 +11,7 @@
   <script src='../template.js'></script>
 
   <!-- LIBRARIES! -->
-  <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
 
   <script src="tsne/tsnedata-8.js"></script>
@@ -33,30 +33,30 @@
 
 <body>
   <div id="controls">
-    
+
     <div class="group">
       <h1>Layout</h1>
       <button id="geography">Geography</button>
       <button id="cluster" class="selected">tSNE</button>
-      <div id="perplexgroup">
-        <h2 id="perp">Perplexity</h2>
-        <button id="perplexityFive">5</button>
-        <button id="perplexityEight">8</button>
-        <button id="perplexityThirty" class="selected">20</button>
-      </div>
+    </div>
+    <div class="group" id="perplexgroup">
+      <h1 id="perp">Perplexity</h1>
+      <button id="perplexityFive">5</button>
+      <button id="perplexityEight">8</button>
+      <button id="perplexityThirty" class="selected">20</button>
     </div>
 
     <div class="group">
       <h1>Color Scheme</h1>
       <button id="neighborhood">By Neighborhood</button>
       <button id="similarity" class="selected">By Cluster</button>
-      <div id="clustergroup">
-        <h2 id="clustNum">Number of Clusters</h2>
-        <button id="clusterSix" class="selected">6</button>
-        <button id="clusterTen">10</button>
-        <button id="clusterTwenty">20</button>
-        <button id="clusterFifty">50</button>
-      </div>
+    </div>
+    <div class="group" id="clustergroup">
+      <h1 id="clustNum">Number of Clusters</h1>
+      <button id="clusterSix" class="selected">6</button>
+      <button id="clusterTen">10</button>
+      <button id="clusterTwenty">20</button>
+      <button id="clusterFifty">50</button>
     </div>
 
   </div>

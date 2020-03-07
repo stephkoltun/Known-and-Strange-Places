@@ -24,18 +24,23 @@ var contextCurrent = "context"; // or alt
 var backgroundIndex = 0;
 var mode = "center";  // center, full, context
 
+
+// TERRAPATTERN ORIGINAL: zm 19, sq 256x256
+// adjusted to 19.8, sq 450x450
+var zoomlevel = 19.8
+
 var context = new mapboxgl.Map({
     container: 'context',
     style: 'mapbox://styles/mapbox/satellite-v9',  // satellite imagery styling
     center: data[0].geometry.coordinates,    // this should be a random point
-    zoom: 18,   // 10 - what scale
+    zoom: zoomlevel,   // 10 - what scale
 });
 
 var contextAlt = new mapboxgl.Map({
     container: 'contextAlt',
     style: 'mapbox://styles/mapbox/satellite-v9',  // satellite imagery styling
     center: data[0].geometry.coordinates,    // this should be a random point
-    zoom: 18,   // 10 - what scale
+    zoom: zoomlevel,   // 10 - what scale
 });
 
 var remix = new mapboxgl.Map({
@@ -43,7 +48,7 @@ var remix = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/satellite-v9',  // satellite imagery styling
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: data[remixIndex].geometry.coordinates,    // this should be a random point
-    zoom: 18,   // 10 - what scale
+    zoom: zoomlevel,   // 10 - what scale
 });
 
 var remixAlt = new mapboxgl.Map({
@@ -51,7 +56,7 @@ var remixAlt = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/satellite-v9',  // satellite imagery styling
     // set the start point of the map - needs to be long-lat (not lat-long)
     center: data[remixAltIndex].geometry.coordinates,    // this should be a random point
-    zoom: 18,   // 10 - what scale
+    zoom: zoomlevel,   // 10 - what scale
 });
 
 

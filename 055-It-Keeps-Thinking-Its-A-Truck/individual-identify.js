@@ -60,15 +60,18 @@ function showClasses() {
     // var yPos = height/2 - scaleHeight/2;
     // image(detected, xPos, yPos, scaleWidth, scaleHeight);
 
+    // var maxHeight = 300;
+    // var imgTransWidth = maxHeight * (bWidth/bHeight);
+    // var xPos = width/2 - imgTransWidth/2;
+    // var yPos = height/3 - maxHeight/2;
+    // image(detected, xPos, yPos, imgTransWidth, maxHeight);
+
+
     var xPos = width/2 - bWidth*3/2;
     var yPos = height/2 - bHeight*3/2;
-    image(detected, 0, yPos, bWidth*3, bHeight*3);
+    image(detected, xPos, yPos, bWidth*3, bHeight*3);
 
-    fill(0);
-    textFont("Karla");
-    textSize(48);
 
-    textAlign(LEFT,CENTER);
     var a = "";
     var firstLetter = predictions[predIndex].class.substring(0,1);
     if (firstLetter == "e" || firstLetter == "a" || firstLetter == "u" || firstLetter == "i" || firstLetter == "o") {
@@ -76,7 +79,8 @@ function showClasses() {
     } else {
       a = "a ";
     }
-    text("This is " + a + predictions[predIndex].class, 0, height-60);
+    $('#label').text(a + predictions[predIndex].class)
+    //text("This is " + a + predictions[predIndex].class, 0, height-60);
     // textAlign(CENTER,CENTER);
     // text(predictions[predIndex].class, width/2, height-60);
 

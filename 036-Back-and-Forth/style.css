@@ -4,8 +4,8 @@ body {
 }
 
 #context, #contextAlt {
-	width:600px;
-	height:600px;
+	width:100vw;
+	height:100vh;
 	margin: 0;
 	z-index: 1;
 	position: absolute;
@@ -19,8 +19,8 @@ body {
 }
 
 #remix, #remixAlt {
-	width:200px;
-	height:200px;
+	width:450px;
+	height:450px;
 	margin: 0;
 	z-index: 10;
 	position: absolute;

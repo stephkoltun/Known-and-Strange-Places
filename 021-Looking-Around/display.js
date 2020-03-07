@@ -69,13 +69,13 @@ function imageDisplay() {
     var streetlabel = parent.street;
     var dirlabel;
     if (d.direction == "N") {
-      dirlabel = "North";
+      dirlabel = "<span class='bold'>North</span>";
     } else if (d.direction == "E") {
-      dirlabel = "East";
+      dirlabel = "<span class='bold'>East</span>";
     } else if (d.direction == "S") {
-      dirlabel = "South";
+      dirlabel = "<span class='bold'>South</span>";
     } else if (d.direction == "W") {
-      dirlabel = "West";
+      dirlabel = "<span class='bold'>West</span>";
     }
     //var dirlabel = "All images facing " + d.direction;
     console.log(mode, d);

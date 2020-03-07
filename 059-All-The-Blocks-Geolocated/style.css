@@ -2,60 +2,45 @@
 body {
 	margin: 0 0 0 0;
 	padding: 0;
+	font-family: 'helvetica', sans-serif;
+	overflow: hidden;
 }
 
 #controls {
 	box-sizing: border-box;
 	position: absolute;
 	bottom: 0;
-	right: 0;
+	left: 0;
 	z-index: 10;
 	margin: 50px auto;
 }
 
 #controls .group {
-	float: left;
 	margin: 0 50px;
 }
 
 #controls h1 {
-	font-family: 'Work Sans', monospace;
-	font-size: 18px;
-	color: #000;
-	font-weight: 700;
-	margin: 20px 0 5px 0;
-	display: inline;
-}
-
-#controls h2 {
-	font-family: 'Work Sans', monospace;
-	font-size: 16px;
+	font-size: 12px;
 	color: #000;
 	font-weight: 600;
-	margin: 0;
-	display: inline;
+	margin: 10px 0 0px 0;
 }
 
 button {
-	min-width: 32px;
-	font-family: 'Work Sans', monospace;
-	font-size: 16px;
-	padding: 5px 5px;
-	margin: 5px 5px 10px 5px;
-	color: #d4d4d4;
+	font-size: 12px;
+	padding: 0px 0px;
+  margin: 0px 8px 10px 0px;
+	color: #d2d2d2;
 	background-color: #fff;
-	border: 2px solid #000;
+	border: none;
 }
 
 .selected {
-	background-color: #000;
-	color: #fff;
-	border: 2px solid #000;
+	color: #000;
 }
 
 button:hover {
-	background-color: #000;
-	color: #fff;
+	color: #000;
 }
 
 button:focus {

@@ -72,26 +72,26 @@ $("#geography").on("click", function() {
   $("#perplexityEight").removeClass("selected");
   $("#perplexityThirty").removeClass("selected");
 
-  $("#perplexgroup").hide();
+  $("#perplexgroup").css('opacity','40%');
 });
 $("#cluster").on("click", function() {
   $("#geography").removeClass("selected");
   $("#cluster").addClass("selected");
   locateByCluster();
-  $("#perplexgroup").show();
+  $("#perplexgroup").css('opacity','100%');
 });
 
 $("#neighborhood").on("click", function() {
   $("#neighborhood").addClass("selected");
   $("#similarity").removeClass("selected");
   colorByNeighborhood();
-  $("#clustergroup").hide();
+  $("#clustergroup").css('opacity','40%');
 });
 $("#similarity").on("click", function() {
   $("#neighborhood").removeClass("selected");
   $("#similarity").addClass("selected");
   colorBySimilarity();
-  $("#clustergroup").show();
+  $("#clustergroup").css('opacity','100%');
 });
 
 $("#perplexityFive").on("click", function() {

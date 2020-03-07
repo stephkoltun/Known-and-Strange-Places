@@ -286,7 +286,7 @@ var allMaps = [
   },
   {
     'num': '055',
-    'title': '',
+    'title': 'It Keeps Thinking It\'s a Truck',
     'description': ''
   },
   {

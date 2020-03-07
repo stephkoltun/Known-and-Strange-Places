@@ -68,9 +68,9 @@ function setup() {
 }
 
 var firedTime = 0;
-var waitTime = 500;
+var waitTime = 300;
 
-document.getElementById("wrapper").addEventListener("wheel", wheeled);
+window.addEventListener("wheel", wheeled);
 
 function wheeled(e) {
   var now = Date.now();
