@@ -12,7 +12,7 @@ function setup() {
   cnv.parent("wrapper");
 
 
-  frameRate(60);
+  frameRate(30);
 
   // for (var i = 1; i < 500; i++) {
   //   drawTrackedBody(i);
@@ -27,9 +27,9 @@ var curFrame = 1;
 
 function draw() {
 
-  //background(255,50);
+  //background(255,20);
 
-  var path = "frames/frame_" + (curFrame-1) + ".jpg";
+  var path = "frames/frame_" + (frameCount-1) + ".jpg";
   loadImage(path, function(thisImg) {
 
     //get rows with frame count number
