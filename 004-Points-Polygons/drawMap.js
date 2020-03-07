@@ -1,12 +1,28 @@
 // initialize map
 mapboxgl.accessToken = key;
 
+var showText = true;
+
 var useStyle;
 if (mapMode == 'neighborhood') {
     useStyle = 'mapbox://styles/stephkoltun/cjcjp91ec8yio2rnwrpt8lwfh'   // with elev points
 } else {
     useStyle = 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc'  // no elevs
 }
+
+var urls = {
+  'neighborhood': 'https://anothersideproject.co/knownandstrange/004/index.html',
+  'points': 'https://anothersideproject.co/knownandstrange/004/pointDistribution.html',
+  'areas': 'https://anothersideproject.co/knownandstrange/004/areaCategorization.html',
+  'polygons': 'https://anothersideproject.co/knownandstrange/004/polygonDistribution.html',
+}
+// 
+// var urls = {
+//   'neighborhood': 'http://localhost:8000/004-Points-Polygons/index.html',
+//   'points': 'http://localhost:8000/004-Points-Polygons/pointDistribution.html',
+//   'areas': 'http://localhost:8000/004-Points-Polygons/areaCategorization.html',
+//   'polygons': 'http://localhost:8000/004-Points-Polygons/polygonDistribution.html',
+// }
 
 var startPoints = [
     [-73.903207, 40.608448],
@@ -30,6 +46,58 @@ var map = new mapboxgl.Map({
     center: startPoints[randomStart],    // this should be a random point
     zoom: zoomLevel,
 });
+
+$(document).keydown(function(e) {
+
+  if ( e.which == 84 ) {
+   showText = !showText;
+  }
+
+  var url;
+
+  var mode = (mapMode === 'neighborhood' || mapMode === 'points') ? 'points' : 'polys';
+  var scale = (mapMode === 'neighborhood' || mapMode === 'polygons') ? 'small' : 'big'
+
+  // spacebar - change mode
+  if ( e.which == 32 ) {
+    if (mode === 'points') {
+      // gonna be SHAPES: either polygons or areas
+      if (scale === 'small') {
+        url = urls.polygons
+      } else {
+        url = urls.areas
+      }
+    } else {
+      // gonna be neighborhood or points
+      if (scale === 'small') {
+        url = urls.neighborhood
+      } else {
+        url = urls.points
+      }
+    }
+    window.location.href(url)
+  }
+  // scale - change scale
+  if ( e.which == 83 ) {
+    if (scale === 'small') {
+      // gonna be BIG: points or areas
+      if (mode === 'points') {
+        url = urls.points
+      } else {
+        url = urls.areas
+      }
+    } else {
+      /// gonna be SMALL
+      if (mode == 'points') {
+        url = urls.neighborhood
+      } else {
+        url = urls.polygons
+      }
+    }
+    window.location.href(url)
+  }
+})
+
 
 // disable map zoom
 map.scrollZoom.disable();
@@ -89,14 +157,19 @@ map.on('load', function () {
             var isolateLayer = features[0].layer.id;
             console.log("isolate " + isolateLayer);
 
+            if (mapMode === 'neighborhood' && isolateLayer != "elevPoints") {
+              map.setLayoutProperty("elevPoints", 'visibility', 'none');
+            }
+
             // hide all other layers
             for (var i = 0; i < mapLayers.length; i++) {
                 if (mapLayers[i].layerId != isolateLayer) {
+
                     //map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'none');
                     if (mapLayers[i].type == 'line') {
-                      map.setPaintProperty(mapLayers[i].layerId, 'fill-opacity',0.2);
+                      map.setPaintProperty(mapLayers[i].layerId, 'fill-opacity',0);
                     } else if (mapLayers[i].type == 'circle') {
-                      map.setPaintProperty(mapLayers[i].layerId, 'circle-opacity',0.2);
+                      map.setPaintProperty(mapLayers[i].layerId, 'circle-opacity',0);
                     }
                 } else {
                     map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
@@ -116,8 +189,12 @@ map.on('load', function () {
                 templabel = "<p class='label'>"+ features[0].layer.metadata.displaylabel + "</p>";
             }
 
-            $("body").append(templabel);
-            $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+            if (showText) {
+              $("body").append(templabel);
+              $(".label").css("top", (e.point.y - 15)).css("left", (e.point.x + 15));
+            }
+
+
 
             currentlyHidden = true;
 
@@ -126,7 +203,13 @@ map.on('load', function () {
             currentlyHidden = false;
             console.log("unhide");
 
-            $(".label").remove();
+            if (showText) {
+              $(".label").remove();
+            }
+
+            if (mapMode === 'neighborhood' && isolateLayer != "elevPoints") {
+              map.setLayoutProperty("elevPoints", 'visibility', 'visible');
+            }
 
             for (var i = 0; i < mapLayers.length; i++) {
                 map.setLayoutProperty(mapLayers[i].layerId, 'visibility', 'visible');
