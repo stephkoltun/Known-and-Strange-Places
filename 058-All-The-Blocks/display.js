@@ -56,13 +56,13 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
   .style("stroke", function(d,i){
     var neigh = d.properties.ntaname;
     var index = neighborhoods.indexOf(neigh);
-    var color = CSS_COLOR_NAMES[index*2];
+    var color = CSS_COLOR_NAMES[index];
     return color;
   })
   .style("fill", function(d,i){
     var neigh = d.properties.ntaname;
     var index = neighborhoods.indexOf(neigh);
-    var color = CSS_COLOR_NAMES[index*2];
+    var color = CSS_COLOR_NAMES[index];
     return color;
   })
   .style("stroke-width", .5)
@@ -118,7 +118,9 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
     .style("stroke-opacity", .7);
 
     d3.selectAll('text.neighborhood')
-    .attr("fill", "#000");
+    .attr("fill", function(d,i) {
+      return CSS_COLOR_NAMES[i];
+    });
   });
 
   svg.selectAll("text.neighborhood")
@@ -135,7 +137,9 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
     })
     .attr("font-family", "sans-serif")
     .attr("font-size", "12px")
-    .attr("fill", "#000");
+    .attr("fill", function(d,i) {
+      return CSS_COLOR_NAMES[i];
+    });
 
 
 });

@@ -301,7 +301,7 @@ var allMaps = [
   },
   {
     'num': '058',
-    'title': '',
+    'title': 'All The Blocks',
     'description': ''
   },
   {
