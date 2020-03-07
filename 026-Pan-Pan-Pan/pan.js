@@ -11,7 +11,7 @@ function preload(){
 }
 
 function setup() {
-  var cnv = createCanvas(displaySize*3, displaySize*2);
+  var cnv = createCanvas(displaySize*3+20, displaySize*2+10);
   cnv.parent("wrapper");  // set parent of canvas
   //background(240);
 
@@ -31,28 +31,29 @@ function updateAllViews() {
   // x: 1, y: 1
   drawVisibleTiles();
 
-  // x: 3, y: 2
+  // x: 2, y: 2
   push();
-  translate(displaySize*2, displaySize);
+  translate(displaySize, displaySize);
   drawCrop();
-  pop();
-
-  // x: 3, y: 1
-  push();
-  translate(displaySize*2, 0);
-  drawKey();
   pop();
 
   // x: 2, y: 1
   push();
   translate(displaySize, 0);
+  drawKey();
+  pop();
+
+  // x: 3, y: 1
+  push();
+  translate(displaySize*2, 0);
   drawVisibleTiles();
   drawVisibleGrid();
   pop();
 
-  // x: 2, y: 2
+
+  // x: 3, y: 2
   push();
-  translate(displaySize, displaySize);
+  translate(displaySize*2, displaySize);
   writeTileIndex();
   pop();
 
@@ -72,7 +73,7 @@ function writeGlobalIndex() {
 
   fill("#fff");
   noStroke();
-  rect(0,0,displaySize,displaySize);
+  rect(0,0,displaySize+20,displaySize+10);
 
   var xEdge = xOffset*(-1);
   var yEdge = yOffset*(-1);
@@ -96,9 +97,8 @@ function writeGlobalIndex() {
       textSize(9);
       text(indexVal, textX+6, textY+8);
       //textSize(9);
-      //text(xLabel, textX+6, textY+14);
-      //text(yLabel, textX+6, textY+24);
-
+      text(xLabel, textX+6, textY+18);
+      text(yLabel, textX+6, textY+28);
     }
   }
 }
@@ -106,7 +106,7 @@ function writeGlobalIndex() {
 function writeTileIndex() {
   fill("#fff");
   noStroke();
-  rect(0,0,displaySize,displaySize);
+  rect(0,0,displaySize+20,displaySize+10);
 
   var xEdge = xOffset*(-1);
   var yEdge = yOffset*(-1);
@@ -169,8 +169,9 @@ function drawVisibleGrid() {
   if (visibleTiles.length > 1) {
     noFill();
     stroke(255);
-    var strokeThick = 5;
+    var strokeThick = 3;
     strokeWeight(strokeThick);
+    strokeCap(SQUARE)
     // x line
     var xPos = xOffset+tileSize;
     if ((xPos > strokeThick) && (xPos < (displaySize-strokeThick))) {
