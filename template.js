@@ -311,7 +311,7 @@ var allMaps = [
   },
   {
     'num': '060',
-    'title': '',
+    'title': 'Routine Tracking',
     'description': ''
   },
   {
@@ -344,4 +344,174 @@ var allMaps = [
     'title': 'Comparing Sorted Clusters',
     'description': 'How do clusters different when compared across different methods?'
   },
+  {
+    'num': '067',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '068',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '069',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '070',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '071',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '072',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '073',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '074',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '075',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '076',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '077',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '078',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '079',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '080',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '081',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '082',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '083',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '084',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '085',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '086',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '087',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '088',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '089',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '090',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '091',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '092',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '093',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '094',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '095',
+    'title': 'Not In My Backyard',
+    'description': ''
+  },
+  {
+    'num': '096',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '097',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '098',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '099',
+    'title': '',
+    'description': ''
+  },
+  {
+    'num': '100',
+    'title': '',
+    'description': ''
+  }
 ]

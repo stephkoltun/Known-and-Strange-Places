@@ -1,6 +1,6 @@
 #bottom, #top {
-	width:1000px;
-	height:1000px;
+	width:100vw;
+	height:100vw;
 	margin: 0;
 	position: absolute;
 	top: 50%;
@@ -19,8 +19,8 @@
 }
 
 canvas#shuffle {
-	width:1000px;
-	height:1000px;
+	width:100vw;
+	height:100vw;
 	position: absolute;
 	top: 50%;
 	left:50%;
@@ -31,4 +31,5 @@ canvas#shuffle {
 body {
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }

@@ -55,18 +55,38 @@ topMap.doubleClickZoom.disable();
 bottomMap.scrollZoom.disable();
 bottomMap.doubleClickZoom.disable();
 
-var nSubs = 6;
-var imgWidth = 1000;
+var nSubs = 12;
+var imgWidth = $(window).width();
 var subSize = imgWidth/nSubs;
 var totalSubs = nSubs*nSubs;
 
 var erase = true;
 
+var topLoaded = false;
+var bottomLoaded = false;
+var creating = false;
+
 topMap.on('load', function () {
-    console.log("map is loaded");
+    console.log("top map is loaded");
 
     topMap.on('render', function() {
+      topLoaded = true;
+      if (topLoaded && bottomLoaded && !creating) {
+        creating = true;
         createCheckerboard();
+      }
+    })
+});
+
+bottomMap.on('load', function () {
+    console.log("bottom map is loaded");
+
+    bottomMap.on('render', function() {
+      bottomLoaded = true;
+      if (topLoaded && bottomLoaded && !creating) {
+        creating = true;
+        createCheckerboard();
+      }
     })
 });
 
@@ -107,6 +127,8 @@ function createCheckerboard() {
   // get the 2D canvas
   var canvas2D = document.getElementById("shuffle");
   var ctx2D = canvas2D.getContext("2d");
+  ctx2D.canvas.width  = $(window).width();
+  ctx2D.canvas.height = $(window).width();
   // draw the webGL canvas as an image to the 2D canvas
   ctx2D.drawImage(canvas, 0, 0, imgWidth, imgWidth);
 
