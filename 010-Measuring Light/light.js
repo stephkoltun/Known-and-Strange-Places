@@ -1,10 +1,22 @@
 var timestamps = [
 	"07:15",
+	"mid",
+	"mid",
 	"08:52",
+	"mid",
+	"mid",
 	"10:29",
+	"mid",
+	"mid",
 	"12:06",
+	"mid",
+	"mid",
 	"13:43",
+	"mid",
+	"mid",
 	"15:20",
+	"mid",
+	"mid",
 	"16:57"
 ];
 
@@ -120,6 +132,14 @@ var kitchen = {
 			],
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '08:52',
 			'measure': [
 				{
@@ -219,6 +239,14 @@ var kitchen = {
 					'val': 144,
 				},
 			],
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '10:29',
@@ -322,6 +350,14 @@ var kitchen = {
 			],
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '12:06',
 			'measure': [
 				{
@@ -421,6 +457,14 @@ var kitchen = {
 					'val': 292,
 				},
 			],
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '13:43',
@@ -524,6 +568,14 @@ var kitchen = {
 			],
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '15:20',
 			'measure': [
 				{
@@ -625,6 +677,14 @@ var kitchen = {
 			],
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '16:57',
 			'measure': [
 				{
@@ -724,8 +784,7 @@ var kitchen = {
 					'val': 0,
 				},
 			],
-		},
-
+		}
 	],
 };
 
@@ -837,6 +896,14 @@ var dining = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '08:52',
 			'measure': [
 				{
@@ -936,6 +1003,14 @@ var dining = {
 					'val': 232,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '10:29',
@@ -1039,6 +1114,14 @@ var dining = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '12:06',
 			'measure': [
 				{
@@ -1138,6 +1221,14 @@ var dining = {
 					'val': 281,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '13:43',
@@ -1241,6 +1332,14 @@ var dining = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '15:20',
 			'measure': [
 				{
@@ -1340,6 +1439,14 @@ var dining = {
 					'val': 25,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '16:57',
@@ -1553,6 +1660,14 @@ var foyer = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '08:52',
 			'measure': [
 				{
@@ -1652,6 +1767,14 @@ var foyer = {
 					'val': 80,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '10:29',
@@ -1755,6 +1878,14 @@ var foyer = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '12:06',
 			'measure': [
 				{
@@ -1854,6 +1985,14 @@ var foyer = {
 					'val': 173,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '13:43',
@@ -1957,6 +2096,14 @@ var foyer = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '15:20',
 			'measure': [
 				{
@@ -2056,6 +2203,14 @@ var foyer = {
 					'val': 5,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '16:57',
@@ -2269,6 +2424,14 @@ var bedroom = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '08:52',
 			'measure': [
 				{
@@ -2368,6 +2531,14 @@ var bedroom = {
 					'val': 57,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '10:29',
@@ -2471,6 +2642,14 @@ var bedroom = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '12:06',
 			'measure': [
 				{
@@ -2570,6 +2749,14 @@ var bedroom = {
 					'val': 108,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '13:43',
@@ -2673,6 +2860,14 @@ var bedroom = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '15:20',
 			'measure': [
 				{
@@ -2772,6 +2967,14 @@ var bedroom = {
 					'val': 3,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '16:57',
@@ -2985,6 +3188,14 @@ var closet = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '08:52',
 			'measure': [
 				{
@@ -3084,6 +3295,14 @@ var closet = {
 					'val': 82,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '10:29',
@@ -3187,6 +3406,14 @@ var closet = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '12:06',
 			'measure': [
 				{
@@ -3286,6 +3513,14 @@ var closet = {
 					'val': 142,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '13:43',
@@ -3389,6 +3624,14 @@ var closet = {
 			]
 		},
 		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
+		},
+		{
 			'time': '15:20',
 			'measure': [
 				{
@@ -3488,6 +3731,14 @@ var closet = {
 					'val': 5,
 				},
 			]
+		},
+		{
+			'time': 'mid',
+			'measure': []
+		},
+		{
+			'time': 'mid2',
+			'measure': []
 		},
 		{
 			'time': '16:57',
