@@ -20,7 +20,7 @@ function setup() {
 
   noFill();
   beginShape();
-    stroke('#F06449');
+    stroke('#ed1e79');
     strokeWeight(1);
     for (var i = 0; i < wave.length; i++){
       var x = map(i, 0, wave.length, 0, width);
@@ -75,7 +75,7 @@ function showGraph() {
           .attr("d", line1(pathPointsFuzzy.features))
           .attr("class", "line")
           .style("fill", "none")
-          .style("stroke", "#5BC3EB")
+          .style("stroke", "#29abe2")
           .style("stroke-width", 1.5);
 }
 
@@ -91,9 +91,11 @@ function showRoute() {
         style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
         //style: 'mapbox://styles/stephkoltun/cjcqeyd6n53932smqco6657s3',
         center: startPoint,
-        minZoom: 14.62,
-        maxZoom: 16,
+        //minZoom: 14.62,
+        //maxZoom: 16,
+        zoom: 15.07,
         attributionControl: false,
+        interactive: false
         //bearing: 208.5,//28.5
     })
     .addControl(new mapboxgl.AttributionControl({
@@ -133,7 +135,7 @@ function showRoute() {
             "type": "line",
             "source": 'walkedpath',
             'paint': {
-                "line-color": '#3AB795',
+                "line-color": '#39b54a',
                 "line-width": 1,
             }
         })
@@ -148,7 +150,7 @@ function showRoute() {
             "type": "circle",
             "source": 'walkedpoints',
             'paint': {
-                "circle-color": '#3AB795',
+                "circle-color": '#39b54a',
                 "circle-radius": 2.5,
             }
         })

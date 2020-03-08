@@ -21,7 +21,7 @@ var map = new mapboxgl.Map({
     //style: 'mapbox://styles/mapbox/satellite-v9',
     style: 'mapbox://styles/stephkoltun/cjcapx5je1wql2so4uigw0ovc',
     center: centerPt,
-    zoom: 13.7,
+    zoom: 14.3,
 });
 map.scrollZoom.disable();
 map.doubleClickZoom.disable();
@@ -33,7 +33,7 @@ var transitLayers = [
         layerId: 'subwayLines',
         color: '#acacac',
         type: 'line',
-        width: 0.5,
+        width: 0.2,
         opac: 1
     },
     {
@@ -42,9 +42,9 @@ var transitLayers = [
         layerId: 'bufferEntrances',
         color: '#000',
         //color: "rgb(25,180,220)",
-        type: 'line',
+        //type: 'line',
         width: 1,
-        // type: 'fill',
+        type: 'fill',
         opac: 1
     },
     // {
@@ -88,10 +88,11 @@ map.on('load', function () {
         'type': 'raster',
         'source': 'satellite',
         'source-layer': 'contour',
-        'paint': {
-            'raster-opacity': 0
-        }
+        // 'paint': {
+        //     'raster-opacity': 0
+        // }
     });
+    map.setLayoutProperty('satellite', 'visibility', 'none');
 
     for (var i = 0; i < transitLayers.length; i++) {
         var thisLayer = transitLayers[i];
@@ -154,13 +155,10 @@ map.on('click', function(e) {
         map.setLayoutProperty('bufferEntrances', 'visibility', 'none');
         map.setLayoutProperty('subwayLines', 'visibility', 'none');
 
-        map.easeTo({
-            center: centroid.geometry.coordinates,
+        map.flyTo(
+          { center: centroid.geometry.coordinates,
             zoom: 20.5,
-            duration: 1200,
-            easing(t) {
-                return t;
-            }
+            duration: 0
         })
 
     }
@@ -194,27 +192,29 @@ function showMask(mask) {
         "type": "fill",
         "paint": {
           "fill-color": "#ffffff",
-          'fill-opacity': 0.999
+          'fill-opacity': 0.99999
         }
     }, 'subwayLines');
 
     masked = true;
     startTimer();
-    map.setPaintProperty('satellite', 'raster-opacity', 1);
+    map.setLayoutProperty('satellite', 'visibility', 'visible');
+    //map.setPaintProperty('satellite', 'raster-opacity', 1);
 }
 
 function clearMask() {
     console.log("clear mask and satellite");
-    map.setPaintProperty('satellite', 'raster-opacity', 0);
     map.setLayoutProperty('bufferEntrances', 'visibility', 'visible');
     map.setLayoutProperty('subwayLines', 'visibility', 'visible');
+    map.setLayoutProperty('satellite', 'visibility', 'none');
+    //map.setPaintProperty('satellite', 'raster-opacity', 0);
 
     map.removeLayer('zmask');
     map.removeSource('mask');
     map.easeTo({
             center: map.getCenter(),
-            zoom: 14,
-            duration: 1200,
+            zoom: 14.3,
+            duration: 0,
             easing(t) {
                 return t;
             }

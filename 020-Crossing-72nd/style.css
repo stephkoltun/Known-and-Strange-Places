@@ -2,6 +2,8 @@
 body {
 	margin: 0 0 0 0;
 	padding: 0;
+	overflow: hidden;
+	width: 1922px;
 }
 
 .loadingclass {
@@ -12,6 +14,7 @@ div#playhead {
 	width:1px;
 	height:100vh;
 	background-color: black;
+	opacity: 0.75;
 	position: absolute;
 	top:0;
 	left:0;
@@ -19,13 +22,13 @@ div#playhead {
 }
 
 #elevation, #path, #audio {
-	width: 100vw;
+	width: 100%;
 	height: 33vh;
 }
 
 h1 {
-	font-family: 'Work Sans', sans-serif;
-	font-size: 15px;
+	font-family: 'Helvetica', sans-serif;
+	font-size: 12px;
 	font-weight: 400;
 	margin: 0;
 }
@@ -34,19 +37,24 @@ h1#label1 {
 	position: absolute;
 	top: 30vh;
 	left: 50px;
-	color: #F06449;
+	color: #ed1e79;
 }
 
 h1#label2 {
 	position: absolute;
 	top: 60vh;
 	left: 50px;
-	color: #3AB795;
+	color: #39b54a;
 }
 
 h1#label3 {
 	position: absolute;
 	top: 90vh;
 	left: 50px;
-	color: #5BC3EB;
+	color: #29abe2;
+}
+
+
+.mapboxgl-control-container {
+	display: none;
 }

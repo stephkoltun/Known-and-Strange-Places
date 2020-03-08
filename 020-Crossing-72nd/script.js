@@ -18,7 +18,7 @@ function setup() {
 
   noFill();
   beginShape();
-    stroke(255,0,0); // waveform is red
+    stroke("#ed1e79"); // waveform is red
     strokeWeight(1);
     for (var i = 0; i < wave.length; i++){
       var x = map(i, 0, wave.length, 0, width);

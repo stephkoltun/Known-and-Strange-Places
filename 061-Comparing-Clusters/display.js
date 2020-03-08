@@ -1,6 +1,6 @@
-var margin = {top: 200, left: 200, bottom: 100, right: 100};
-var width = $(window).width()/2;
-var height = $(window).height()/2;
+var margin = {top: 100, left: 100, bottom: 100, right: 100};
+var width = $(window).width()/3;
+var height = $(window).height()/1;
 
 var widthLarge = $(window).width();
 var heightLarge = $(window).height();
@@ -30,10 +30,10 @@ var svgAgglom = d3.select("#agglom")
 .attr("width", width)
 .attr("height", height);
 
-var svgAffinity = d3.select("#affinity")
-.append("svg")
-.attr("width", width)
-.attr("height", height);
+// var svgAffinity = d3.select("#affinity")
+// .append("svg")
+// .attr("width", width)
+// .attr("height", height);
 
 var svgLarge = d3.select("#large")
 .append("svg")
@@ -43,7 +43,7 @@ var svgLarge = d3.select("#large")
 var projectionBronx = d3.geoMercator()
 .translate([width/2, height/2])    // translate to center of screen
 .center([-73.859508, 40.856729])  // middle of the bronx
-.scale([140000]);          // scale things wayyyy up
+.scale([180000]);          // scale things wayyyy up
 var pathGeo = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
 .projection(projectionBronx);
 
@@ -69,7 +69,7 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
     features[i].clusters["gmm"] = gmm.clusters[i].label;
     features[i].clusters["kmeans"] = kmeans.clusters[i].label;
     features[i].clusters["agglom"] = agglom.clusters[i].label;
-    features[i].clusters["affinity"] = affinity.clusters[i].label;
+    // features[i].clusters["affinity"] = affinity.clusters[i].label;
   }
 
   console.log(features[10]);
@@ -77,14 +77,14 @@ d3.json('Bronx-neighborhoods.geojson', function(error, mapData) {
   plotGeographically(features, "kmeans");
   plotGeographically(features, "gmm");
   plotGeographically(features, "agglom");
-  plotGeographically(features, "affinity");
+  // plotGeographically(features, "affinity");
   plotGeographically(features, "large");
 });
 
 var kmeansColors = colorGroupings(kmeans, kmeans.count);
 var gmmColors = colorGroupings(gmm, gmm.count);
 var agglomColors = colorGroupings(agglom, agglom.count);
-var affinityColors = colorGroupings(affinity, affinity.count);
+// var affinityColors = colorGroupings(affinity, affinity.count);
 
 
 function plotGeographically(features, mode) {
@@ -111,12 +111,12 @@ function plotGeographically(features, mode) {
       var gmm = d.clusters.gmm;
       var kmeans = d.clusters.kmeans;
       var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
+      // var affinity = d.clusters.affinity;
 
       gmmColors[gmm] = randomColor;
       kmeansColors[kmeans] = randomColor;
       agglomColors[agglom] = randomColor;
-      affinityColors[affinity] = randomColor;
+      // affinityColors[affinity] = randomColor;
 
       d3.selectAll('path.gmm')
       .filter(function(s) {
@@ -124,7 +124,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.gmm')
       .filter(function(s) {
@@ -140,7 +140,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.kmeans')
       .filter(function(s) {
@@ -156,7 +156,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.agglom')
       .filter(function(s) {
@@ -166,27 +166,27 @@ function plotGeographically(features, mode) {
       .duration(150)
       .style("fill", randomColor);
 
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity != affinity
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
+      // d3.selectAll('path.affinity')
+      // .filter(function(s) {
+      //   return s.clusters.affinity != affinity
+      // })
+      // .transition()
+      // .duration(150)
+      // .style('fill-opacity',0.00);
 
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity == affinity
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
+      // d3.selectAll('path.affinity')
+      // .filter(function(s) {
+      //   return s.clusters.affinity == affinity
+      // })
+      // .transition()
+      // .duration(150)
+      // .style("fill", randomColor);
     })
     .on("mouseup", function(d,i) {
       var gmm = d.clusters.gmm;
       var kmeans = d.clusters.kmeans;
       var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
+      // var affinity = d.clusters.affinity;
 
       d3.selectAll('path.gmm')
       .transition()
@@ -203,19 +203,19 @@ function plotGeographically(features, mode) {
       .duration(150)
       .style('fill-opacity',.7);
 
-      d3.selectAll('path.affinity')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
+      // d3.selectAll('path.affinity')
+      // .transition()
+      // .duration(150)
+      // .style('fill-opacity',.7);
     });
 
 
     svgKmeans.append("text")
     .text("K-Means")
     .attr("x", 50)
-    .attr("y", 50)
+    .attr("y", height-250)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 700)
     .attr("fill", "#000");
 
@@ -223,18 +223,18 @@ function plotGeographically(features, mode) {
     svgKmeans.append("text")
     .text(title)
     .attr("x", 50)
-    .attr("y", 70)
+    .attr("y", height-232)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 400)
     .attr("fill", "#000");
 
     svgKmeans.append("text")
     .text("Zernike Moments")
     .attr("x", 50)
-    .attr("y", 90)
+    .attr("y", height-214)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 400)
     .attr("fill", "#000");
   }
@@ -262,12 +262,12 @@ function plotGeographically(features, mode) {
       var gmm = d.clusters.gmm;
       var kmeans = d.clusters.kmeans;
       var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
+      // var affinity = d.clusters.affinity;
 
       gmmColors[gmm] = randomColor;
       kmeansColors[kmeans] = randomColor;
       agglomColors[agglom] = randomColor;
-      affinityColors[affinity] = randomColor;
+      // affinityColors[affinity] = randomColor;
 
       d3.selectAll('path.gmm')
       .filter(function(s) {
@@ -275,7 +275,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.gmm')
       .filter(function(s) {
@@ -291,7 +291,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.kmeans')
       .filter(function(s) {
@@ -307,7 +307,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.agglom')
       .filter(function(s) {
@@ -317,27 +317,27 @@ function plotGeographically(features, mode) {
       .duration(150)
       .style("fill", randomColor);
 
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity != affinity
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
-
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity == affinity
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
+      // d3.selectAll('path.affinity')
+      // .filter(function(s) {
+      //   return s.clusters.affinity != affinity
+      // })
+      // .transition()
+      // .duration(150)
+      // .style('fill-opacity',0.00);
+      //
+      // d3.selectAll('path.affinity')
+      // .filter(function(s) {
+      //   return s.clusters.affinity == affinity
+      // })
+      // .transition()
+      // .duration(150)
+      // .style("fill", randomColor);
     })
     .on("mouseup", function(d,i) {
       var gmm = d.clusters.gmm;
       var kmeans = d.clusters.kmeans;
       var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
+      // var affinity = d.clusters.affinity;
 
       d3.selectAll('path.gmm')
       .transition()
@@ -354,19 +354,19 @@ function plotGeographically(features, mode) {
       .duration(150)
       .style('fill-opacity',.7);
 
-      d3.selectAll('path.affinity')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
+      // d3.selectAll('path.affinity')
+      // .transition()
+      // .duration(150)
+      // .style('fill-opacity',.7);
     });
 
 
     svgGmm.append("text")
     .text("Gaussian Mixture Method")
     .attr("x", 50)
-    .attr("y", 50)
+    .attr("y", height-250)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 700)
     .attr("fill", "#000");
 
@@ -374,18 +374,18 @@ function plotGeographically(features, mode) {
     svgGmm.append("text")
     .text(title)
     .attr("x", 50)
-    .attr("y", 70)
+    .attr("y", height-232)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 400)
     .attr("fill", "#000");
 
     svgGmm.append("text")
     .text("Zernike Moments")
     .attr("x", 50)
-    .attr("y", 90)
+    .attr("y", height-214)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 400)
     .attr("fill", "#000");
   }
@@ -413,12 +413,12 @@ function plotGeographically(features, mode) {
       var gmm = d.clusters.gmm;
       var kmeans = d.clusters.kmeans;
       var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
+      // var affinity = d.clusters.affinity;
 
       gmmColors[gmm] = randomColor;
       kmeansColors[kmeans] = randomColor;
       agglomColors[agglom] = randomColor;
-      affinityColors[affinity] = randomColor;
+      // affinityColors[affinity] = randomColor;
 
       d3.selectAll('path.gmm')
       .filter(function(s) {
@@ -426,7 +426,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.gmm')
       .filter(function(s) {
@@ -442,7 +442,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.kmeans')
       .filter(function(s) {
@@ -458,7 +458,7 @@ function plotGeographically(features, mode) {
       })
       .transition()
       .duration(150)
-      .style('fill-opacity',0.05);
+      .style('fill-opacity',0.00);
 
       d3.selectAll('path.agglom')
       .filter(function(s) {
@@ -468,27 +468,27 @@ function plotGeographically(features, mode) {
       .duration(150)
       .style("fill", randomColor);
 
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity != affinity
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
-
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity == affinity
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
+      // d3.selectAll('path.affinity')
+      // .filter(function(s) {
+      //   return s.clusters.affinity != affinity
+      // })
+      // .transition()
+      // .duration(150)
+      // .style('fill-opacity',0.00);
+      //
+      // d3.selectAll('path.affinity')
+      // .filter(function(s) {
+      //   return s.clusters.affinity == affinity
+      // })
+      // .transition()
+      // .duration(150)
+      // .style("fill", randomColor);
     })
     .on("mouseup", function(d,i) {
       var gmm = d.clusters.gmm;
       var kmeans = d.clusters.kmeans;
       var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
+      // var affinity = d.clusters.affinity;
 
       d3.selectAll('path.gmm')
       .transition()
@@ -505,18 +505,18 @@ function plotGeographically(features, mode) {
       .duration(150)
       .style('fill-opacity',.7);
 
-      d3.selectAll('path.affinity')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
+      // d3.selectAll('path.affinity')
+      // .transition()
+      // .duration(150)
+      // .style('fill-opacity',.7);
     });
 
     svgAgglom.append("text")
     .text("Ward Agglomerative Clustering")
     .attr("x", 50)
-    .attr("y", 50)
+    .attr("y", height-250)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 700)
     .attr("fill", "#000");
 
@@ -524,171 +524,171 @@ function plotGeographically(features, mode) {
     svgAgglom.append("text")
     .text(title)
     .attr("x", 50)
-    .attr("y", 70)
+    .attr("y", height-232)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 400)
     .attr("fill", "#000");
 
     svgAgglom.append("text")
     .text("Zernike Moments")
     .attr("x", 50)
-    .attr("y", 90)
+    .attr("y", height-214)
     .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
+    .attr("font-size", "12px")
     .attr("font-weight", 400)
     .attr("fill", "#000");
   }
 
-  if (mode == "affinity") {
-    var labels = affinity;
-
-    svgAffinity.selectAll("path.affinity")
-    .data(features)
-    .enter()
-    .append("path")
-    .attr("d",pathGeo)
-    .attr("class","affinity")
-    .style("stroke", "none")
-    .style("fill", function(d,i){
-      var label = labels.clusters[i].label;
-      var color = affinityColors[label];
-      return color;
-    })
-    .style("fill-opacity", 0.7)
-    .on("mousedown", function(d,i) {
-      var randomNum = Math.floor(Math.random()*hexSmall.length);
-      var randomColor = hexSmall[randomNum];
-
-      var gmm = d.clusters.gmm;
-      var kmeans = d.clusters.kmeans;
-      var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
-
-      gmmColors[gmm] = randomColor;
-      kmeansColors[kmeans] = randomColor;
-      agglomColors[agglom] = randomColor;
-      affinityColors[affinity] = randomColor;
-
-      d3.selectAll('path.gmm')
-      .filter(function(s) {
-        return s.clusters.gmm != gmm
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
-
-      d3.selectAll('path.gmm')
-      .filter(function(s) {
-        return s.clusters.gmm == gmm
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
-
-      d3.selectAll('path.kmeans')
-      .filter(function(s) {
-        return s.clusters.kmeans != kmeans
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
-
-      d3.selectAll('path.kmeans')
-      .filter(function(s) {
-        return s.clusters.kmeans == kmeans
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
-
-      d3.selectAll('path.agglom')
-      .filter(function(s) {
-        return s.clusters.agglom != agglom
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
-
-      d3.selectAll('path.agglom')
-      .filter(function(s) {
-        return s.clusters.agglom == agglom
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
-
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity != affinity
-      })
-      .transition()
-      .duration(150)
-      .style('fill-opacity',0.05);
-
-      d3.selectAll('path.affinity')
-      .filter(function(s) {
-        return s.clusters.affinity == affinity
-      })
-      .transition()
-      .duration(150)
-      .style("fill", randomColor);
-    })
-    .on("mouseup", function(d,i) {
-      var gmm = d.clusters.gmm;
-      var kmeans = d.clusters.kmeans;
-      var agglom = d.clusters.agglom;
-      var affinity = d.clusters.affinity;
-
-      d3.selectAll('path.gmm')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
-
-      d3.selectAll('path.kmeans')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
-
-      d3.selectAll('path.agglom')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
-
-      d3.selectAll('path.affinity')
-      .transition()
-      .duration(150)
-      .style('fill-opacity',.7);
-    });
-
-    svgAffinity.append("text")
-    .text("Affinity Propagation")
-    .attr("x", 50)
-    .attr("y", 50)
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
-    .attr("font-weight", 700)
-    .attr("fill", "#000");
-
-    var title = "Clusters: " + labels.count;
-    svgAffinity.append("text")
-    .text(title)
-    .attr("x", 50)
-    .attr("y", 70)
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
-    .attr("font-weight", 400)
-    .attr("fill", "#000");
-
-    svgAffinity.append("text")
-    .text("Zernike Moments")
-    .attr("x", 50)
-    .attr("y", 90)
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "15px")
-    .attr("font-weight", 400)
-    .attr("fill", "#000");
-  }
+  // if (mode == "affinity") {
+  //   var labels = affinity;
+  //
+  //   svgAffinity.selectAll("path.affinity")
+  //   .data(features)
+  //   .enter()
+  //   .append("path")
+  //   .attr("d",pathGeo)
+  //   .attr("class","affinity")
+  //   .style("stroke", "none")
+  //   .style("fill", function(d,i){
+  //     var label = labels.clusters[i].label;
+  //     var color = affinityColors[label];
+  //     return color;
+  //   })
+  //   .style("fill-opacity", 0.7)
+  //   .on("mousedown", function(d,i) {
+  //     var randomNum = Math.floor(Math.random()*hexSmall.length);
+  //     var randomColor = hexSmall[randomNum];
+  //
+  //     var gmm = d.clusters.gmm;
+  //     var kmeans = d.clusters.kmeans;
+  //     var agglom = d.clusters.agglom;
+  //     var affinity = d.clusters.affinity;
+  //
+  //     gmmColors[gmm] = randomColor;
+  //     kmeansColors[kmeans] = randomColor;
+  //     agglomColors[agglom] = randomColor;
+  //     affinityColors[affinity] = randomColor;
+  //
+  //     d3.selectAll('path.gmm')
+  //     .filter(function(s) {
+  //       return s.clusters.gmm != gmm
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',0.00);
+  //
+  //     d3.selectAll('path.gmm')
+  //     .filter(function(s) {
+  //       return s.clusters.gmm == gmm
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style("fill", randomColor);
+  //
+  //     d3.selectAll('path.kmeans')
+  //     .filter(function(s) {
+  //       return s.clusters.kmeans != kmeans
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',0.00);
+  //
+  //     d3.selectAll('path.kmeans')
+  //     .filter(function(s) {
+  //       return s.clusters.kmeans == kmeans
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style("fill", randomColor);
+  //
+  //     d3.selectAll('path.agglom')
+  //     .filter(function(s) {
+  //       return s.clusters.agglom != agglom
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',0.00);
+  //
+  //     d3.selectAll('path.agglom')
+  //     .filter(function(s) {
+  //       return s.clusters.agglom == agglom
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style("fill", randomColor);
+  //
+  //     d3.selectAll('path.affinity')
+  //     .filter(function(s) {
+  //       return s.clusters.affinity != affinity
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',0.00);
+  //
+  //     d3.selectAll('path.affinity')
+  //     .filter(function(s) {
+  //       return s.clusters.affinity == affinity
+  //     })
+  //     .transition()
+  //     .duration(150)
+  //     .style("fill", randomColor);
+  //   })
+  //   .on("mouseup", function(d,i) {
+  //     var gmm = d.clusters.gmm;
+  //     var kmeans = d.clusters.kmeans;
+  //     var agglom = d.clusters.agglom;
+  //     var affinity = d.clusters.affinity;
+  //
+  //     d3.selectAll('path.gmm')
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',.7);
+  //
+  //     d3.selectAll('path.kmeans')
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',.7);
+  //
+  //     d3.selectAll('path.agglom')
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',.7);
+  //
+  //     d3.selectAll('path.affinity')
+  //     .transition()
+  //     .duration(150)
+  //     .style('fill-opacity',.7);
+  //   });
+  //
+  //   svgAffinity.append("text")
+  //   .text("Affinity Propagation")
+  //   .attr("x", 50)
+  //   .attr("y", 50)
+  //   .attr("font-family", "sans-serif")
+  //   .attr("font-size", "12px")
+  //   .attr("font-weight", 700)
+  //   .attr("fill", "#000");
+  //
+  //   var title = "Clusters: " + labels.count;
+  //   svgAffinity.append("text")
+  //   .text(title)
+  //   .attr("x", 50)
+  //   .attr("y", 70)
+  //   .attr("font-family", "sans-serif")
+  //   .attr("font-size", "12px")
+  //   .attr("font-weight", 400)
+  //   .attr("fill", "#000");
+  //
+  //   svgAffinity.append("text")
+  //   .text("Zernike Moments")
+  //   .attr("x", 50)
+  //   .attr("y", 90)
+  //   .attr("font-family", "sans-serif")
+  //   .attr("font-size", "12px")
+  //   .attr("font-weight", 400)
+  //   .attr("fill", "#000");
+  // }
 
   if (mode == "large") {
     var labels = gmm;
@@ -709,7 +709,7 @@ function plotGeographically(features, mode) {
   }
 }
 
-var modes = [gmm, kmeans, agglom, affinity];
+var modes = [gmm, kmeans, agglom];
 var curMode = 0;
 
 var seenStates = 1;
@@ -722,13 +722,35 @@ $('#restore').on("click", function() {
   .style("fill-opacity", 0.7)
 })
 
+$(document).keydown(function(e) {
+  if ( e.which == 77 ) {
+    if (flipping == false) {
+      $('#gmm').fadeOut();
+      $('#kmeans').fadeOut();
+      $('#agglom').fadeOut();
+      // $('#affinity').fadeOut();
+      $('#large').fadeIn();
+      showModesInterval = setInterval(changeModes, 2000);
+      flipping = true;
+    } else {
+      $('#gmm').fadeIn();
+      $('#kmeans').fadeIn();
+      $('#agglom').fadeIn();
+      // $('#affinity').fadeIn();
+      $('#large').fadeOut();
+      clearInterval(showModesInterval);
+      flipping = false;
+    }
+  }
+})
+
 $('#cycle').on("click", function() {
   console.log("click");
   if (flipping == false) {
     $('#gmm').fadeOut();
     $('#kmeans').fadeOut();
     $('#agglom').fadeOut();
-    $('#affinity').fadeOut();
+    // $('#affinity').fadeOut();
     $('#large').fadeIn();
     showModesInterval = setInterval(changeModes, 2000);
     flipping = true;
@@ -736,7 +758,7 @@ $('#cycle').on("click", function() {
     $('#gmm').fadeIn();
     $('#kmeans').fadeIn();
     $('#agglom').fadeIn();
-    $('#affinity').fadeIn();
+    // $('#affinity').fadeIn();
     $('#large').fadeOut();
     clearInterval(showModesInterval);
     flipping = false;
@@ -762,10 +784,11 @@ function changeModes() {
   } else if (curMode == 2) {
     colorsForGroup = agglomColors;
     labels = agglom;
-  } else if (curMode == 3) {
-    colorsForGroup = affinityColors;
-    labels = affinity;
   }
+  // else if (curMode == 3) {
+  //   colorsForGroup = affinityColors;
+  //   labels = affinity;
+  // }
 
 
   d3.selectAll("path.large")

@@ -316,7 +316,7 @@ var allMaps = [
   },
   {
     'num': '061',
-    'title': '',
+    'title': 'Comparing Clusters',
     'description': ''
   },
   {
@@ -491,7 +491,7 @@ var allMaps = [
   },
   {
     'num': '096',
-    'title': '',
+    'title': 'Slow Zoom',
     'description': ''
   },
   {
