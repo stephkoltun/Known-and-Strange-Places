@@ -1,12 +1,12 @@
-var width = $(window).width()/3;
-var height = $(window).width()/3;
+var width = $(window).width()*.27;
+var height = $(window).width()*.27;
 
 showGraph();
 showAerial();
 showRoute();
 
-var lineColor = "#84d2aa";
-var dotColor = "#342ce4";
+var lineColor = "#000";
+var dotColor = "#000";
 
 function showGraph() {
     var xScale = d3.scaleLinear()
@@ -26,11 +26,11 @@ function showGraph() {
     var pathPointData = pathPoints.features;
 
     var line1 = d3.line()
-        .x(function(d,i) { 
+        .x(function(d,i) {
             // should use time as X...
-            return xScale(i); 
+            return xScale(i);
         })
-        .y(function(d) { 
+        .y(function(d) {
             return yScale(d.properties.elev); // use the 1st index of data (for example, get 20 from [20,13])
         })
 
@@ -38,7 +38,7 @@ function showGraph() {
         .attr("d", line1(pathPointData))
         .attr("class", "line")
         .style("fill", "none")
-        .style("stroke", "#84d2aa")
+        .style("stroke", "#29abe2")
         .style("stroke-width", 1);
 
     svg.selectAll('.altitude')
@@ -52,7 +52,7 @@ function showGraph() {
         .attr("cy", function(d) {
             return yScale(d.properties.elev)
         })
-        .style("fill", "#342ce4")
+        .style("fill", "#29abe2")
         .style("opacity", 0)
         .on("mouseover", function(d,i) {
 
@@ -85,7 +85,7 @@ function showGraph() {
                     }
                 },
                 'paint': {
-                    "circle-color": dotColor,
+                    "circle-color": "#39b54a",
                     "circle-radius": 5,
                 }
             })
@@ -94,7 +94,7 @@ function showGraph() {
 
 
 // ----- MAPBOX STUFF ------ //
-    
+
 
 
 var aerial;
@@ -105,17 +105,18 @@ function showRoute() {
     var startPoint = [ -73.969647, 40.671737 ];
     route = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/stephkoltun/cjcqeyd6n53932smqco6657s3',
-        center: startPoint,  
-        zoom: 16, 
-        attributionControl: false 
+        style: 'mapbox://styles/stephkoltun/cjgznrj43000j2rmc2um3e7d5/draft',
+        center: startPoint,
+        zoom: 16,
+        attributionControl: false,
+        interactive: false
     })
     .addControl(new mapboxgl.AttributionControl({
         compact: true
     }));
 
-    route.scrollZoom.disable();
-    route.doubleClickZoom.disable();
+    // route.scrollZoom.disable();
+    // route.doubleClickZoom.disable();
 
     route.on('load', function () {
         console.log("route is loaded");
@@ -130,7 +131,7 @@ function showRoute() {
             "type": "line",
             "source": 'walkedpath',
             'paint': {
-                "line-color": lineColor,
+                "line-color": "#39b54a",
                 "line-width": 1.5,
             }
         })
@@ -145,7 +146,7 @@ function showRoute() {
             "type": "circle",
             "source": 'walkedpoints',
             'paint': {
-                "circle-color": lineColor,
+                "circle-color": "#39b54a",
                 "circle-radius": .75,
             }
         })
@@ -159,12 +160,13 @@ function showAerial() {
     aerial = new mapboxgl.Map({
         container: 'aerial',
         style: 'mapbox://styles/mapbox/satellite-v9',
-        center: startPoint,  
-        zoom: 18,  
+        center: startPoint,
+        zoom: 18,
+        interactive: false
     });
 
-    aerial.scrollZoom.disable();
-    aerial.doubleClickZoom.disable();
+    // aerial.scrollZoom.disable();
+    // aerial.doubleClickZoom.disable();
 
     aerial.on('load', function () {
         console.log("aerial is loaded");
