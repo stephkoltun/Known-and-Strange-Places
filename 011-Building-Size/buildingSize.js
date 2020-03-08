@@ -27,14 +27,14 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building500.geojson',
         dataName: 'oneRange',
         layerId: 'oneRange',
-        color: '#da024a',
+        color: '#000',
         type: 'fill',
     },
     // {
     //     //dataObj: twoObj,
     //     geoURL: 'GEOJSON/building500-2000.geojson',
-    //     dataName: 'twoRange',
-    //     layerId: 'twoRange',
+    //     dataName: 'original',
+    //     layerId: 'original',
     //     color: '#8ae314',
     //     type: 'fill',
     // },
@@ -43,7 +43,7 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building2000-5000.geojson',
         dataName: 'threeRange',
         layerId: 'threeRange',
-        color: '#3973f2',
+        color: '#000',
         type: 'fill',
     },
     {
@@ -51,7 +51,7 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building5000-10000.geojson',
         dataName: 'fourRange',
         layerId: 'fourRange',
-        color: '#36dad5',
+        color: '#000',
         type: 'fill',
     },
     {
@@ -59,7 +59,7 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building10000-25000.geojson',
         dataName: 'fiveRange',
         layerId: 'fiveRange',
-        color: '#f65b0e',
+        color: '#000',
         type: 'fill',
     },
     {
@@ -67,7 +67,7 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building25000-50000.geojson',
         dataName: 'sixRange',
         layerId: 'sixRange',
-        color: '#009241',
+        color: '#000',
         type: 'fill',
     },
     {
@@ -75,7 +75,7 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building50000-100000.geojson',
         dataName: 'sevenRange',
         layerId: 'sevenRange',
-        color: '#731478',
+        color: '#000',
         type: 'fill',
     },
     {
@@ -83,7 +83,7 @@ var buildingLayers = [
         geoURL: 'GEOJSON/building100000.geojson',
         dataName: 'eightRange',
         layerId: 'eightRange',
-        color: '#dd0692',
+        color: '#000',
         type: 'fill',
     },
 ];
@@ -109,7 +109,7 @@ map.on('load', function () {
             "type": "fill",
             "source": thisLayer.dataName,
             'paint': {
-                "fill-color": "#999",
+                "fill-color": "#efefef",
                 'fill-antialias': true,
             }
         })
@@ -118,7 +118,7 @@ map.on('load', function () {
 
 var currentlyHidden = false;
 
-map.on('mousemove', function(e) {
+map.on('click', function(e) {
     var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
     var features = map.queryRenderedFeatures(bbox);
 
@@ -128,6 +128,13 @@ map.on('mousemove', function(e) {
         console.log(isolateLayer);
 
         // hide all other layers
+
+        if (isolateLayer !== 'original') {
+          map.setLayoutProperty('original', 'visibility', 'none');
+        } else {
+          map.setPaintProperty('original', 'fill-color', '#000');
+        }
+
         for (var i = 0; i < buildingLayers.length; i++) {
             if (buildingLayers[i].layerId != isolateLayer) {
                 map.setLayoutProperty(buildingLayers[i].layerId, 'visibility', 'none');
@@ -144,10 +151,12 @@ map.on('mousemove', function(e) {
         currentlyHidden = false;
 
         //$(".label").remove();
+        map.setLayoutProperty('original', 'visibility', 'visible');
+        map.setPaintProperty('original', 'fill-color', '#efefef');
 
         for (var i = 0; i < buildingLayers.length; i++) {
             map.setLayoutProperty(buildingLayers[i].layerId, 'visibility', 'visible');
-            map.setPaintProperty(buildingLayers[i].layerId, 'fill-color', '#999');
+            map.setPaintProperty(buildingLayers[i].layerId, 'fill-color', '#efefef');
         }
 
     }
