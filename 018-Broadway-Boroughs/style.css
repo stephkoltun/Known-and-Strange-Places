@@ -4,34 +4,48 @@
   overflow: hidden;
   position: absolute;
   top:50%;
-  left:5vw;
   transform: translate(0%,-50%);
 }
 
 #streetLeft {
-  width: 45vw;
+  width: 50vw;
   z-index: 10;
 }
+
 #streetRight {
-  width: 90vw;
+  width: 100vw;
   z-index: 0;
 }
-#streetRight h1 {
-  position: relative;
-  left: 45vw;
-}
+
 
 img {
-  width: 100vw;
+  width: auto;
+  height: 100vh
 }
 
 body{
-  margin:0 5vw;
+  margin:0;
   padding: 0;
+  overflow: hidden;
 }
 
 h1 {
-	font-family: 'Work Sans', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
+  position: relative;
+	font-family: 'Helvetica', sans-serif;
+  color: #fff;
+  text-transform: uppercase;
+	font-size: 36px;
+	font-weight: 800;
+  z-index: 50;
+  text-align: center;
+  top: 71vh;
+  width: 50vw;
+  display: inline-block;
+}
+#streetLeftlabel {
+  left: 0;
+  top: 78vh;
+}
+#streetRightlabel {
+  left: 50vw;
 }

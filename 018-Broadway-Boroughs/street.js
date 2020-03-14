@@ -62,11 +62,13 @@ function assembleImage(side) {
 function requestImg(classname, point) {
   var imgUrl = "https://maps.googleapis.com/maps/api/streetview?&key=" + key + "&size=640x320&location=" + point.lon + "," + point.lat + "&fov=90&heading=" + point.heading;
 
+
   convertFunction(imgUrl, function(base64Img){
       // console.log(point.boro);
-      // var img = "<img src='"+base64Img+"'><h1>" + point.boro + "</h1>";
       var img = "<img src='"+base64Img+"'>";
+      // var img = "<img src='"+base64Img+"'>";
       $(classname).html(img);
+      $(classname+'label').text(point.boro);
   });
 
   function convertFunction (url, callback){
