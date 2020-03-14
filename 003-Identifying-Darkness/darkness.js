@@ -1,9 +1,9 @@
-var curScale = 1;
+var curScale = 0;
 var curMode = 0;
+var curLocation = 0;
 var modes = ["blob", "edge", "pixel"];
-var timer;
-
-$("#desc").delay(5000).fadeOut(1000);
+var scales = ["1000", "2000", "5000"];
+var locations = ["ConeyIsland", "CoopCity", "WashingtonCemetery"];
 
 var body = document.getElementsByTagName("body")[0];
 
@@ -16,10 +16,6 @@ $(document).keypress(function(e) {
 	}
 });
 
-$("body").on("swipe", function() {
-	changeScale()
-});
-
 $("body").mousedown(function() {
 	showAnalysis();
 });
@@ -30,19 +26,17 @@ $("body").mouseup(function() {
 
 function showAnalysis() {
 	// show brightness mode
-	var targetImg = "#" + modes[curMode] + curScale;
-	console.log("show " + targetImg);
-	$(targetImg).addClass("vis").removeClass("hid");
+	var imgSrc = `img/${locations[curLocation]}/${modes[curMode]}/${locations[curLocation]}-${scales[curScale]}-${modes[curMode]}.png`;
+	$("#img").attr("src",imgSrc);
 }
 
 
 function showAerial() {
 	// hide brightness mode
-	var prevImg = "#" + modes[curMode] + curScale;
-	console.log("hide " + prevImg);
-	$(prevImg).addClass("hid").removeClass("vis");
+	var imgSrc = `img/${locations[curLocation]}/base/${locations[curLocation]}-${scales[curScale]}.jpeg`;
+	$("#img").attr("src",imgSrc);
 
-	if (curMode < 2) {
+	if (curMode < modes.length-1) {
 		curMode++;
 	} else {
 		curMode = 0
@@ -51,19 +45,18 @@ function showAerial() {
 
 function changeScale() {
 	// hide current aerial
-	var curAerial = "#aer" + curScale;
-	$(curAerial).addClass("hid").removeClass("vis");
-
-	if (curScale < 4) {
+	if (curScale < scales.length-1) {
 		curScale++;
 	} else {
-		curScale = 1;
+		curScale = 0;
+		if (curLocation < locations.length-1) {
+			curLocation++;
+		} else {
+			curLocation = 0;
+		}
 	}
 
-	// show new aerial
-	var nextAerial = "#aer" + (curScale);
-	// set new aerial
-	$(nextAerial).addClass("vis").removeClass("hid");
+	var imgSrc = `img/${locations[curLocation]}/base/${locations[curLocation]}-${scales[curScale]}.jpeg`;
+	$("#img").attr("src",imgSrc);
 
-	console.log("--- scale: " + curScale);
 }
