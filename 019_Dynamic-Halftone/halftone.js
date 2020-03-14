@@ -1,30 +1,32 @@
 $(document).ready(function () {
 
-    var centerPt = [40.648063, -73.972526];
+    var centerPt = [40.649137, -73.974940];
     //var centerPt = [40.575162,-73.946886];
 
-  var aerialmap = L.map('aerialmap', {attributionControl: false, zoomControl:false}).setView(centerPt, 17);
+    var zoom = 17;
+
+  var aerialmap = L.map('aerialmap', {attributionControl: false, zoomControl:false}).setView(centerPt, zoom);
   var aerialtile = L.tileLayer('Flatbush-Ditmas-Park/Flatbush-Ditmas-Park_RGB/{z}/{x}/{y}.png', {
 //var aerialtile = L.tileLayer('Coney-AER/{z}/{x}/{y}.png', {
-    minZoom: 17,
-    maxZoom: 17,
+    minZoom: zoom,
+    maxZoom: zoom,
     tms: true,
   }).addTo(aerialmap);
   //L.control.layers({'Coney-AER':aerialtile}).addTo(aerialmap);
 
-  var irmap = L.map('irmap', {attributionControl: false, zoomControl: false}).setView(centerPt, 17);
+  var irmap = L.map('irmap', {attributionControl: false, zoomControl: false}).setView(centerPt, zoom);
   var irtile = L.tileLayer('Flatbush-Ditmas-Park/Flatbush-Ditmas-Park_IR/{z}/{x}/{y}.png', {
   //var irtile = L.tileLayer('Coney-IR-RED/{z}/{x}/{y}.png', {
-    minZoom: 17,
-    maxZoom: 17,
+    minZoom: zoom,
+    maxZoom: zoom,
     tms: true,
   }).addTo(irmap);
   //L.control.layers({'Coney-IR':irtile}).addTo(irmap);
 
-  var demmap = L.map('demmap', {attributionControl: false, zoomControl: false}).setView(centerPt, 17);
+  var demmap = L.map('demmap', {attributionControl: false, zoomControl: false}).setView(centerPt, zoom);
   var demtile = L.tileLayer('Flatbush-Ditmas-Park/Flatbush-Ditmas-Park_DEM/{z}/{x}/{y}.png', {
-    minZoom: 17,
-    maxZoom: 17,
+    minZoom: zoom,
+    maxZoom: zoom,
     tms: true,
   }).addTo(demmap);
 
@@ -65,8 +67,8 @@ $(document).ready(function () {
 var prevAERContext;
 var prevIRContext;
 var prevDEMContext;
-var nSubs = 50;
-var imgWidth = 600;
+var nSubs = 400;
+var imgWidth = 2000;
 var subSize = imgWidth/nSubs;
 var totalSubs = nSubs*nSubs;
 var aerXOffset = 1;
@@ -76,15 +78,52 @@ var irYOffset = -3;
 var demXOffset = -4;
 var demYOffset = 4;
 
+var sizePairs = [
+  {
+    nSubs: 500,
+    subSize: imgWidth/500 //4
+  },
+  {
+    nSubs: 400,
+    subSize: imgWidth/400 //5
+  },
+  {
+    nSubs: 250,
+    subSize: imgWidth/250 //8
+  },
+  {
+    nSubs: 200,
+    subSize: imgWidth/200 //10
+  },
+  {
+    nSubs: 125,
+    subSize: imgWidth/125 //16
+  },
+]
+
 $('#parameters').on('click', function() {
   $('.slidercontainer').toggleClass('collapsed', 'expanded');
 })
 
+$('#aerialmap').on('mousedown', function() {
+  $("#aerialmap").css("opacity", 1);
+})
+
+$('#aerialmap').on('mouseup', function() {
+  $("#aerialmap").css("opacity", 0);
+})
+
+
 subsizeSlider.oninput = function() {
-    //console.log("prev size: " + subSize);
-    subSize = parseInt(this.value);
-    //console.log("new size: " + subSize);
-    nSubs = Math.ceil(imgWidth/subSize);
+
+    console.log("prev size: " + subSize);
+    console.log("prev nsubs: " + nSubs)
+    var i = parseInt(this.value);
+    nSubs = sizePairs[i].nSubs;
+    subSize = sizePairs[i].subSize;
+
+    console.log("new size: " + subSize);
+    console.log("new nsubs: " + nSubs)
 }
 
 $('#subsizeSlider').mouseup(function() {
@@ -157,28 +196,26 @@ function drawAer(pixels, context) {
   var minBrightness = pixels.minBrightness;
   var avgBrightness = pixels.totalBrightness/hslData.length;
 
-  var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);   // brighter = bigger
+  var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2);   // brighter = bigger
 
   var x = pixels.xCenter + aerXOffset;
   var y = pixels.yCenter + aerYOffset;
-
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI, false);
-  context.fillStyle = "rgba(0, 0, 255, .5)";
+  context.fillStyle = "rgba(255, 0, 255, 1)";
   context.fill();
 }
 
 function drawIR(pixels, context) {
   var avgRed = pixels.avgRed;
-  var radius = mapVal(avgRed, 0.0, 255.0, 0.0, subSize/2.5);
+  var radius = mapVal(avgRed, 0.0, 255.0, 0.0, subSize/2);
 
   var x = pixels.xCenter + irXOffset;
   var y = pixels.yCenter + irYOffset;
-
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI, false);
   // halftoneCxt.rect(x,y,radius*2,radius*2);
-  context.fillStyle = "rgba(0, 255, 0, .5)";
+  context.fillStyle = "rgba(255, 255, 0, 1)";
   context.fill();
 }
 
@@ -189,7 +226,7 @@ function drawDEM(pixels, context) {
   var minBrightness = pixels.minBrightness;
   var avgBrightness = pixels.totalBrightness/hslData.length;
 
-  var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2.5);
+  var radius = mapVal(avgBrightness, 0.0, 1.0, 0.0, subSize/2);
 
   var x = pixels.xCenter + demXOffset;
   var y = pixels.yCenter + demYOffset;
@@ -198,7 +235,7 @@ function drawDEM(pixels, context) {
   //halftoneCxt.arc(x, y, radius, 0, 2 * Math.PI, false);
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI, false);
-  context.fillStyle = "rgba(255, 0, 0, .5)";
+  context.fillStyle = "rgba(0, 255, 255, 1)";
   context.fill();
 }
 
@@ -212,6 +249,7 @@ function generateHalftone(mode) {
     halftoneCxt.rect(0,0,halftone2D.width,halftone2D.height);
     halftoneCxt.fillStyle = "rgb(255, 255, 255)";
     halftoneCxt.fill();
+    halftoneCxt.globalCompositeOperation = 'multiply';
 
     if (mode == "all") {
       captureSubdivs()

@@ -28,40 +28,40 @@
 
 <body>
   <div id="allSliders">
-    <h3 id="parameters">Adjust Parameters</h3>
-    <div class="slidercontainer collapsed">
+    <!-- <h3 id="parameters">Parameters</h3> -->
+    <div class="slidercontainer">
       <label for="subsizeSlider">Subsize</label><br>
-      <input type="range" min="4" max="20" value="4" class="slider" id="subsizeSlider" step="4">
+      <input type="range" min="0" max="4" value="1" class="slider" id="subsizeSlider" step="1">
     </div>
-    <div class="slidercontainer collapsed">
+    <div class="slidercontainer">
       <label for="aerXSlider">Brightness X</label><br>
       <input type="range" min="-20" max="20" value="1" class="slider" id="aerXSlider" step="1">
     </div>
-    <div class="slidercontainer collapsed">
+    <div class="slidercontainer">
       <label for="aerYSlider">Brightness Y</label><br>
       <input type="range" min="-20" max="20" value="1" class="slider" id="aerYSlider" step="1">
     </div>
 
-    <div class="slidercontainer collapsed">
+    <div class="slidercontainer">
       <label for="irXSlider">Vegetation X</label><br>
       <input type="range" min="-20" max="20" value="-2" class="slider" id="irXSlider" step="1">
     </div>
-    <div class="slidercontainer collapsed">
+    <div class="slidercontainer">
       <label for="irYSlider">Vegetation Y</label><br>
       <input type="range" min="-20" max="20" value="-3" class="slider" id="irYSlider" step="1">
     </div>
 
-    <div class="slidercontainer collapsed">
+    <div class="slidercontainer">
       <label for="demXSlider">Topography X</label><br>
       <input type="range" min="-20" max="20" value="-4" class="slider" id="demXSlider" step="1">
     </div>
-    <div class="slidercontainer collapsed">
+    <div class="slidercontainer">
       <label for="demYSlider">Topography Y</label><br>
       <input type="range" min="-20" max="20" value="2" class="slider" id="demYSlider" step="1">
     </div>
   </div>
 
-  <canvas id="halftone" width="600" height="600"></canvas>
+  <canvas id="halftone" width="2000" height="2000"></canvas>
 
   <div id="aerialmap">
   </div>
