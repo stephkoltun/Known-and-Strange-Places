@@ -7,7 +7,7 @@ var curPlaying;
 
 var waveHome = WaveSurfer.create({
     container: '#waveform-home',
-    waveColor: '#43ccd4',
+    waveColor: '#d9e021',
     cursorWidth: 0,
     progressColor: inactiveColor,
     barWidth: 3,
@@ -18,7 +18,7 @@ var waveHome = WaveSurfer.create({
 
 var waveSubway = WaveSurfer.create({
     container: '#waveform-subway',
-    waveColor: '#cc43d4',
+    waveColor: '#0071bc',
     cursorWidth: 0,
     progressColor: inactiveColor,
     barWidth: 3,
@@ -29,7 +29,7 @@ var waveSubway = WaveSurfer.create({
 
 var waveStreet = WaveSurfer.create({
     container: '#waveform-street',
-    waveColor: '#32ffa1',
+    waveColor: '#f7931e',
     cursorWidth: 0,
     progressColor: inactiveColor,
     barWidth: 3,
@@ -40,7 +40,7 @@ var waveStreet = WaveSurfer.create({
 
 var waveMorning = WaveSurfer.create({
     container: '#waveform-morning',
-    waveColor: '#f7b613',
+    waveColor: '#00a99d',
     cursorWidth: 0,
     progressColor: inactiveColor,
     barWidth: 3,
@@ -48,6 +48,8 @@ var waveMorning = WaveSurfer.create({
     normalize: true,
     interact: false,
 });
+
+["#c1272d","#ed1c24","#f15a24","#f7931e","#fbb03b","#fcee21","#d9e021","#8cc63f","#39b54a","#009245","#006837","#22b573","#00a99d","#29abe2","#0071bc","#2e3192","#1b1464","#662d91","#93278f","#9e005d","#d4145a","#ed1e79"]
 
 waveHome.load('audio/home.mp3');
 waveSubway.load('audio/subway.mp3');
@@ -57,6 +59,7 @@ waveMorning.load('audio/morning.mp3');
 var homeReady = false;
 var subwayReady = false;
 var streetReady = false;
+var morningReady = false;
 
 waveStreet.on('ready', function () {
     streetReady = true;
