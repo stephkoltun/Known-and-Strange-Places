@@ -1,14 +1,23 @@
 
-var tileSize = 4000;
+var tileSize = $(window).width();
 var tileNum = 1;
 var extentSize = tileSize*tileNum;
-var displaySize = tileSize/4;
-var multiplier = 4;
-var visibleSubSize = displaySize/(Math.pow(2,multiplier));
+var displaySize = tileSize;
+var multiplier = 1;
+//var visibleSubSize = displaySize/(Math.pow(2,multiplier));
+var visibleSubSize = extentSize;
 console.log(visibleSubSize);
 
-var rgbImage,
+var rgbImage;
 var irImage;
+
+$(window).on('mousedown',function() {
+  $('#aerial').show()
+})
+
+$(window).on('mouseup',function() {
+  $('#aerial').hide()
+})
 
 function preload(){
   rgbImage = loadImage('img/SouthSlope_1200.png');
@@ -21,7 +30,7 @@ function setup() {
   cnv.parent("wrapper");  // set parent of canvas
   background(240);
 
-  image(irImage,0,-1200);
+  image(irImage,0,0,$(window).width(),$(window).width());
 
   var source = canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height)
 
@@ -31,7 +40,7 @@ function setup() {
   console.log(blobs);
   console.log(counts);
 
-  image(rgbImage,0,-1200);
+  image(rgbImage,0,0,$(window).width(),$(window).width());
 
   for(y = 0; y < source.height; y++){
     for(x = 0; x < source.width; x++){
@@ -43,17 +52,17 @@ function setup() {
       //   console.log('count', thisCount);
       // }
 
-      if (thisPix <= 10) {
-        noStroke();
-        fill(255,255,255);
-        rect(x,y,1,1);
+      if (thisPix <= 20 && thisCount >= 500) {
+          noStroke();
+          fill(255,255,255);
+          rect(x,y,1,1);
       } else {
         // look up size of blob in the unique labels
-        if (thisCount < 10) {
-          noStroke();
-          fill(0,255,255);
-          rect(x,y,1,1);
-        }
+        // if (thisCount < 10) {
+        //   noStroke();
+        //   fill(0,255,255);
+        //   rect(x,y,1,1);
+        // }
       }
     }
   }
@@ -68,14 +77,14 @@ function removeSmallBlobs(secondFrame) {
   var blobRemovedImage = createImage(canvasWidth,canvasHeight);
   blobRemovedImage.loadPixels();
   diffImage.loadPixels();
-  for (var y = 1; y < canvasHeight-1; y+=4) {  // look at a 4x4 area
-    for (var x = 1; x < canvasWidth-1; x+=4) {
+  for (var y = 1; y < canvasHeight-1; y+=8) {  // look at a 4x4 area
+    for (var x = 1; x < canvasWidth-1; x+=8) {
       var index = (x + y*canvasWidth) * 4;
 
       var sum = 0; // blob size
       // evaluate only a 3x3 area
-      for (var ky = -1; ky <= 1; ky++) {
-        for (var kx = -1; kx <= 1; kx++) {
+      for (var ky = -2; ky <= 2; ky++) {
+        for (var kx = -2; kx <= 2; kx++) {
           // Calculate the adjacent pixel for center kernel point
           var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
 

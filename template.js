@@ -198,7 +198,7 @@ var allMaps = [
   {
     'num': '037',
     'title': 'Fore-blob, Middle-blob, Back-blob',
-    'description': 'The traditional figure-ground relationship is reinterpreted by treating vegetation as the “figure”. From a near-infrared aerial image, vegetation is identified from red hues and isolated with a crude blob-detection algorithm.'
+    'description': 'The traditional figure-ground relationship is reinterpreted by treating vegetation as the &lsquo;figure&rsquo;. From a near-infrared aerial image, vegetation is identified from red hues and isolated with a crude blob-detection algorithm.'
   },{
     'num': '038',
     'title': 'Frankenstein',
