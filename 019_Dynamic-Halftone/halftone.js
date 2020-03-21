@@ -3,7 +3,7 @@ $(document).ready(function () {
     var centerPt = [40.649137, -73.974940];
     //var centerPt = [40.575162,-73.946886];
 
-    var zoom = 17;
+    var zoom = 16;
 
   var aerialmap = L.map('aerialmap', {attributionControl: false, zoomControl:false}).setView(centerPt, zoom);
   var aerialtile = L.tileLayer('Flatbush-Ditmas-Park/Flatbush-Ditmas-Park_RGB/{z}/{x}/{y}.png', {
