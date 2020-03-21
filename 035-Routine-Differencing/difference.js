@@ -6,6 +6,9 @@ var differenceThreshold = 25;
 var sameTransparency = 255;
 var framerate = 3;
 
+var multiplier = 2.4; //1920/800 to be full width
+
+
 // load all the images and assign them back to the object
 function preload(){
   for (var img = 0; img < imgArray.length; img++) {
@@ -15,7 +18,7 @@ function preload(){
 
 function setup() {
   console.log("loaded");
-  var cnv = createCanvas(canvasWidth, canvasHeight);
+  var cnv = createCanvas(canvasWidth*multiplier, canvasHeight*multiplier);
   cnv.parent("canvas");  // set parent of canvas
   background(240);
   frameRate(framerate);
@@ -105,7 +108,7 @@ function removeSmallBlobs(secondFrame) {
     }
   }
   blobRemovedImage.updatePixels();
-  image(blobRemovedImage,0,0);
+  image(blobRemovedImage,0,0,canvasWidth*multiplier,canvasHeight*multiplier);
 }
 
 function differenceFrames(_frame, _second, callback) {
