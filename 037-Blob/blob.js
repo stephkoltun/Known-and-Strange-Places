@@ -199,7 +199,7 @@ function findBlobs(src) {
         var mapHue = map(hsl[0], 0,1,0,360);
 
         // check red hue to see if within range
-        isVisible = (mapHue >= 356 || (mapHue <=10 && mapHue >= 4));
+        isVisible = (mapHue >= 356 || (mapHue <=10 && mapHue >= 0));
 
         if (isVisible) {
           // Find the lowest blob index nearest this pixel
