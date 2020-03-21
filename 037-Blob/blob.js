@@ -77,14 +77,14 @@ function removeSmallBlobs(secondFrame) {
   var blobRemovedImage = createImage(canvasWidth,canvasHeight);
   blobRemovedImage.loadPixels();
   diffImage.loadPixels();
-  for (var y = 1; y < canvasHeight-1; y+=8) {  // look at a 4x4 area
-    for (var x = 1; x < canvasWidth-1; x+=8) {
+  for (var y = 1; y < canvasHeight-1; y+=4) {  // look at a 4x4 area
+    for (var x = 1; x < canvasWidth-1; x+=4) {
       var index = (x + y*canvasWidth) * 4;
 
       var sum = 0; // blob size
       // evaluate only a 3x3 area
-      for (var ky = -2; ky <= 2; ky++) {
-        for (var kx = -2; kx <= 2; kx++) {
+      for (var ky = -1; ky <= 1; ky++) {
+        for (var kx = -1; kx <= 1; kx++) {
           // Calculate the adjacent pixel for center kernel point
           var pos = ((x + kx) + (y + ky)*canvasWidth) * 4;
 
@@ -199,7 +199,7 @@ function findBlobs(src) {
         var mapHue = map(hsl[0], 0,1,0,360);
 
         // check red hue to see if within range
-        isVisible = (mapHue >= 344 || mapHue <=7);
+        isVisible = (mapHue >= 356 || (mapHue <=10 && mapHue >= 4));
 
         if (isVisible) {
           // Find the lowest blob index nearest this pixel
