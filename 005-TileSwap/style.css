@@ -1,6 +1,6 @@
 #map {
-	width:1000px;
-	height:1000px;
+	width:1930px;
+	height:1086px;
 	z-index: 10;
 	margin: 0;
 	opacity: 0;
@@ -21,4 +21,5 @@ canvas#shuffle {
 body {
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }

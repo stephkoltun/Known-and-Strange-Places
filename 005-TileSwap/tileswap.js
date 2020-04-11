@@ -30,13 +30,17 @@ var map = new mapboxgl.Map({
 map.scrollZoom.disable();
 map.doubleClickZoom.disable();
 
-var nSubs = 4;
-var imgWidth = 1000;
-var subSize = imgWidth/nSubs;
-var totalSubs = nSubs*nSubs;
+//var nSubs = 4;
+var xSubs = 5;
+var ySubs = 3;
+var imgWidth = 1930;
+var imgHeight = 1086;
+var subSizeX = imgWidth/xSubs;
+var subSizeY = imgHeight/ySubs;
+var totalSubs = xSubs*ySubs;
 
 //generate normal order
-var normalOrder = createOrder(nSubs);
+var normalOrder = createOrder(xSubs, ySubs);
 var newOrder = shuffleArray(normalOrder);
 console.log(normalOrder);
 console.log(newOrder);
@@ -63,51 +67,44 @@ function swapPixels() {
     // draw the webGL canvas as an image to the 2D canvas
     ctx2D.drawImage(canvas, 0, 0);
 
-    for (var i = 0; i < newOrder.length; i = i+2) {
-        // set the first
-        var targetSub = newOrder[i];
-        var replaceSub = newOrder[i+1];
+    const futureData = [];
 
-        var targetX = targetSub.x*subSize;
-        var targetY = targetSub.y*subSize;
-        // get the target subdivision
-        var targetImage = ctx2D.getImageData(targetX, targetY, subSize, subSize);
-        var targetData = targetImage.data;
-
-        // duplicate this data
-        var duplicateTarget = targetData.slice();
+    for (var i = 0; i < newOrder.length; i++) {
+        var replaceSub = newOrder[i];
 
         // use the next one in the sequence
-        
-        var replaceX = replaceSub.x*subSize;
-        var replaceY = replaceSub.y*subSize;
+        var replaceX = replaceSub.x*subSizeX;
+        var replaceY = replaceSub.y*subSizeY;
 
-        var replaceImage = ctx2D.getImageData(replaceX, replaceY, subSize, subSize);
+        var replaceImage = ctx2D.getImageData(replaceX, replaceY, subSizeX, subSizeY);
         var replaceData = replaceImage.data;
+        // save the replacement data
+        futureData[i] = replaceData;
+    }
 
-        // swap arrays
-        for (var k = 0; k < targetData.length; k += 4) {
-          targetData[k]     = replaceData[k];     // red
-          replaceData[k]    = duplicateTarget[k];
-          //eplaceData[k]    = 255;
+    for (var i = 0; i < newOrder.length; i++) {
+      var targetSub = normalOrder[i];
+      var targetX = targetSub.x*subSizeX;
+      var targetY = targetSub.y*subSizeY;
+      // get the target subdivision
+      var targetImage = ctx2D.getImageData(targetX, targetY, subSizeX, subSizeY);
+      var targetData = targetImage.data;
 
-          targetData[k+1]   = replaceData[k+1]; // green
-          replaceData[k+1]  = duplicateTarget[k+1];
+      var replacementData = futureData[i];
+      for (var k = 0; k < replacementData.length; k += 4) {
+        targetData[k] = replacementData[k];
+        targetData[k+1] = replacementData[k+1];
+        targetData[k+2] = replacementData[k+2]; 
+      }
 
-          targetData[k+2]   = replaceData[k+2]; // blue
-          replaceData[k+2]  = duplicateTarget[k+2];
-        }
-
-        ctx2D.putImageData(targetImage, targetX, targetY);
-        ctx2D.putImageData(replaceImage, replaceX, replaceY);
-
+      ctx2D.putImageData(targetImage, targetX, targetY);
     }
 }
 
-function createOrder(subs) {
+function createOrder(xsubs, ysubs) {
     var xyPairs = [];
-    for (var x = 0; x < subs; x++) {
-        for (var y = 0; y < subs; y++) {
+    for (var x = 0; x < xsubs; x++) {
+        for (var y = 0; y < ysubs; y++) {
             var pair = {
                 'x': x,
                 'y': y
@@ -137,8 +134,3 @@ function shuffleArray (originalArray) {
 
     return array;
 }
-
-
-
-
-
