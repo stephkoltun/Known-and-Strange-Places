@@ -55,10 +55,14 @@ topMap.doubleClickZoom.disable();
 bottomMap.scrollZoom.disable();
 bottomMap.doubleClickZoom.disable();
 
-var nSubs = 12;
-var imgWidth = $(window).width();
-var subSize = imgWidth/nSubs;
-var totalSubs = nSubs*nSubs;
+//var nSubs = 12;
+var xSubs = 10;
+var ySubs = 6;
+var imgWidth = 1930;
+var imgHeight = 1086;
+var subSizeX = imgWidth/xSubs;
+var subSizeY = imgHeight/ySubs;
+var totalSubs = xSubs*ySubs;
 
 var erase = true;
 
@@ -127,31 +131,38 @@ function createCheckerboard() {
   // get the 2D canvas
   var canvas2D = document.getElementById("shuffle");
   var ctx2D = canvas2D.getContext("2d");
-  ctx2D.canvas.width  = $(window).width();
-  ctx2D.canvas.height = $(window).width();
+  ctx2D.canvas.width  = 1930;
+  ctx2D.canvas.height = 1086;
   // draw the webGL canvas as an image to the 2D canvas
-  ctx2D.drawImage(canvas, 0, 0, imgWidth, imgWidth);
+  ctx2D.drawImage(canvas, 0, 0, imgWidth, imgHeight);
 
-  for (var y = 0; y < nSubs; y++) {
-    for (var x = 0; x < nSubs; x++) {
+  for (var y = 0; y < ySubs; y++) {
+    for (var x = 0; x < xSubs; x++) {
 
-      var index = x + y*nSubs;
-      //console.log(index);
+      var targetX = x*subSizeX;
+      var targetY = y*subSizeY;
 
-      var targetX = x*subSize;
-      var targetY = y*subSize;
-
-      //console.log(index + ", x: " + targetX + ", y: " + targetY);
       // get the target subdivision
-      var targetImage = ctx2D.getImageData(targetX, targetY, subSize, subSize);
+      var targetImage = ctx2D.getImageData(targetX, targetY, subSizeX, subSizeY);
       var targetData = targetImage.data;
 
-      if (erase && y % 2 == 0 || !erase && y %2 == 1) {
-        for (var k = 0; k < targetData.length; k += 4) {
-          // set alpha to 0 (transparent)
-          targetData[k+3] = 0;
+      if (totalSubs % 2 == 0) {
+        if (erase && y % 2 == 0 || !erase && y % 2 == 1) {
+          for (var k = 0; k < targetData.length; k += 4) {
+            // set alpha to 0 (transparent)
+            targetData[k+3] = 0;
+          }
+        }
+      } else {
+        if (erase) {
+          for (var k = 0; k < targetData.length; k += 4) {
+            // set alpha to 0 (transparent)
+            targetData[k+3] = 0;
+          }
         }
       }
+
+
       erase = !erase;
       ctx2D.putImageData(targetImage, targetX, targetY);
     }

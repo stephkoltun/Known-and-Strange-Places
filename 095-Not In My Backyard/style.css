@@ -1,6 +1,6 @@
 #bottom, #top {
-	width:100vw;
-	height:100vw;
+	width:1930px;
+	height:1086px;
 	margin: 0;
 	position: absolute;
 	top: 50%;
@@ -18,9 +18,13 @@
 	opacity: 0;
 }
 
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib, .mapboxgl-ctrl-logo {
+	display: none;
+}
+
 canvas#shuffle {
-	width:100vw;
-	height:100vw;
+	width:1930px;
+	height:1086px;
 	position: absolute;
 	top: 50%;
 	left:50%;
