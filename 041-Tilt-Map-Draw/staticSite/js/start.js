@@ -17,7 +17,7 @@ function init() {
         margin: 10
     });
 
-    var lineCols = ["#F63523", "#F05B53", "#234994","#28788E","#3385B7"];
+    var lineCols = ["#FFF"];
     var randomline = lineCols[Math.floor(Math.random()*lineCols.length)];
 
     /* Create the ball */
@@ -31,9 +31,10 @@ function init() {
 
     /* Add devicemotion control */
     window.mDeviceMotionControl = new DeviceMotionControl();
-
+    //$('#permission'),remove()
     /* Start the game */
     window.mGame.start();
+
 }
 
 /* Call init() when the window is loaded */
