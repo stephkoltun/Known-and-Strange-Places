@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 
 #displayCanvas{
@@ -8,14 +9,14 @@ body {
 	top: 50%;
 	left:50%;
 	transform: translate(-50%,-50%);
-	width: 768px;
-	height: 768px;
+	width: 1922px;
+	height: 1090px;
 }
 
 #stagingCanvas, #tempCanvas{
 	opacity: 0;
-	width: 768px;
-	height: 768px;
+	width: 1922px;
+	height: 1090px;
 }
 
 div {

@@ -17,24 +17,23 @@
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
 
   <script src='config.js'></script>
-  <!-- <script src='stepped-first.js'></script> -->
-  <script src='stepped-tenth.js'></script>
+  <script src='stepped-first.js'></script>
+  <!-- <script src='stepped-tenth.js'></script> -->
   <!-- <script src='stepped-tennis.js'></script> -->
 
   <script type="text/javascript">
   $(document).ready(function() {
     console.log("document is ready");
     addTitle(56, "black", true);
-    setInterval(copyTile, 750);
-    setInterval(changeLocation, 6750);
+    startIntervals();
   });
   </script>
 </head>
 
 <body>
-  <canvas id="displayCanvas" width="768" height="768">
+  <canvas id="displayCanvas" width="1922" height="1090">
   </canvas>
-  <canvas id="tempCanvas" width="768" height="768">
+  <canvas id="tempCanvas" width="1922" height="1090">
   </canvas>
   <div id="stagingCanvas">
   </div>

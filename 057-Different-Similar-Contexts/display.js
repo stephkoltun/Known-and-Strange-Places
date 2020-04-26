@@ -9,11 +9,12 @@ var mapPosition = 0;
 var initialized = false;
 var readyToCopy = false;
 
+var zoomlevel = 19.5
 var map = new mapboxgl.Map({
     container: "stagingCanvas",
     style: 'mapbox://styles/mapbox/satellite-v9',
     center: steppedPlaces.features[mapPosition].geometry.coordinates,
-    zoom: 18,
+    zoom: zoomlevel,
     interactive: false,
 });
 
@@ -27,9 +28,21 @@ map.on('render', function() {
   }
 })
 
-var copyTileIndex = 4;
-var subSize = 256;
-var newOrder = shuffleArray([0,1,2,3,4,5,6,7,8]);
+var copyTileIndex = 7; // middle
+var tileIndex = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+var xSubs = 5;
+var ySubs = 3;
+var xSubSize = 1930/xSubs;
+var ySubSize = 1086/ySubs;
+var newOrder = shuffleArray(tileIndex);
+
+
+function startIntervals() {
+  var tileTime = 750;
+  var totalTime = tileTime*(xSubs*ySubs);
+  setInterval(copyTile, tileTime);
+  setInterval(changeLocation, totalTime);
+}
 
 function copyTile() {
   if (readyToCopy) {
@@ -41,24 +54,24 @@ function copyTile() {
 
     var randomIndex = newOrder[copyTileIndex];
 
-    var yIndex = Math.floor(randomIndex/3);
-    var xIndex = randomIndex - yIndex*3;
+    var yIndex = Math.floor(randomIndex/5);
+    var xIndex = randomIndex - yIndex*5;
 
     //console.log(xIndex, yIndex);
 
     console.log(xIndex, yIndex);
 
-    var targetX = xIndex*subSize;
-    var targetY = yIndex*subSize;
+    var targetX = xIndex*xSubSize;
+    var targetY = yIndex*ySubSize;
     // get the target subdivision
-    var targetImage = ctxTarget.getImageData(targetX, targetY, subSize, subSize);
+    var targetImage = ctxTarget.getImageData(targetX, targetY, xSubSize, ySubSize);
     var targetData = targetImage.data;
 
     // duplicate this data
     var duplicateTarget = targetData.slice();
 
 
-    var replaceImage = ctxDisplayCanvas.getImageData(targetX, targetY, subSize, subSize);
+    var replaceImage = ctxDisplayCanvas.getImageData(targetX, targetY, xSubSize, ySubSize);
     var replaceData = replaceImage.data;
 
     // swap arrays
@@ -70,7 +83,7 @@ function copyTile() {
 
     ctxDisplayCanvas.putImageData(replaceImage, targetX, targetY);
 
-    if (copyTileIndex < 8) {
+    if (copyTileIndex < tileIndex.length-1) {
       copyTileIndex++;
     } else {
       copyTileIndex = 0;
@@ -90,7 +103,7 @@ function copyCanvas(copyTo) {
 }
 
 function changeLocation() {
-  newOrder = shuffleArray([0,1,2,3,4,5,6,7,8]);
+  newOrder = shuffleArray(tileIndex);
 
   if (!initialized) {
     initialized = true;
