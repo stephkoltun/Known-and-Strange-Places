@@ -46,6 +46,9 @@ var map = new mapboxgl.Map({
 
 map.scrollZoom.disable();
 map.doubleClickZoom.disable();
+map.dragPan.disable();
+map.dragRotate.disable();
+map.touchZoomRotate.disable();
 
 var geoOptions = {
   enableHighAccuracy: true,
