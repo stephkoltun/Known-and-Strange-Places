@@ -15,8 +15,8 @@ var geoOptions = {
 };
 
 function gotLocation(position) {
+  console.log(position)
   //alert("new position");
-  console.log(position);
   //alert("lat: " + position.coords.latitude + " lon: " + position.coords.longitude);
   requestImg(position.coords);
   //$("body").append("<p>" + position.coords.latitude + " " + position.coords.longitude + "</p>")
