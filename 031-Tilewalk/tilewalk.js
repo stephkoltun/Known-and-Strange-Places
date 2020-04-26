@@ -5,25 +5,22 @@ if (!isMobile) alert("This works best on mobile devices")
 // configure grid sizes
 var wWidth = window.innerWidth;
 var wHeight = window.innerHeight;
-var minDim = wWidth < wHeight ? wWidth : wHeight;
-var minSubSize = 300;
-
-if (minDim/minSubSize < 3) minSubSize = Math.floor(minDim/3);
-let numOfSubsWidth = Math.floor(wWidth / minSubSize);
-let numOfSubsHeight = Math.floor(wHeight / minSubSize);
+let numOfSubsWidth = 3;
+let numOfSubsHeight = 5;
+let xDim = wWidth/numOfSubsWidth
+let yDim = wHeight/numOfSubsHeight
 
 // resize canvas elements
-$('#map').width(numOfSubsWidth * minSubSize);
-$('#map').height(numOfSubsHeight * minSubSize);
+$('#map').width(numOfSubsWidth * xDim);
+$('#map').height(numOfSubsHeight * yDim);
 var canvas2D = document.getElementById("shuffle");
 var ctx2D = canvas2D.getContext("2d");
-ctx2D.canvas.width = numOfSubsWidth * minSubSize;
-ctx2D.canvas.height = numOfSubsHeight * minSubSize;
+ctx2D.canvas.width = numOfSubsWidth * xDim;
+ctx2D.canvas.height = numOfSubsHeight * yDim;
 
 
-var imgWidth = numOfSubsWidth * minSubSize;
-var imgHeight = numOfSubsHeight * minSubSize;
-var subSize = minSubSize;
+var imgWidth = numOfSubsWidth * xDim;
+var imgHeight = numOfSubsHeight * yDim;
 var totalSubs = numOfSubsWidth * numOfSubsHeight
 
 //generate normal order
@@ -95,21 +92,21 @@ function swapPixels() {
         var targetSub = normalOrder[i];
         var replaceSub = newOrder[i];
 
-        var targetX = targetSub.x*subSize;
-        var targetY = targetSub.y*subSize;
+        var targetX = targetSub.x*xDim;
+        var targetY = targetSub.y*yDim;
 
         // get the target subdivision
-        var targetImage = ctx2D.getImageData(targetX, targetY, subSize, subSize);
+        var targetImage = ctx2D.getImageData(targetX, targetY, xDim, yDim);
         var targetData = targetImage.data;
 
         // duplicate this data
         var duplicateTarget = targetData.slice();
 
         // use the next one in the sequence
-        var replaceX = replaceSub.x*subSize;
-        var replaceY = replaceSub.y*subSize;
+        var replaceX = replaceSub.x*xDim;
+        var replaceY = replaceSub.y*yDim;
 
-        var replaceImage = ctx2D.getImageData(replaceX, replaceY, subSize, subSize);
+        var replaceImage = ctx2D.getImageData(replaceX, replaceY, xDim, yDim);
         var replaceData = replaceImage.data;
 
         // swap arrays
